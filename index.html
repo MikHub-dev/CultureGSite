@@ -1,0 +1,864 @@
+<title>CultureGSite</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Concept : carnet de lecture. L'accueil est une grille de 9 vignettes, une teinte par thème.
+   Chaque thème s'ouvre en colonne de lecture, une fiche par document, avec son statut de lecture. */
+:root{
+  --bg:#f1f3f7; --surface:#ffffff; --ink:#141922; --ink2:#4b5567; --line:#d8dde6; --brand:#26408f;
+  --ok:#1f7a4d; --warn:#955d00; --off:#667084; --info:#2459b3;
+  --tc-s:55%; --tc-l:33%; --bg-s:42%; --bg-l:93%;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1118; --surface:#161b25; --ink:#e8ecf3; --ink2:#a0abbd; --line:#2a3242; --brand:#9bb0ff;
+    --ok:#6fd3a0; --warn:#f0b64e; --off:#98a2b6; --info:#8fb4ff;
+    --tc-s:60%; --tc-l:72%; --bg-s:30%; --bg-l:17%;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1118; --surface:#161b25; --ink:#e8ecf3; --ink2:#a0abbd; --line:#2a3242; --brand:#9bb0ff;
+  --ok:#6fd3a0; --warn:#f0b64e; --off:#98a2b6; --info:#8fb4ff;
+  --tc-s:60%; --tc-l:72%; --bg-s:30%; --bg-l:17%;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
+a{color:var(--brand)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1120px;margin:0 auto;padding-block:20px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* en-tête */
+.site{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.brand{font:700 1.35rem/1 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.brand span{color:var(--brand)}
+.site p{margin:0;font:400 .8rem/1.4 var(--f-mono);color:var(--ink2)}
+
+/* accueil */
+.hero{padding:36px 0 28px;display:grid;gap:12px;max-width:760px}
+.hero h1{margin:0;font:700 clamp(2rem,5vw,3.1rem)/1.05 var(--f-display);letter-spacing:-.02em;text-wrap:balance}
+.hero p{margin:0;color:var(--ink2);font-size:1.1rem}
+.stats{display:flex;flex-wrap:wrap;gap:8px}
+.stat{font:500 .78rem/1 var(--f-mono);padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink2)}
+.stat b{color:var(--ink);font-weight:500}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.theme{--tc:hsl(var(--hue) var(--tc-s) var(--tc-l));--tcbg:hsl(var(--hue) var(--bg-s) var(--bg-l))}
+.t-geopolitique{--hue:5}.t-economie{--hue:38}.t-philosophie{--hue:82}.t-sante{--hue:135}
+.t-informatique{--hue:172}.t-physique{--hue:212}.t-maths{--hue:256}.t-langue{--hue:290}.t-etudes{--hue:325}
+.t-hors{--hue:215}
+
+.vig{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:10px;min-height:250px;padding:20px;background:var(--tcbg);border:1px solid var(--line);border-radius:14px;transition:border-color .15s,transform .15s}
+.vig::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(150deg,var(--tcbg) 0%,var(--tcbg) 22%,transparent 72%)}
+.vig:hover{border-color:var(--tc);transform:translateY(-2px)}
+.vig:focus-within{border-color:var(--tc)}
+.art{position:absolute;inset:0;z-index:0;width:100%;height:100%;fill:none;stroke:var(--tc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.art .f{fill:var(--tc);fill-opacity:.15;stroke-opacity:.85}
+.art .s{stroke-opacity:.5}
+.art .d{fill:var(--tc);stroke:none}
+.art text{fill:var(--tc);stroke:none;font-family:var(--f-display);font-weight:700}
+.vhead{position:relative;z-index:2;display:flex;align-items:center;gap:14px}
+.ico{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:11px;background:var(--surface);color:var(--tc);box-shadow:0 0 0 1px var(--line)}
+.ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ico svg text{fill:currentColor;stroke:none;font:700 20px var(--f-display)}
+.vig h3{margin:0;font:700 1.3rem/1.15 var(--f-display);letter-spacing:-.01em;text-wrap:balance}
+.vig h3 a{color:var(--ink);text-decoration:none}
+.vig h3 a::after{content:"";position:absolute;inset:0;z-index:3;border-radius:14px}
+.count{position:relative;z-index:2;font:500 .76rem/1 var(--f-mono);color:var(--tc);text-transform:uppercase;letter-spacing:.06em}
+
+.side{margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.mini{position:relative;padding:18px 20px;border:1px dashed var(--line);border-radius:14px;display:grid;gap:6px;background:transparent}
+.mini h3{margin:0;font:700 1.05rem/1.2 var(--f-display)}
+.mini h3 a{color:var(--ink);text-decoration:none}
+.mini h3 a::after{content:"";position:absolute;inset:0;border-radius:14px}
+.mini p{margin:0;color:var(--ink2);font-size:.94rem;line-height:1.5}
+.mini:hover,.mini:focus-within{border-color:var(--brand)}
+
+.method{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:12px;max-width:760px}
+.method h2{margin:0;font:700 1.15rem/1.2 var(--f-display)}
+.method p{margin:0;color:var(--ink2)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+
+/* vue thème */
+.back{display:inline-block;margin:24px 0 8px;font:500 .82rem/1 var(--f-mono);text-decoration:none;color:var(--brand)}
+.back:hover{text-decoration:underline}
+.thead{display:grid;gap:14px;max-width:760px;padding:8px 0 24px}
+.thead .ico{width:56px;height:56px;border-radius:14px;background:var(--tcbg);box-shadow:none}
+.thead .ico svg{width:32px;height:32px}
+.thead h2{margin:0;font:700 clamp(1.8rem,4.5vw,2.7rem)/1.05 var(--f-display);letter-spacing:-.02em;color:var(--tc);text-wrap:balance}
+.thead p{margin:0;font-size:1.08rem;color:var(--ink2)}
+.col{max-width:760px}
+.toc{margin:0 0 8px;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.toc h3{margin:0 0 10px;font:500 .74rem/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tc)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.toc li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;min-width:0}
+.toc li>a:first-child{font:700 1.02rem/1.3 var(--f-display);color:var(--ink);text-decoration:none;min-width:0}
+.toc li>a:first-child:hover{color:var(--tc);text-decoration:underline}
+.toc .b{font-size:.64rem;padding:4px 6px}
+.toc .ext{font:400 .78rem/1.3 var(--f-mono)}
+.fiche{padding:28px 0;border-top:1px solid var(--line);display:grid;gap:12px;scroll-margin-top:16px}
+.fiche h3{margin:0;font:700 1.5rem/1.2 var(--f-display);letter-spacing:-.01em;text-wrap:balance}
+.fiche p{margin:0;max-width:66ch}
+.fiche h4{margin:6px 0 0;font:500 .74rem/1 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tc)}
+.fiche ul{margin:0;padding-left:1.15rem;display:grid;gap:6px;max-width:66ch}
+.fiche li::marker{color:var(--tc)}
+.meta{font:400 .78rem/1.5 var(--f-mono);color:var(--ink2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.b{font:500 .7rem/1 var(--f-mono);text-transform:uppercase;letter-spacing:.07em;padding:6px 8px;border-radius:6px;border:1px solid var(--line);color:var(--ink2);background:var(--surface)}
+.b-lu{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 10%,var(--surface))}
+.b-part,.b-titre{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,transparent);background:color-mix(in srgb,var(--warn) 10%,var(--surface))}
+.b-non{color:var(--off);border-color:var(--line);border-style:dashed}
+.b-liste{color:var(--info);border-color:color-mix(in srgb,var(--info) 45%,transparent);background:color-mix(in srgb,var(--info) 10%,var(--surface))}
+.note{padding:12px 14px;border-radius:10px;background:var(--tcbg);font-size:.95rem;line-height:1.5;max-width:66ch}
+.note b{font-family:var(--f-display);font-weight:700}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem;line-height:1.45}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font:500 .72rem/1.2 var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.formula{font:500 .95rem/1.5 var(--f-mono);padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow-x:auto;max-width:66ch}
+.src{font:400 .82rem/1.5 var(--f-mono)}
+.src a{word-break:break-all}
+.pairs{display:grid;gap:8px;max-width:66ch}
+.pairs div{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.pairs strong{font:700 .98rem/1.3 var(--f-display)}
+.pairs span{font-size:.92rem;color:var(--ink2);line-height:1.45}
+.foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font:400 .78rem/1.5 var(--f-mono);color:var(--ink2);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+.js .view[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.vig{transition:none}.vig:hover{transform:none}.vig li a{transition:none}}
+@media (max-width:480px){body{font-size:16px}.fiche h3{font-size:1.3rem}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-sante" viewBox="0 0 24 24"><path d="M12 21s-7.2-4.5-9.3-9.1A5.3 5.3 0 0 1 12 6.4a5.3 5.3 0 0 1 9.3 5.5C19.2 16.5 12 21 12 21z"/><path d="M7 12h3l1.5-2.5L13.5 14l1-2H17"/></symbol>
+  <symbol id="i-geopolitique" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.4 3.2 3.4 14.8 0 18M12 3c-3.4 3.2-3.4 14.8 0 18"/></symbol>
+  <symbol id="i-economie" viewBox="0 0 24 24"><path d="M3 20.5h18M6 20V12M11 20V6M16 20v-6M21 20V9"/></symbol>
+  <symbol id="i-physique" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="1.4"/></symbol>
+  <symbol id="i-informatique" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/><path d="M9.5 2.5v4M14.5 2.5v4M9.5 17.5v4M14.5 17.5v4M2.5 9.5h4M2.5 14.5h4M17.5 9.5h4M17.5 14.5h4"/></symbol>
+  <symbol id="i-maths" viewBox="0 0 24 24"><path d="M4 7h16M8 7v11M16 7c-.5 6 0 9 2.5 11"/></symbol>
+  <symbol id="i-etudes" viewBox="0 0 24 24"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 12v4.5c0 1.6 2.7 3 6 3s6-1.4 6-3V12M22 9.5V15"/></symbol>
+  <symbol id="i-philosophie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.5"/><path d="M12 3v18"/></symbol>
+  <symbol id="i-langue" viewBox="0 0 24 24"><path d="M4 7h6v5.5c0 2.8-1.8 4.6-4.5 4.8M14 7h6v5.5c0 2.8-1.8 4.6-4.5 4.8"/></symbol>
+  <symbol id="i-hors" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="site">
+    <a class="brand" href="#accueil">Culture<span>G</span>Site</a>
+    <p>Fiches de lecture · 9 thèmes</p>
+  </header>
+
+  <main id="main">
+
+<!-- ======================= ACCUEIL ======================= -->
+<section class="view" id="v-accueil">
+  <div class="hero">
+    <h1>Neuf thèmes, vingt-six fiches de lecture</h1>
+    <p>Chaque vignette ouvre un thème. Chaque thème résume, document par document, ce que contient le dépôt : PDF, images, pages web et vidéos.</p>
+    <div class="stats" aria-label="Avancement de la lecture">
+      <span class="stat"><b>17</b> lues en entier</span>
+      <span class="stat"><b>3</b> lues en partie</span>
+      <span class="stat"><b>2</b> titre ou liste seulement</span>
+      <span class="stat"><b>4</b> non lues</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="vig theme t-sante">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="f" d="M270 252C170 192 150 122 205 106c30-8 53 10 65 30 12-20 35-38 65-30 55 16 35 86-65 146z"/><path d="M0 205h150l20 0 15-45 20 75 20-55 15 25h160" class="s"/><path class="f" d="M40 280c-30-40-10-80 40-90 10 40-5 78-40 90z"/><path class="s" d="M40 280c10-35 25-60 40-90"/></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-sante"/></svg></span><h3><a href="#sante">Santé et alimentation</a></h3></div>
+      <span class="count">4 fiches</span>
+    </article>
+
+    <article class="vig theme t-geopolitique">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><circle class="f" cx="270" cy="205" r="105"/><ellipse class="s" cx="270" cy="205" rx="45" ry="105"/><ellipse class="s" cx="270" cy="205" rx="90" ry="105"/><path class="s" d="M165 205h210M180 155h180M180 255h180M270 100v210"/><path stroke-dasharray="6 7" d="M30 250C110 120 200 90 300 120"/><circle class="d" cx="300" cy="120" r="6"/><circle class="d" cx="30" cy="250" r="5"/></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-geopolitique"/></svg></span><h3><a href="#geopolitique">Géopolitique</a></h3></div>
+      <span class="count">1 fiche</span>
+    </article>
+
+    <article class="vig theme t-economie">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="s" d="M0 270h400"/><rect class="f" x="205" y="200" width="32" height="70"/><rect class="f" x="251" y="160" width="32" height="110"/><rect class="f" x="297" y="112" width="32" height="158"/><rect class="f" x="343" y="62" width="32" height="208"/><path d="M40 215l60-30 50 20 80-80 60-10" stroke-dasharray="7 6"/><circle class="d" cx="150" cy="205" r="5"/><circle class="d" cx="230" cy="125" r="5"/><circle class="f" cx="75" cy="250" r="38"/><circle class="s" cx="75" cy="250" r="26"/><text x="75" y="262" font-size="34" text-anchor="middle">€</text></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-economie"/></svg></span><h3><a href="#economie">Économie et finance</a></h3></div>
+      <span class="count">2 fiches</span>
+    </article>
+
+    <article class="vig theme t-physique">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g transform="translate(275 165)"><ellipse class="s" rx="135" ry="46"/><ellipse class="s" rx="135" ry="46" transform="rotate(60)"/><ellipse class="s" rx="135" ry="46" transform="rotate(120)"/><circle class="f" r="17"/><circle class="d" cx="135" cy="0" r="6"/><circle class="d" cx="-67" cy="-117" r="6"/><circle class="d" cx="-67" cy="117" r="6"/></g><circle class="d" cx="40" cy="260" r="3"/><circle class="d" cx="95" cy="285" r="2"/><circle class="d" cx="360" cy="40" r="3"/></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-physique"/></svg></span><h3><a href="#physique">Physique et sciences</a></h3></div>
+      <span class="count">2 fiches</span>
+    </article>
+
+    <article class="vig theme t-informatique">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect class="f" x="205" y="100" width="130" height="130" rx="14"/><rect class="s" x="232" y="127" width="76" height="76" rx="6"/><path class="s" d="M230 100V60M270 100V40M310 100V60M230 230v40M270 230v60M310 230v40M205 130h-60M205 165h-90M205 200h-60M335 130h60M335 165h65M335 200h60"/><circle class="d" cx="230" cy="60" r="5"/><circle class="d" cx="270" cy="40" r="5"/><circle class="d" cx="145" cy="130" r="5"/><circle class="d" cx="115" cy="165" r="5"/><circle class="d" cx="395" cy="200" r="5"/><text x="270" y="175" font-size="26" text-anchor="middle">01</text></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-informatique"/></svg></span><h3><a href="#informatique">Informatique et technologies</a></h3></div>
+      <span class="count">3 fiches</span>
+    </article>
+
+    <article class="vig theme t-maths">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="s" d="M150 30v250M110 200h290"/><path d="M130 200Q185 60 240 200T350 200T410 200"/><path class="s" stroke-dasharray="5 6" d="M150 280Q260 20 390 280"/><polygon class="f" points="300,70 380,120 280,130"/><text x="70" y="250" font-size="64" opacity=".9">π</text><text x="345" y="260" font-size="40" opacity=".6">Σ</text></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-maths"/></svg></span><h3><a href="#maths">Mathématiques</a></h3></div>
+      <span class="count">3 fiches</span>
+    </article>
+
+    <article class="vig theme t-etudes">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><polygon class="f" points="275,62 400,118 275,174 150,118"/><path d="M205 145v48c40 34 100 34 140 0v-48"/><path d="M400 118v70"/><circle class="d" cx="400" cy="192" r="6"/><rect class="f" x="30" y="236" width="130" height="22" rx="3"/><rect class="f" x="42" y="212" width="112" height="22" rx="3" transform="rotate(-4 42 212)"/><rect class="s" x="30" y="260" width="140" height="18" rx="3"/></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-etudes"/></svg></span><h3><a href="#etudes">Études et orientation</a></h3></div>
+      <span class="count">6 fiches</span>
+    </article>
+
+    <article class="vig theme t-philosophie">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><circle class="f" cx="270" cy="120" r="92"/><polygon class="f" points="140,138 270,66 400,138"/><path d="M160 138h220"/><path class="s" d="M170 150v90M220 150v90M270 150v90M320 150v90M370 150v90"/><rect class="f" x="150" y="240" width="240" height="14"/><rect class="s" x="135" y="262" width="270" height="14" fill="none"/><circle class="d" cx="40" cy="60" r="4"/><circle class="d" cx="75" cy="30" r="2"/></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-philosophie"/></svg></span><h3><a href="#philosophie">Philosophie</a></h3></div>
+      <span class="count">2 fiches</span>
+    </article>
+
+    <article class="vig theme t-langue">
+      <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="f" d="M180 60h170a24 24 0 0 1 24 24v70a24 24 0 0 1-24 24H260l-40 34v-34h-40a24 24 0 0 1-24-24V84a24 24 0 0 1 24-24z"/><text x="277" y="136" font-size="56" text-anchor="middle">Aa</text><path class="s" d="M40 215q40-50 80 0t80 0 80 0 80 0"/><path class="s" d="M60 255q40-30 80 0t80 0 80 0 80 0"/><circle class="d" cx="58" cy="72" r="5"/><text x="40" y="160" font-size="34" opacity=".7">«»</text></svg>
+      <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-langue"/></svg></span><h3><a href="#langue">Langue française</a></h3></div>
+      <span class="count">3 fiches</span>
+    </article>
+  </div>
+
+  <div class="side">
+    <article class="mini theme t-hors">
+      <h3><a href="#hors-theme">Hors thème · 1 fiche</a></h3>
+      <p>Une politique de confidentialité d'entreprise, sans lien avec la culture générale.</p>
+    </article>
+    <article class="mini theme t-hors">
+      <h3><a href="#en-attente">Liens à compléter · 11 liens</a></h3>
+      <p>Neuf vidéos YouTube, un lien Gmail et une recherche Google que je n'ai pas pu ouvrir.</p>
+    </article>
+  </div>
+
+  <section class="method" aria-labelledby="meth-h">
+    <h2 id="meth-h">Comment lire les fiches</h2>
+    <p>Chaque fiche indique ce qui a été réellement lu. Les résumés sont rédigés avec mes mots à partir des documents du dépôt. Un document non ouvert n'est jamais résumé à partir d'une supposition : je le dis, et je donne seulement ce que le titre ou l'adresse permettent d'affirmer.</p>
+    <div class="legend">
+      <span class="b b-lu">Lu en entier</span>
+      <span class="b b-part">Lu en partie</span>
+      <span class="b b-liste">Liste lue</span>
+      <span class="b b-titre">Titre seulement</span>
+      <span class="b b-non">Non lu</span>
+    </div>
+  </section>
+</section>
+
+<!-- ======================= SANTÉ ======================= -->
+<section class="view theme t-sante" id="v-sante">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-sante"/></svg></span>
+    <h2>Santé et alimentation</h2>
+    <p>Quatre documents, trois angles : l'assiette qui protège le cœur, la science du vieillissement et la digestion au quotidien. Ce sont des avis de spécialistes présentés dans la presse, pas des consignes médicales personnalisées.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="sante-aliments">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Les 9 aliments qu'un cardiologue écarte de son assiette</h3>
+    <p class="meta">Les 9 aliments quun cardiologue bannit de son assiette.pdf · document du 11 octobre 2026 · propos du cardiologue américain Sanjay Bhojraj, rapportés par CNBC</p>
+    <p>Après vingt ans de consultations, ce médecin constate que des patients sportifs, attentifs à leur poids et à leur stress arrivent tout de même chez lui avec de graves problèmes cardiovasculaires. Il en voit la cause dans des produits présentés comme « bons pour le cœur », « végétaux » ou « légers » qui entretiennent l'inflammation, font monter la glycémie et abîment peu à peu les artères.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Aliment écarté</th><th>Reproche</th><th>À la place</th></tr></thead>
+      <tbody>
+        <tr><td>Céréales sucrées du petit-déjeuner</td><td>Pic de sucre et d'insuline, fatigue du métabolisme</td><td>Flocons d'avoine, baies, cannelle</td></tr>
+        <tr><td>Charcuterie transformée</td><td>Nitrates et nitrites, tension, lésions des artères</td><td>Dinde ou poulet rôtis maison</td></tr>
+        <tr><td>Sodas et boissons énergisantes</td><td>Glycémie, composés inflammatoires, microbiome perturbé par les versions light</td><td>Eau pétillante au citron, tisane glacée</td></tr>
+        <tr><td>Fast-foods frits</td><td>Huiles industrielles oxydées à haute température</td><td>Versions cuites au four, huile d'olive ou d'avocat</td></tr>
+        <tr><td>Pain blanc, glucides raffinés</td><td>Peu de fibres, pics glycémiques, diabète</td><td>Pain de céréales entières</td></tr>
+        <tr><td>Margarine</td><td>Souvent des acides gras trans, mauvais cholestérol</td><td>Beurre ou huile d'olive extra-vierge</td></tr>
+        <tr><td>Viandes végétales ultra-transformées</td><td>Sodium, huiles inflammatoires, additifs</td><td>Lentilles, haricots, tofu peu transformé</td></tr>
+        <tr><td>Soupes en conserve</td><td>Une tasse peut apporter jusqu'à 100 % de la limite quotidienne de sodium</td><td>Soupe maison de légumes et d'herbes</td></tr>
+        <tr><td>Crèmes à café aromatisées</td><td>Huiles hydrogénées, arômes et sucres ajoutés</td><td>Lait d'amande ou d'avoine non sucré</td></tr>
+      </tbody>
+    </table></div>
+    <h4>À retenir</h4>
+    <ul>
+      <li>Les mentions « light », « végétal » ou « bon pour le cœur » ne garantissent rien : il faut lire la liste des ingrédients.</li>
+      <li>Les mêmes adversaires reviennent : sucres ajoutés, sodium, graisses trans, huiles industrielles, additifs.</li>
+      <li>Le médecin préfère les produits bruts ou faits maison et pense que les petits échanges s'additionnent.</li>
+      <li>Avant un changement important d'alimentation, il recommande de consulter un professionnel de santé.</li>
+    </ul>
+  </article>
+
+  <article class="fiche" id="sante-ramakrishnan">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Venki Ramakrishnan : ce que la science sait du vieillissement</h3>
+    <p class="meta">Le Figaro, 26 mai 2025 · entretien de la Gazeta Wyborcza (Piotr Cieslinski) · prix Nobel de chimie 2009, ancien président de la Royal Society, auteur de <i>Why We Die</i></p>
+    <p>L'auteur du livre sur la mort et le vieillissement met en garde contre les promesses d'immortalité. Il observe que des start-up de la « longévité » valent des dizaines de milliards de dollars et recrutent des scientifiques célèbres, qui ont donc un intérêt financier à promettre beaucoup.</p>
+    <p>Pour lui, vieillir revient à accumuler des dégâts à tous les niveaux : ADN abîmé, protéines mal assemblées, mitochondries qui s'usent, et cellules « sénescentes » qui ne se divisent plus mais émettent des signaux inflammatoires. Avec l'âge, le système immunitaire les élimine trop lentement. L'inflammation chronique aggrave alors les dégâts, qui aggravent à leur tour l'inflammation.</p>
+    <h4>Les pistes de recherche</h4>
+    <ul>
+      <li><b>Restriction calorique et molécules qui l'imitent</b>, dont la rapamycine : elle ralentit la cicatrisation et affaiblit l'immunité, et son bon dosage reste inconnu.</li>
+      <li><b>Sénolytiques</b>, qui éliminent les cellules sénescentes : jusqu'à 20 à 30 % de vie en plus chez la souris, mais la sélectivité reste à prouver.</li>
+      <li><b>Plasma de jeunes donneurs</b> : l'agence américaine FDA a averti que son efficacité n'est pas démontrée.</li>
+      <li><b>Reprogrammation cellulaire</b> : la plus prometteuse à long terme selon lui, et la plus risquée, car une cellule trop « rajeunie » peut devenir cancéreuse.</li>
+    </ul>
+    <p>Sur la durée de vie, il ne voit aucune loi physique qui interdise de dépasser 120 ans, mais le plafond actuel se situe entre 110 et 120 ans (Jeanne Calment a atteint 122 ans). Il s'interroge aussi sur une société où les mêmes dirigeants resteraient en place pendant des décennies.</p>
+    <h4>À retenir</h4>
+    <ul>
+      <li>Trois piliers solides : une alimentation modérée, de l'activité physique (renforcement musculaire et cardio) et un bon sommeil.</li>
+      <li>À ajouter : les liens sociaux, un sens à sa vie et des bilans préventifs dès 40 ans (glycémie, cholestérol, tension).</li>
+      <li>Il rappelle que ce mode de vie est un privilège : au Royaume-Uni, les 10 % les plus riches vivent en moyenne dix ans de plus que les 10 % les plus pauvres.</li>
+      <li>Il annonce prendre sa retraite à la fin de l'année de l'entretien, estimant que les idées neuves viennent désormais de ses jeunes chercheurs.</li>
+    </ul>
+    <p class="src">Source : <a href="https://www.lefigaro.fr/sciences/venki-ramakrishnan-prix-nobel-de-chimie-ses-trois-cles-pour-rester-jeune-20250526" target="_blank" rel="noopener">lefigaro.fr, 26 mai 2025</a></p>
+  </article>
+
+  <article class="fiche" id="sante-gastro">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Cinq conseils d'une gastro-entérologue contre les maux de ventre</h3>
+    <p class="meta">Le Figaro, 12 novembre 2025 · Soline Roy · Dr Pauline Guillouche, auteure de <i>Décryptez votre ventre !</i> (Vuibert)</p>
+    <p>L'article reprend les conseils d'une hépato-gastro-entérologue connue sur les réseaux sous le nom « Pauline hépato ». Son point de départ : la digestion commence dans la bouche, et la plupart des douleurs bénignes se préviennent avec quelques gestes simples.</p>
+    <div class="pairs">
+      <div><strong>1. Soigner sa bouche</strong><span>Bien mâcher prépare la digestion et lance le signal de satiété, qui met une vingtaine de minutes à atteindre le cerveau. Des dents en mauvais état expliquent parfois des douleurs ou une perte de poids. La salive (0,5 à 1,5 litre par jour) commence à décomposer l'amidon.</span></div>
+      <div><strong>2. Cuisiner maison</strong><span>Les aliments industriels sont trop gras, sucrés, salés et pauvres en fibres. Les fibres nourrissent le microbiote : les solubles régulent le transit, les insolubles peuvent irriter, d'où l'intérêt de les augmenter progressivement.</span></div>
+      <div><strong>3. Boire de l'eau</strong><span>1,5 à 2 litres par jour suffisent. Les boissons gazeuses peuvent donner des ballonnements, et les boissons brûlantes irritent les muqueuses.</span></div>
+      <div><strong>4. Contre les remontées acides</strong><span>Limiter tabac, alcool et repas gras ou pimentés, ne pas s'allonger juste après le repas et dormir sur le côté gauche. Les inhibiteurs de la pompe à protons ne devraient pas être pris longtemps, car ils fragilisent le microbiote.</span></div>
+      <div><strong>5. Bouger et se détendre</strong><span>L'activité physique stimule le transit et réduit l'inflammation. Le stress nuit à la digestion : méditation, yoga et bon sommeil aident.</span></div>
+    </div>
+  </article>
+
+  <article class="fiche" id="sante-farine">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Les types de farine de blé, de T45 à T150</h3>
+    <p class="meta">Gmail - Farine.pdf · courriel daté du 24 octobre 2025</p>
+    <p>Le « T » signifie « type » : le chiffre correspond à la teneur en minéraux, mesurée par les résidus laissés après combustion de 100 g de farine. Plus il est élevé, plus la farine contient de son et de fibres. Elle est alors plus nutritive, mais plus foncée et moins légère.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Type</th><th>Nom courant</th><th>Usage typique</th></tr></thead>
+      <tbody>
+        <tr><td>T45</td><td>Farine très blanche</td><td>Pâtisserie : gâteaux, brioches</td></tr>
+        <tr><td>T55</td><td>Farine blanche classique</td><td>Baguettes « standard », pâtes à tarte</td></tr>
+        <tr><td>T65</td><td>Farine légèrement bise</td><td>Pain « tradition », pizzas</td></tr>
+        <tr><td>T80</td><td>Farine semi-complète</td><td>Pains rustiques</td></tr>
+        <tr><td>T110</td><td>Farine complète</td><td>Pains complets</td></tr>
+        <tr><td>T150</td><td>Farine intégrale</td><td>Pains très riches en fibres</td></tr>
+      </tbody>
+    </table></div>
+    <h4>À retenir</h4>
+    <ul>
+      <li>La plupart des artisans utilisent une T65 pour la baguette tradition, parfois un mélange T55 et T65.</li>
+      <li>Les farines T110 et T150 donnent un goût plus marqué, une mie plus dense et une autre croûte.</li>
+    </ul>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= GÉOPOLITIQUE ======================= -->
+<section class="view theme t-geopolitique" id="v-geopolitique">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-geopolitique"/></svg></span>
+    <h2>Géopolitique</h2>
+    <p>Un seul document dans cette catégorie, mais il est présent deux fois dans le dépôt. C'est un entretien d'opinion : il donne le point de vue d'un seul intervenant.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="geopolitique-tremblais">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Jean-Louis Tremblais : ce que les reportages ne disent pas</h3>
+    <p class="meta">Geopolitique.pdf et Document sans titre 1.pdf (même contenu) · entretien mené par Nicolas Gauthier · livre <i>Entre les lignes</i> (Érick Bonnier)</p>
+    <p>Jean-Louis Tremblais a été pendant plus de vingt-cinq ans grand reporter au Figaro Magazine et a couvert presque toutes les guerres de la période. Dans cet entretien, il présente son livre, qui rassemble ce qui n'a jamais paru dans ses articles : le comique, le tragique, le banal et le grotesque du terrain.</p>
+    <h4>Ses idées principales</h4>
+    <ul>
+      <li>La géopolitique n'a ni « gentils » ni « méchants » : il y voit des rapports de force entre puissants, que diplomates, conseillers et communicants justifient ensuite.</li>
+      <li>Il juge les journalistes actuels trop moutonniers et trop prompts à donner des leçons. Il admire à l'inverse l'enquête de terrain de Gérard de Villiers, l'auteur des <i>SAS</i>.</li>
+      <li>Sur l'ex-Yougoslavie, il estime que les Serbes ont perdu la bataille de la communication et que le bombardement de Belgrade en 1999 s'est fait sous influence américaine. Il compare la place de la Serbie d'alors à celle de la Russie aujourd'hui.</li>
+      <li>Il décrit les États-Unis comme un « État voyou » qui ne respecte pas le droit international.</li>
+      <li>Il affirme que son travail est devenu plus difficile à mesure que les grands médias fixaient à l'avance qui avait raison.</li>
+    </ul>
+    <p class="note"><b>À garder en tête.</b> Le ton est volontairement provocateur et l'interviewer partage largement les vues de l'interviewé. Ses jugements sur le Kosovo, l'OTAN et les États-Unis sont discutés par d'autres analystes. Pour un travail sérieux, il faut les croiser avec des sources aux positions opposées.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= ÉCONOMIE ======================= -->
+<section class="view theme t-economie" id="v-economie">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-economie"/></svg></span>
+    <h2>Économie et finance</h2>
+    <p>Deux documents qui se répondent : ce qui arrive aux épargnants quand l'État ne paie plus, et la théorie qui explique comment répartir son épargne. Ce sont des résumés de lecture, pas des conseils d'investissement.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="economie-banqueroute">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>La banqueroute des deux tiers : l'État annule ses dettes en 1797</h3>
+    <p class="meta">Le Figaro, 11 octobre 2026 · Guillaume Perrault · « Grand récit »</p>
+    <p>L'article part d'un débat actuel sur le poids de la dette publique, où certains proposent de spolier les créanciers de l'État plutôt que de réduire les dépenses. Il rappelle un précédent : en 1797, le Directoire a annulé en pratique les deux tiers de la dette, alors que les révolutionnaires juraient depuis 1789 de ne jamais faire banqueroute.</p>
+    <h4>Le déroulé</h4>
+    <ul>
+      <li>En 1789, la dette de l'État royal atteint en moyenne 80 % du PIB. Les rentes sont alors le seul placement connu de la bourgeoisie, même modeste.</li>
+      <li>La Constituante crée les assignats, d'abord gagés sur les biens du clergé nationalisés. Les impressions s'emballent avec la guerre : début 1796, un assignat ne vaut plus que 1/300<sup>e</sup> à 1/400<sup>e</sup> de sa valeur affichée. Les planches à billets sont brûlées place Vendôme le 19 février 1796.</li>
+      <li>Le ministre des Finances Ramel-Nogaret veut faire banqueroute sans en avoir l'air. Le coup d'État du 18 fructidor (4 septembre 1797) écarte les parlementaires hostiles, et sa loi est votée fin septembre.</li>
+      <li>Les deux tiers du capital sont remboursés en bons échangeables contre des biens nationaux, qui s'effondrent en valeur. Le tiers restant, dit « consolidé », n'est pas payé en argent pendant quatre ans, jusqu'en 1801.</li>
+    </ul>
+    <p>Un épargnant qui avait placé 30 000 francs début 1797 n'en possède plus que 1 320 en décembre 1799, soit plus de 95 % de perte selon l'historien Marcel Marion cité dans l'article. On estime entre 110 000 et 360 000 le nombre de personnes touchées, retraités de l'État compris.</p>
+    <h4>À retenir</h4>
+    <ul>
+      <li>Le Directoire en sort discrédité. Bonaparte rétablit ensuite une monnaie et des finances saines.</li>
+      <li>Selon l'auteur, ce traumatisme a nourri au XIX<sup>e</sup> siècle une prudence économique durable : peur du manque, thésaurisation, goût pour l'immobilier, aversion au risque.</li>
+    </ul>
+  </article>
+
+  <article class="fiche" id="economie-portefeuille">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>La théorie moderne du portefeuille</h3>
+    <p class="meta">Théorie moderne du portefeuille — Wikipédia.pdf · article encyclopédique</p>
+    <p>Développée en 1952 par Harry Markowitz, cette théorie montre comment un investisseur rationnel réduit son risque en diversifiant, au lieu de miser sur quelques actifs. Le rendement d'un portefeuille est la moyenne pondérée de ceux de ses actifs. Son risque dépend aussi de la façon dont ces actifs évoluent ensemble.</p>
+    <div class="formula">E(Rp) = Σ wi · E(Ri)</div>
+    <h4>Les notions clés</h4>
+    <ul>
+      <li><b>Diversification</b> : associer des actifs peu corrélés baisse la volatilité sans baisser le rendement attendu.</li>
+      <li><b>Frontière efficiente</b> : pour chaque niveau de risque, le portefeuille au rendement attendu maximal. Ce qui est en dessous est sous-optimal.</li>
+      <li><b>Actif sans risque et portefeuille de marché</b> : avec un actif sans risque, la frontière devient une droite tangente. Le point de contact est le portefeuille de marché.</li>
+      <li><b>MEDAF</b> (modèle de Sharpe) : le rendement exigé d'un actif dépend de son risque systématique, mesuré par le coefficient bêta.</li>
+    </ul>
+    <p>Le modèle suppose des marchés efficients et des investisseurs qui craignent le risque. Le nombre de covariances à estimer croît vite avec le nombre d'actifs : n(n−1)/2, d'où l'usage de logiciels.</p>
+    <h4>Les critiques</h4>
+    <ul>
+      <li>Benoît Mandelbrot juge ces modèles déconnectés des marchés réels, qu'ils n'ont pas su prévoir lors des krachs.</li>
+      <li>Nassim Nicholas Taleb reproche l'usage de la loi normale, qui sous-estime les événements extrêmes (subprimes, LTCM, Lehman Brothers). Il préfère les lois de puissance ou de Pareto.</li>
+    </ul>
+    <p class="note"><b>Voir aussi.</b> La fiche <a href="#informatique-quantique">Informatique et technologies : 11 valeurs du quantique</a> décrit un secteur boursier que ce type de modèle cherche à évaluer.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= PHYSIQUE ======================= -->
+<section class="view theme t-physique" id="v-physique">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-physique"/></svg></span>
+    <h2>Physique et sciences</h2>
+    <p>Deux documents seulement pour l'instant : une image sur les dimensions de l'espace et un article sur un ordinateur fait de neurones vivants. Le site de J.-F. Colonna (rubrique Mathématiques) traite aussi de relativité, de cosmologie et de mécanique quantique.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="physique-dimensions">
+    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>De 3 dimensions à 4 : une dimension supplémentaire enroulée</h3>
+    <p class="meta">De 3 dimensions à 4.png · schéma légendé en anglais</p>
+    <p><b>Ce que montre l'image.</b> Un cylindre gris, étiqueté « 3-dimensional space » (espace à trois dimensions), traversé par une ligne en pointillés. Sur sa face avant apparaît une courbe bleue enchevêtrée, comme un nœud, désignée par une flèche : « Compactified extra dimension » (dimension supplémentaire compactifiée).</p>
+    <p><b>L'idée représentée.</b> Certaines théories de la physique, comme les théories de Kaluza-Klein et des cordes, supposent des dimensions d'espace en plus des trois que nous voyons. Elles seraient « compactifiées » : enroulées sur elles-mêmes à une échelle minuscule, ce qui expliquerait qu'on ne les perçoive pas. L'image de la face du cylindre dit la même chose : en s'approchant, ce qui semblait un point cache une petite structure à part.</p>
+    <p class="note"><b>Précision.</b> L'image ne porte que deux légendes. L'explication ci-dessus vient de connaissances générales en physique, pas du document. Le schéma est illustratif : la forme du nœud n'est pas celle d'un objet précis.</p>
+  </article>
+
+  <article class="fiche" id="physique-cl1">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>CL1, le premier ordinateur neurobiologique</h3>
+    <p class="meta">Article CNews du 9 mars 2025 · capture de la page, publicités et menus comprises</p>
+    <p>Le laboratoire australien Cortical Labs, à Melbourne, a fusionné une puce en silicium avec de vrais neurones cultivés en laboratoire, au lieu d'implanter une puce dans un cerveau humain. Le résultat, baptisé CL1, est présenté comme le premier ordinateur neurobiologique.</p>
+    <ul>
+      <li>Il contient des dizaines de milliers de neurones, qui baignent dans un liquide nutritif dans un espace stérile. Ils réagissent aux informations envoyées par la puce, et certaines réponses justes renforcent l'apprentissage.</li>
+      <li>Les chercheurs ont intégré ces cellules à un environnement de jeu simulé et les ont stimulées pour imiter le jeu d'arcade Pong.</li>
+      <li>Le directeur scientifique Brett Kagan y voit presque une forme de vie à part, différente des animaux comme des humains.</li>
+      <li>L'appareil est déjà en vente. Les applications visées sont les tests de médicaments et la médecine personnalisée, notamment pour les maladies neurologiques comme Alzheimer.</li>
+    </ul>
+    <p class="note"><b>Voir aussi.</b> <a href="#informatique-quantique">Informatique et technologies</a> pour l'autre pari sur le calcul du futur : les ordinateurs quantiques.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= INFORMATIQUE ======================= -->
+<section class="view theme t-informatique" id="v-informatique">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-informatique"/></svg></span>
+    <h2>Informatique et technologies</h2>
+    <p>Un document lu en entier et deux liens dont je n'ai pu lire que le titre ou l'adresse. Les statuts sont indiqués sur chaque fiche.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="informatique-quantique">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Onze entreprises cotées de l'informatique quantique</h3>
+    <p class="meta">Document sans titre 2.pdf · texte annonçant une nouvelle vague d'introductions en Bourse en 2026</p>
+    <p>Le document sépare les entreprises dont c'est l'activité exclusive, dites « pure players », et les géants de la technologie qui fournissent l'infrastructure ou financent la recherche.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Entreprise</th><th>Ce qu'elle fait, selon le document</th></tr></thead>
+      <tbody>
+        <tr><td>IonQ</td><td>Ordinateurs à ions piégés. Première société 100 % quantique cotée (2021).</td></tr>
+        <tr><td>Rigetti Computing</td><td>Processeurs supraconducteurs, compatibles avec les standards des semi-conducteurs.</td></tr>
+        <tr><td>D-Wave Quantum</td><td>Recuit quantique, adapté aux problèmes d'optimisation.</td></tr>
+        <tr><td>Quantinuum</td><td>Matériel et logiciel, issue de Honeywell et Cambridge Quantum, entrée au Nasdaq en 2026.</td></tr>
+        <tr><td>Quantum Computing Inc.</td><td>Solutions utilisables par les entreprises sans expertise quantique interne.</td></tr>
+        <tr><td>Arqit Quantum</td><td>Cybersécurité quantique et distribution de clés de chiffrement par satellite.</td></tr>
+        <tr><td>IBM</td><td>Pionnier, services cloud, correction d'erreurs.</td></tr>
+        <tr><td>Alphabet (Google)</td><td>« Suprématie quantique » annoncée en 2019 avec le processeur Sycamore.</td></tr>
+        <tr><td>Microsoft</td><td>Azure Quantum et pari sur les qubits topologiques.</td></tr>
+        <tr><td>Nvidia</td><td>Ne fabrique pas d'ordinateur quantique, mais fournit GPU et plateforme CUDA-Q pour simuler des circuits.</td></tr>
+        <tr><td>Intel</td><td>Qubits de spin sur silicium, pour une production à l'échelle industrielle.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Il cite aussi IQM, Xanadu (photonique) et Infleqtion (atomes neutres) comme introductions de 2026, et renvoie à une vidéo YouTube intitulée « Le quantique s'emballe : 10 actions qui peuvent exploser ! ».</p>
+    <p class="note"><b>Précautions.</b> Ce texte a l'allure d'une synthèse automatique, non sourcée : les détails sur les introductions en Bourse de 2026 ne sont pas vérifiés ici. Ce n'est pas un conseil d'investissement, et le titre de la vidéo en renvoi est celui d'un contenu promotionnel.</p>
+  </article>
+
+  <article class="fiche" id="informatique-internet">
+    <div class="badges"><span class="b">Page web</span><span class="b b-non">Non lu</span></div>
+    <h3>L'histoire d'Internet</h3>
+    <p class="meta">computerhistory.org/internethistory · ouverture refusée par l'extension Chrome</p>
+    <p>Je n'ai pas pu ouvrir cette page. L'adresse indique une ressource sur l'histoire d'Internet publiée par le Computer History Museum, mais je n'en connais pas le contenu et je ne le résume donc pas.</p>
+    <p class="src">Lien : <a href="https://www.computerhistory.org/internethistory/" target="_blank" rel="noopener">computerhistory.org/internethistory</a></p>
+  </article>
+
+  <article class="fiche" id="informatique-ia">
+    <div class="badges"><span class="b">YouTube</span><span class="b b-titre">Titre seulement</span></div>
+    <h3>Vidéo : « The 6 Possible Endings of AI »</h3>
+    <p class="meta">youtu.be/uTLjFAB7Lsc · titre relevé dans l'onglet, contenu non lu</p>
+    <p>Le titre de la vidéo annonce six scénarios de fin pour l'intelligence artificielle, sous la mention « GRIM TIMES ». Le lecteur de page m'a été refusé sur YouTube : je ne connais ni la chaîne, ni la durée, ni les six scénarios. Cette fiche sera complétée avec une transcription ou un résumé de votre part.</p>
+    <p class="src">Lien : <a href="https://youtu.be/uTLjFAB7Lsc" target="_blank" rel="noopener">youtu.be/uTLjFAB7Lsc</a></p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= MATHS ======================= -->
+<section class="view theme t-maths" id="v-maths">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-maths"/></svg></span>
+    <h2>Mathématiques</h2>
+    <p>Trois liens de la liste « Document sans titre 3 ». Un seul a pu être lu assez largement, les deux autres seulement en partie ou pas du tout.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="maths-colonna">
+    <div class="badges"><span class="b">Page web</span><span class="b b-part">Lu en partie</span></div>
+    <h3>Les mathématiques, instrument virtuel pour explorer l'Univers</h3>
+    <p class="meta">lactamme.polytechnique.fr · Jean-François Colonna, CMAP, École polytechnique · page d'accueil lue, sous-pages non ouvertes</p>
+    <p>Ce site créé en 1994 rassemble 388 pages et 10 702 images et animations « entre la science et l'art ». Son auteur défend l'idée que les mathématiques, aidées des ordinateurs, jouent le rôle d'un instrument d'optique virtuel, comme le microscope et le télescope.</p>
+    <ul>
+      <li>Contre l'idée qu'elles sont inutiles : le GPS dépend de la relativité générale, et sans mécanique quantique il n'y aurait ni circuits intégrés ni téléphones portables.</li>
+      <li>Il raconte comment l'abandon de l'idée que le postulat des parallèles se démontre a donné les géométries non euclidiennes, puis la relativité générale d'Einstein en 1915.</li>
+      <li>Il cite les pionniers du calcul : Pascal, Leibniz, Babbage, Ada Lovelace, Boole, Turing, von Neumann.</li>
+      <li>Il insiste sur les limites du calcul : les nombres réels n'existent pas vraiment dans un ordinateur, et les calculs flottants ne sont pas sûrs.</li>
+    </ul>
+    <h4>Les 19 rubriques notées dans votre liste</h4>
+    <p>Animations, art et science, création artistique, astrophysique et cosmologie, mécanique céleste, chaos déterministe, géométrie fractale déterministe, mécanique des fluides, généralités sur la visualisation, nombres et lumière, géométrie fractale non déterministe, théorie des nombres (automates cellulaires, fonctions complexes, nœuds, pavages), mécanique statistique, nombre pi, mécanique quantique et atome d'hydrogène, autoportraits, sensibilité aux erreurs d'arrondi (attracteur de Lorenz, problème à N corps), traitement du signal (Fourier, ondelettes), synthèse de textures.</p>
+    <p class="src">Lien : <a href="https://www.lactamme.polytechnique.fr/" target="_blank" rel="noopener">lactamme.polytechnique.fr</a></p>
+  </article>
+
+  <article class="fiche" id="maths-crypto">
+    <div class="badges"><span class="b">Page web</span><span class="b b-part">Lu en partie</span></div>
+    <h3>Ars Zipherarum : cours de cryptographie en ligne</h3>
+    <p class="meta">apprendre-en-ligne.net/crypto · Didier Müller · table des matières seulement</p>
+    <p>La page ouverte est la table des matières d'un cours de cryptographie signé Didier Müller, daté du 14 janvier 2021. Elle annonce les rubriques suivantes : stéganographie, cryptanalyse, lexique, histoire de la cryptologie, codes, chiffres de transposition, chiffres de substitution et chiffrement par calculs.</p>
+    <p>Je n'ai lu aucun des chapitres, donc je ne résume pas leur contenu. Le plan va des méthodes anciennes (substitution, transposition) vers le chiffrement par calcul.</p>
+    <p class="src">Lien : <a href="https://www.apprendre-en-ligne.net/crypto/index-cryptographie.html" target="_blank" rel="noopener">apprendre-en-ligne.net/crypto</a></p>
+  </article>
+
+  <article class="fiche" id="maths-jeux">
+    <div class="badges"><span class="b">Page web</span><span class="b b-non">Non lu</span></div>
+    <h3>La théorie des jeux</h3>
+    <p class="meta">fr.wikipedia.org/wiki/Théorie_des_jeux · ouverture refusée par l'extension Chrome</p>
+    <p>Je n'ai pas pu ouvrir l'article. Pour situer le sujet seulement : la théorie des jeux étudie les décisions d'acteurs dont les résultats dépendent des choix des autres, avec des notions comme la stratégie et l'équilibre de Nash. Cette définition vient de connaissances générales, pas de la page.</p>
+    <p class="src">Lien : <a href="https://fr.wikipedia.org/wiki/Th%C3%A9orie_des_jeux" target="_blank" rel="noopener">fr.wikipedia.org/wiki/Théorie_des_jeux</a></p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= ÉTUDES ======================= -->
+<section class="view theme t-etudes" id="v-etudes">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-etudes"/></svg></span>
+    <h2>Études et orientation</h2>
+    <p>Le thème le plus documenté : salaires par école, chemins vers Polytechnique, un test de maths pour les lycéens et des témoignages d'étudiants.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="etudes-salaires">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Écoles d'ingénieurs : celles qui mènent aux meilleurs salaires</h3>
+    <p class="meta">Le Figaro / Fig Data, 13 avril 2026 · Nicolas Mondon · données du ministère de l'Enseignement supérieur (InserSup), promotion 2022</p>
+    <p>Le titre d'ingénieur est régulé par la Commission des titres d'ingénieur : 204 établissements peuvent le délivrer. Le classement compare les salaires nets mensuels à temps plein 18 mois après le diplôme, à partir de déclarations sociales et de données de l'Insee. Un quart des diplômés de Polytechnique gagnent déjà plus de 4 000 € net. Les quatre premières écoles sont publiques, la première école privée (Epita) arrive autour de la dixième place.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>École</th><th class="num">25 % gagnent moins que</th><th class="num">75 % gagnent moins que</th><th class="num">En emploi stable</th></tr></thead>
+      <tbody>
+        <tr><td>École polytechnique</td><td class="num">2 920 €</td><td class="num">4 050 €</td><td class="num">84,6 %</td></tr>
+        <tr><td>Mines Paris</td><td class="num">3 100 €</td><td class="num">3 970 €</td><td class="num">86,3 %</td></tr>
+        <tr><td>CentraleSupélec</td><td class="num">2 960 €</td><td class="num">3 970 €</td><td class="num">93,4 %</td></tr>
+        <tr><td>Ensae</td><td class="num">3 060 €</td><td class="num">3 870 €</td><td class="num">90,8 %</td></tr>
+        <tr><td>Telecom Paris</td><td class="num">2 850 €</td><td class="num">3 610 €</td><td class="num">86,8 %</td></tr>
+      </tbody>
+    </table></div>
+    <h4>À retenir</h4>
+    <ul>
+      <li>Les écarts sont forts au sein d'une même promotion : plus de 1 000 € séparent les 25 % les moins payés des 25 % les mieux payés à Polytechnique ou CentraleSupélec.</li>
+      <li>Les salaires progressent vite : pour la promotion 2021, l'écart atteint près de 1 500 € à 30 mois.</li>
+      <li>Les CDI dominent : 100 % des diplômés en emploi à l'EIVP et à l'ESITC Metz, deux écoles du bâtiment.</li>
+    </ul>
+  </article>
+
+  <article class="fiche" id="etudes-polytechnique">
+    <div class="badges"><span class="b">Page web</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Quelles prépas pour intégrer Polytechnique ?</h3>
+    <p class="meta">L'Étudiant, 1<sup>er</sup> juin 2026 · François Fromont, Clément Rocher, Eloïse Girard · infographies</p>
+    <p>À la rentrée 2025, près des trois quarts des admis à l'X viennent d'une prépa MP (42,1 %) ou PC (32,1 %). Suivent PSI (14,1 %), MPI (5,7 %), BCPST (3,1 %), PT (2,4 %) et TSI (0,5 %).</p>
+    <ul>
+      <li>Les lycées qui reviennent le plus sont Sainte-Geneviève à Versailles, Louis-le-Grand, Hoche et Henri-IV. En région, Pierre-de-Fermat à Toulouse, du Parc et Aux Lazaristes à Lyon.</li>
+      <li>De 2021 à 2025, 35 % des élèves de MP de Sainte-Geneviève ont été admis à l'X.</li>
+      <li>Ces prépas sont très sélectives, avec des moyennes souvent au-dessus de 18/20 et une pension d'internat de 6 120 à 20 850 € à Sainte-Geneviève en 2026-2027.</li>
+      <li>L'école annonce des mesures d'ouverture : bourses, programmes d'égalité des chances et admissions sur titre.</li>
+    </ul>
+    <p class="src">Lien : <a href="https://www.letudiant.fr/etudes/classes-prepa/quelles-sont-les-meilleures-prepas-pour-integrer-polytechnique-1.html" target="_blank" rel="noopener">letudiant.fr</a></p>
+  </article>
+
+  <article class="fiche" id="etudes-tescia">
+    <div class="badges"><span class="b">Page web</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Tescia : un test de maths pour se situer avant la prépa</h3>
+    <p class="meta">Figaro Étudiant, 18 décembre 2024 · enseignant Clément de Seguins Pazzis, association Aores</p>
+    <p>Un professeur de classes préparatoires du lycée Hoche à Versailles a créé un test de maths pour les élèves de terminale. Les candidats passent, sans calculatrice, deux épreuves de 1 h 30 : l'une mesure la rapidité et l'aisance, l'autre l'initiative, l'abstraction et la recherche. Leurs scores et classements peuvent figurer dans leur dossier Parcoursup.</p>
+    <ul>
+      <li>L'idée est née d'un recrutement raté en prépa : le dossier scolaire ne détecte pas toujours le niveau réel.</li>
+      <li>En 2024, le test a réuni 2 000 candidats. L'ambition affichée est de devenir une sorte de « SAT français ».</li>
+      <li>Selon son créateur, le test évite à des élèves d'échouer en prépa faute d'avoir visé le bon niveau.</li>
+    </ul>
+    <p class="src">Lien : <a href="https://etudiant.lefigaro.fr/article/lycee/parcoursup-ce-test-permet-de-distinguer-les-meilleurs-eleves-de-terminale-en-mathematiques-20241218/" target="_blank" rel="noopener">etudiant.lefigaro.fr</a></p>
+  </article>
+
+  <article class="fiche" id="etudes-boisseau">
+    <div class="badges"><span class="b">Page web</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Les conseils de Paul Boisseau, major de l'école des Mines</h3>
+    <p class="meta">Figaro Étudiant, 17 décembre 2024 · major MP 2024 à l'entrée des Mines Paris, prépa au lycée Pierre-de-Fermat à Toulouse</p>
+    <p>Paul Boisseau raconte une méthode personnelle qu'il ne présente pas comme universelle.</p>
+    <ul>
+      <li>Il listait ses tâches à l'avance, acceptait de ne pas tout faire et a donné la priorité aux maths, quitte à négliger le français en première année.</li>
+      <li>Il commençait par les exercices faciles avant les difficiles, et travaillait d'abord les chapitres les plus ardus plutôt que ses points forts. Il a progressé à l'oral d'anglais grâce aux colles régulières.</li>
+      <li>Pour tenir, il voyait ses amis, rentrait en famille pendant les vacances, lisait le soir et se couchait tôt dans les périodes difficiles. Il a fait peu de sport.</li>
+      <li>Il pense qu'on peut faire une prépa MP sans être sûr de vouloir devenir ingénieur : lui hésite entre recherche, enseignement et administration.</li>
+    </ul>
+    <p class="src">Lien : <a href="https://etudiant.lefigaro.fr/article/etudes/les-conseils-de-paul-major-de-l-ecole-des-mines-en-maths-et-en-physique-j-ai-travaille-d-abord-les-chapitres-les-plus-difficiles-20241217/" target="_blank" rel="noopener">etudiant.lefigaro.fr</a></p>
+  </article>
+
+  <article class="fiche" id="etudes-aores">
+    <div class="badges"><span class="b">Page web</span><span class="b b-non">Non lu</span></div>
+    <h3>Le programme de l'Aores</h3>
+    <p class="meta">aores-sci.fr/programme · ouverture refusée par l'extension Chrome</p>
+    <p>Je n'ai pas pu ouvrir cette page. Le nom correspond à l'association Aores, que l'article du Figaro Étudiant (fiche précédente) désigne comme organisatrice du test Tescia. C'est une déduction, pas une lecture de la page.</p>
+    <p class="src">Lien : <a href="https://www.aores-sci.fr/programme/" target="_blank" rel="noopener">aores-sci.fr/programme</a></p>
+  </article>
+
+  <article class="fiche" id="etudes-mit">
+    <div class="badges"><span class="b">YouTube</span><span class="b b-liste">Liste lue</span></div>
+    <h3>Vidéos d'étudiants sur la première année au MIT</h3>
+    <p class="meta">Document sans titre 3.pdf · liste annotée, les vidéos elles-mêmes n'ont pas été vues · nombres de vues tels que notés dans le document</p>
+    <p>La liste rassemble des témoignages sur un premier semestre difficile. Votre note dit que la vidéo de William Lin est la plus proche de celle de Frank Monbe : un étudiant qui a failli rater un cours dès son premier semestre.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Vidéo</th><th>Auteur</th><th class="num">Vues</th></tr></thead>
+      <tbody>
+        <tr><td>Almost Failed MIT Class: My First Semester at MIT</td><td>William Lin</td><td class="num">442 k</td></tr>
+        <tr><td>My First Semester at MIT | An HONEST Recap</td><td>AnxiousJoe</td><td class="num">99 k</td></tr>
+        <tr><td>Surviving My First Year at MIT (The Honest Truth)</td><td>Jensen Coonradt</td><td class="num">8,3 k</td></tr>
+        <tr><td>What I Learned from 4 Years at MIT honest college advice</td><td>Richard Guang</td><td class="num">9 k</td></tr>
+        <tr><td>I FAILED my first calculus exam at MIT</td><td>Grace Ueng</td><td class="num">523</td></tr>
+        <tr><td>what I WISH I KNEW before MIT &amp; Graduate School</td><td>Liz Raman</td><td class="num">1,8 k</td></tr>
+        <tr><td>College advice you need to hear before freshman year (MIT edition)</td><td>frankly, franklin</td><td class="num">1 k</td></tr>
+        <tr><td>Une journée réaliste dans ma vie au MIT | VLOG #001</td><td>Richard Guang</td><td class="num">574 k</td></tr>
+        <tr><td>MIT : ces élèves sont poussés à l'extrême pour réussir (reportage)</td><td>Immersion</td><td class="num">680 k</td></tr>
+        <tr><td>choses que je ne savais pas avant de venir au MIT (grwm)</td><td>jina</td><td class="num">4,3 k</td></tr>
+      </tbody>
+    </table></div>
+    <p>Vos remarques : la vidéo de Grace Ueng est très pertinente sur le fond mais peu vue ; pour les deux titres en français de Richard Guang et de jina, la langue parlée n'a pas été vérifiée ; celle d'Immersion est un reportage, pas un témoignage d'étudiant. Les sept premières lignes ont un titre anglais, les trois dernières un titre français.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= PHILOSOPHIE ======================= -->
+<section class="view theme t-philosophie" id="v-philosophie">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-philosophie"/></svg></span>
+    <h2>Philosophie</h2>
+    <p>Deux entrées : un entretien de Michel Onfray dont seul le début est accessible, et une chaîne YouTube non ouverte.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="philosophie-onfray">
+    <div class="badges"><span class="b">Page web</span><span class="b b-part">Lu en partie</span></div>
+    <h3>Michel Onfray : « un siècle d'effondrement civilisationnel »</h3>
+    <p class="meta">Front Populaire, 15 septembre 2026 · entretien paru dans Il Foglio le 12 septembre 2026 · contenu payant, début de l'article seulement</p>
+    <p>L'entretien porte sur le livre <i>Déambulation dans les ruines</i> (Albin Michel, 2025). Dans le passage visible, Onfray explique qu'il ne s'agit pas d'un livre isolé mais du début d'une tétralogie, une histoire philosophique de l'Occident, dont le premier moment est gréco-romain. Il décrit la généalogie de la civilisation occidentale comme judéo-chrétienne.</p>
+    <p>Le titre indique sa thèse : notre siècle serait regardé plus tard comme un siècle d'effondrement civilisationnel. La suite, derrière l'accès payant, n'est pas lue. Les commentaires de lecteurs sous l'article ne sont pas pris en compte.</p>
+    <p class="src">Lien : <a href="https://frontpopulaire.fr/culture/contents/michel-onfray-on-regardera-probablement-notre-siecle-comme-un-siecle-deffon_tco_31908053" target="_blank" rel="noopener">frontpopulaire.fr</a></p>
+  </article>
+
+  <article class="fiche" id="philosophie-precepteur">
+    <div class="badges"><span class="b">YouTube</span><span class="b b-non">Non lu</span></div>
+    <h3>La chaîne « Le Précepteur »</h3>
+    <p class="meta">youtube.com/@Le_Precepteur · décrite dans votre liste comme « chaîne philosophie »</p>
+    <p>Je n'ai pas pu ouvrir la chaîne : YouTube refuse la lecture de page dans cette session. Je ne connais ni ses sujets ni ses vidéos et je n'en dis donc rien au-delà de votre description.</p>
+    <p class="src">Lien : <a href="https://www.youtube.com/@Le_Precepteur" target="_blank" rel="noopener">youtube.com/@Le_Precepteur</a></p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= LANGUE ======================= -->
+<section class="view theme t-langue" id="v-langue">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-langue"/></svg></span>
+    <h2>Langue française</h2>
+    <p>Trois images de virelangues, ces phrases difficiles à prononcer vite. Je décris leur contenu sans recopier les textes.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="langue-exercices">
+    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>28 exercices d'articulation</h3>
+    <p class="meta">Articulations.png · feuille intitulée « Exercices d'articulation »</p>
+    <p>Une feuille de 28 phrases numérotées. On y trouve des classiques à base de répétitions de sons proches : les « s » et « ch » des saucissons, les « r » des rats, les « p » et « b » du pêcheur et du dragon, les « t » et « d » d'un petit train de mots, ou les « c » de scies et de cigares. D'autres jouent sur des noms propres à rallonge ou sur des phrases presque identiques qui ne diffèrent que d'une lettre.</p>
+    <p>Elle mêle phrases courtes à répéter vite et textes longs, comme celui du pêcheur qui prépare toute une liste d'objets. La phrase 25 est un petit dialogue autour d'une tortue et d'un tatou.</p>
+  </article>
+
+  <article class="fiche" id="langue-serie-1">
+    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Série de virelangues, numéros 1 à 8</h3>
+    <p class="meta">Articulations2.png · huit phrases en gras</p>
+    <p>Huit virelangues, dont certains sont aussi dans la feuille de 28 exercices : le « donnez-lui à minuit », le dialogue de Madame Foncoutu, le papa qui boit dans les pins, le pêcheur et sa liste, les saucissons de « ciel si c'est cinq sous ». S'y ajoutent une série autour d'une marchande de foie à Foix, une phrase sur les « grains d'orge » et une longue phrase sur trente-trois cuillères d'or argentées.</p>
+  </article>
+
+  <article class="fiche" id="langue-serie-2">
+    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Série de virelangues, numéros 9 à 19</h3>
+    <p class="meta">Articulations3.png · suite de la série précédente</p>
+    <p>Onze virelangues supplémentaires. Les plus longs jouent sur la répétition de préfixes et de verbes : un ange qui change de visage, une pomme à « dépépiner », l'Américain à « désaméricaniser », la cathédrale à « décathédraliser ». D'autres reposent sur des sons serrés : six sachets chers, six cents scies, six cigares, un cordier qui corde une corde.</p>
+    <p>On y retrouve aussi le dragon gradé, le rat qui vit un rot et la cavale du Valaque, qui figurent déjà dans la feuille de 28 exercices.</p>
+    <p class="note"><b>Conseil d'usage.</b> Dire chaque phrase d'abord lentement, en détachant chaque syllabe, puis accélérer sans perdre la netteté. C'est la pratique courante pour ce type d'exercice, pas une indication des documents.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= HORS THÈME ======================= -->
+<section class="view theme t-hors" id="v-hors-theme">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-hors"/></svg></span>
+    <h2>Hors thème</h2>
+    <p>Ce document n'entre dans aucun des neuf thèmes. Il a sans doute été déposé par erreur.</p>
+  </div>
+  <div class="col">
+
+  <article class="fiche" id="hors-theme-sage">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Politique de confidentialité RH d'un éditeur de logiciels</h3>
+    <p class="meta">Global HR Privacy Notice French.pdf · version France, dernière mise à jour mars 2026 · 16 pages</p>
+    <p>Ce document explique aux candidats, salariés et anciens salariés de l'entreprise Sage comment elle traite leurs données personnelles. Le responsable de traitement est la société du groupe qui recrute ou emploie la personne, soit Sage SAS en France.</p>
+    <ul>
+      <li><b>Données :</b> 16 catégories, de l'identité et des coordonnées à la paie, aux évaluations, aux enregistrements d'appels et aux données de diversité, collectées sur la base du volontariat.</li>
+      <li><b>Finalités :</b> recrutement, paie, avantages sociaux, gestion des performances et des absences, enquêtes internes, surveillance des systèmes et des locaux, lancement d'alerte.</li>
+      <li><b>Droits :</b> accès, rectification, opposition, limitation, portabilité, retrait du consentement et plainte auprès de la CNIL.</li>
+      <li><b>Transferts et durées :</b> données possiblement transférées hors de l'Espace économique européen avec des garanties contractuelles ; données de diversité conservées au plus six mois pour les candidats et un an après le départ pour les salariés.</li>
+    </ul>
+    <p class="note"><b>Avant de publier ce site.</b> C'est un document d'entreprise : vérifiez qu'il peut être diffusé, ou retirez cette fiche.</p>
+  </article>
+
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+<!-- ======================= EN ATTENTE ======================= -->
+<section class="view theme t-hors" id="v-en-attente">
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+  <div class="thead">
+    <span class="ico"><svg aria-hidden="true"><use href="#i-hors"/></svg></span>
+    <h2>Liens à compléter</h2>
+    <p>Onze liens de la liste « Document sans titre 3 » que je n'ai pas pu lire. Pour les vidéos, l'extension Chrome a refusé l'accès à www.youtube.com. Il suffit d'autoriser le site dans l'extension, ou de me donner les titres et des transcriptions, pour que je rédige les fiches.</p>
+  </div>
+  <div class="col">
+    <div class="tablewrap"><table>
+      <thead><tr><th>Lien</th><th>Ce qu'on en sait</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://www.youtube.com/watch?v=aBStNwdE0DU" target="_blank" rel="noopener">youtube.com/watch?v=aBStNwdE0DU</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=WQIEOBjTQ1o" target="_blank" rel="noopener">youtube.com/watch?v=WQIEOBjTQ1o</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=_xOUBPMPIQc" target="_blank" rel="noopener">youtube.com/watch?v=_xOUBPMPIQc</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=IxEZvxgwJ8k" target="_blank" rel="noopener">youtube.com/watch?v=IxEZvxgwJ8k</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=0ChMzw8DU5E" target="_blank" rel="noopener">youtube.com/watch?v=0ChMzw8DU5E</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=GEDa9TiYF0o" target="_blank" rel="noopener">youtube.com/watch?v=GEDa9TiYF0o</a></td><td>Vidéo, titre inconnu (lien noté avec un départ à 6 min 30)</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=JTGHpZ_XVSA" target="_blank" rel="noopener">youtube.com/watch?v=JTGHpZ_XVSA</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=jOd098jIT0Q" target="_blank" rel="noopener">youtube.com/watch?v=jOd098jIT0Q</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td><a href="https://www.youtube.com/watch?v=k-pa4uk1vns" target="_blank" rel="noopener">youtube.com/watch?v=k-pa4uk1vns</a></td><td>Vidéo, titre inconnu</td></tr>
+        <tr><td>Lien vers un message de votre boîte Gmail</td><td>Lien privé, volontairement non ouvert</td></tr>
+        <tr><td>Recherche Google « pereto principle »</td><td>Probablement une recherche sur le principe de Pareto (la règle des 80/20), cité dans la fiche <a href="#economie-portefeuille">Théorie moderne du portefeuille</a>. Les résultats de recherche n'ont pas été ouverts.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin-top:16px"><b>Déjà classés dans leur thème :</b> <a href="#informatique-ia">la vidéo sur l'IA</a> (titre relevé), <a href="#informatique-internet">histoire d'Internet</a>, <a href="#maths-jeux">théorie des jeux</a>, <a href="#etudes-aores">site de l'Aores</a> et <a href="#philosophie-precepteur">la chaîne Le Précepteur</a>.</p>
+  </div>
+  <a class="back" href="#accueil">← Tous les thèmes</a>
+</section>
+
+  </main>
+
+  <footer class="foot">
+    <span>CultureGSite · fiches rédigées d'après les documents du dépôt du projet</span>
+    <span>Mis à jour le 7 novembre 2026</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var views = Array.prototype.slice.call(document.querySelectorAll('.view'));
+  document.querySelectorAll('.view .col').forEach(function(col){
+    var fs = col.querySelectorAll('.fiche');
+    if (!fs.length) return;
+    var nav = document.createElement('nav'); nav.className = 'toc'; nav.setAttribute('aria-label','Fiches de ce thème');
+    var h = document.createElement('h3'); h.textContent = 'Fiches de ce thème'; nav.appendChild(h);
+    var ol = document.createElement('ol');
+    fs.forEach(function(f){
+      var li = document.createElement('li');
+      var a = document.createElement('a'); a.href = '#' + f.id; a.textContent = f.querySelector('h3').textContent; li.appendChild(a);
+      var st = f.querySelectorAll('.badges .b'); if (st.length) { li.appendChild(st[st.length-1].cloneNode(true)); }
+      var src = f.querySelector('.src a');
+      if (src) { var x = document.createElement('a'); x.className='ext'; x.href = src.href; x.target='_blank'; x.rel='noopener'; x.textContent = 'source ↗'; li.appendChild(x); }
+      ol.appendChild(li);
+    });
+    nav.appendChild(ol); col.insertBefore(nav, col.firstChild);
+  });
+
+  function show(){
+    var h = decodeURIComponent((location.hash || '').replace(/^#/, '')) || 'accueil';
+    var target = null, id = h;
+    if (!document.getElementById('v-' + h)) {
+      var art = document.getElementById(h);
+      if (art && art.closest('.view')) { target = art; id = art.closest('.view').id.slice(2); }
+      else { id = 'accueil'; }
+    }
+    root.classList.add('js');
+    views.forEach(function(v){ v.hidden = (v.id !== 'v-' + id); });
+    if (target) { target.scrollIntoView(); } else { window.scrollTo(0, 0); }
+  }
+  window.addEventListener('hashchange', show);
+  show();
+})();
+</script>
