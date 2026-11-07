@@ -60,13 +60,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .themes-titre{margin:0;font:500 clamp(1.7rem,4vw,2.4rem)/1.15 var(--f-ui);text-wrap:balance}
 .themes-titre em{font-style:normal;color:var(--accent);text-shadow:0 0 16px rgba(95,212,255,.45)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px;max-width:752px}
 .theme{--tc:var(--cyan);--tcbg:color-mix(in srgb,var(--tc) 12%,transparent)}
 .t-sante{--tc:#7fe3b2}.t-geopolitique{--tc:var(--rouge)}.t-economie{--tc:#f2c879}.t-physique{--tc:var(--cyan)}
 .t-informatique{--tc:var(--bleu)}.t-maths{--tc:#b8a6ff}.t-etudes{--tc:var(--orange)}.t-philosophie{--tc:var(--menthe)}
 .t-langue{--tc:var(--rose)}.t-hors{--tc:var(--bleu)}
 
-.vig{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:10px;min-height:250px;padding:20px;
+.vig{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:8px;min-height:175px;padding:14px;
   background:var(--verre);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--trait);border-radius:12px;transition:border-color .2s,background-color .2s}
 .vig::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(150deg,rgba(6,16,40,.9) 0%,rgba(6,16,40,.82) 22%,transparent 72%)}
 .vig:hover{border-color:var(--tc);background:var(--verre-clair)}
@@ -76,16 +76,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .art .s{stroke-opacity:.5}
 .art .d{fill:var(--tc);stroke:none}
 .art text{fill:var(--tc);stroke:none;font-family:var(--f-serif);font-weight:600}
-.vhead{position:relative;z-index:2;display:flex;align-items:center;gap:14px}
-.ico{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:11px;background:color-mix(in srgb,var(--tc) 14%,rgba(5,13,34,.85));border:1px solid color-mix(in srgb,var(--tc) 38%,transparent);color:var(--tc)}
-.ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--tc) 55%,transparent))}
-.vig h3{margin:0;font:500 1.3rem/1.15 var(--f-ui);text-wrap:balance}
+.vhead{position:relative;z-index:2;display:flex;align-items:center;gap:10px}
+.ico{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:9px;background:color-mix(in srgb,var(--tc) 14%,rgba(5,13,34,.85));border:1px solid color-mix(in srgb,var(--tc) 38%,transparent);color:var(--tc)}
+.ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--tc) 55%,transparent))}
+.vig h3{margin:0;font:500 1.02rem/1.15 var(--f-ui);text-wrap:balance}
 .vig h3 a{color:var(--texte);text-decoration:none}
 .vig .cover{position:absolute;inset:0;z-index:3;border-radius:12px}
 .vig h3 a:focus-visible{outline-offset:4px}
-.count{position:relative;z-index:2;font:600 .78rem/1 var(--f-ui);color:var(--tc);text-transform:uppercase;letter-spacing:.14em;text-shadow:0 0 12px color-mix(in srgb,var(--tc) 45%,transparent)}
+.count{position:relative;z-index:2;font:600 .68rem/1 var(--f-ui);color:var(--tc);text-transform:uppercase;letter-spacing:.14em;text-shadow:0 0 12px color-mix(in srgb,var(--tc) 45%,transparent)}
 
-.side{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.side{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;max-width:752px}
 .mini{position:relative;padding:16px 20px;border:1px solid var(--trait);border-radius:12px;display:grid;gap:4px;background:var(--verre);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,background-color .2s}
 .mini h3{margin:0;font:500 1.05rem/1.25 var(--f-ui)}
 .mini h3 a{color:var(--texte);text-decoration:none}
