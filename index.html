@@ -59,10 +59,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .themes-entete{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.5rem 2rem;margin-bottom:1rem}
 .themes-titre{margin:0;font:500 clamp(1.7rem,4vw,2.4rem)/1.15 var(--f-ui);text-wrap:balance}
 .themes-titre em{font-style:normal;color:var(--accent);text-shadow:0 0 16px rgba(95,212,255,.45)}
-.bilan{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;margin:0;color:var(--texte-doux);font-size:.9rem}
-.bilan b{color:var(--cyan);font-weight:600}
-.preambule{max-width:78ch;margin:0 0 1.4rem;padding:.65rem 1.05rem;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;background:var(--verre);font:400 1.06rem/1.55 var(--f-serif);color:var(--texte)}
-.preambule strong{color:var(--accent);font-weight:600}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
 .theme{--tc:var(--cyan);--tcbg:color-mix(in srgb,var(--tc) 12%,transparent)}
@@ -97,10 +93,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .mini p{margin:0;color:var(--texte-doux);font-size:.95rem;line-height:1.5}
 .mini:hover,.mini:focus-within{border-color:var(--bleu);background:var(--verre-clair)}
 
-.method{margin-top:28px;display:grid;gap:12px;max-width:78ch}
-.method h2{margin:0;font:500 1.15rem/1.2 var(--f-ui);color:var(--menthe)}
-.method p{margin:0;font:400 1.02rem/1.55 var(--f-serif);color:var(--texte-doux)}
-.legend{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
 
 /* ---------- pages de thème ---------- */
 .back{display:inline-block;margin:6px 0 14px;padding:8px 16px;border:1px solid var(--trait);border-radius:9px;font:700 14px/1 var(--f-math);text-decoration:none;color:var(--texte);background:transparent}
@@ -152,6 +144,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 .pairs span{font:400 .98rem/1.5 var(--f-serif);color:var(--texte-doux)}
 .foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--trait);font:400 .8rem/1.5 var(--f-math);color:var(--texte-doux);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
 
+.foot[hidden]{display:none}
 @media (max-width:900px){
   :root{--entete-h:calc(104px + env(safe-area-inset-top,0px))}
   .entete{flex-direction:column;align-items:stretch;justify-content:center;gap:.35rem;padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
@@ -199,9 +192,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 <section class="view" id="v-accueil">
   <div class="themes-entete">
     <h1 class="themes-titre">Neuf thèmes, <em>vingt-six</em> fiches de lecture</h1>
-    <p class="bilan" aria-label="Avancement de la lecture"><span><b>17</b> lues en entier</span><span><b>3</b> lues en partie</span><span><b>2</b> titre ou liste seulement</span><span><b>4</b> non lues</span></p>
   </div>
-  <p class="preambule">Chaque vignette ouvre un thème. Chaque thème résume, document par document, ce que contient le dépôt : <strong>PDF, images, pages web et vidéos</strong>.</p>
 
   <div class="grid">
     <article class="vig theme t-sante">
@@ -278,18 +269,6 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       <p>Neuf vidéos YouTube, un lien Gmail et une recherche Google que je n'ai pas pu ouvrir.</p>
     </article>
   </div>
-
-  <section class="method" aria-labelledby="meth-h">
-    <h2 id="meth-h">Comment lire les fiches</h2>
-    <p>Chaque fiche indique ce qui a été réellement lu. Les résumés sont rédigés avec mes mots à partir des documents du dépôt. Un document non ouvert n'est jamais résumé à partir d'une supposition : je le dis, et je donne seulement ce que le titre ou l'adresse permettent d'affirmer.</p>
-    <div class="legend">
-      <span class="b b-lu">Lu en entier</span>
-      <span class="b b-part">Lu en partie</span>
-      <span class="b b-liste">Liste lue</span>
-      <span class="b b-titre">Titre seulement</span>
-      <span class="b b-non">Non lu</span>
-    </div>
-  </section>
 </section>
 
 <!-- ======================= SANTÉ ======================= -->
@@ -858,7 +837,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 
   </main>
 
-  <footer class="foot">
+  <footer class="foot" id="pied">
     <span>CultureGSite · fiches rédigées d'après les documents du dépôt du projet</span>
     <span>Mis à jour le 7 novembre 2026</span>
   </footer>
@@ -894,6 +873,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       else { id = 'accueil'; }
     }
     root.classList.add('js');
+    document.getElementById('pied').hidden = (id === 'accueil');
     var vw = document.getElementById('v-' + id);
     var acc = vw ? getComputedStyle(vw).getPropertyValue('--tc').trim() : '';
     root.style.setProperty('--accent', (id === 'accueil' || !acc) ? '#5fd4ff' : acc);
