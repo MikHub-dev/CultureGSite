@@ -60,7 +60,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .themes-titre{margin:0;font:500 clamp(1.7rem,4vw,2.4rem)/1.15 var(--f-ui);text-wrap:balance}
 .themes-titre em{font-style:normal;color:var(--accent);text-shadow:0 0 16px rgba(95,212,255,.45)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px;max-width:752px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}}
 .theme{--tc:var(--cyan);--tcbg:color-mix(in srgb,var(--tc) 12%,transparent)}
 .t-sante{--tc:#7fe3b2}.t-geopolitique{--tc:var(--rouge)}.t-economie{--tc:#f2c879}.t-physique{--tc:var(--cyan)}
 .t-informatique{--tc:var(--bleu)}.t-maths{--tc:#b8a6ff}.t-etudes{--tc:var(--orange)}.t-philosophie{--tc:var(--menthe)}
@@ -85,7 +86,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .vig h3 a:focus-visible{outline-offset:4px}
 .count{position:relative;z-index:2;font:600 .68rem/1 var(--f-ui);color:var(--tc);text-transform:uppercase;letter-spacing:.14em;text-shadow:0 0 12px color-mix(in srgb,var(--tc) 45%,transparent)}
 
-.side{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;max-width:752px}
+.side{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
 .mini{position:relative;padding:16px 20px;border:1px solid var(--trait);border-radius:12px;display:grid;gap:4px;background:var(--verre);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,background-color .2s}
 .mini h3{margin:0;font:500 1.05rem/1.25 var(--f-ui)}
 .mini h3 a{color:var(--texte);text-decoration:none}
