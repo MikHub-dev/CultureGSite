@@ -1,0 +1,34 @@
+name: Télécharger les annales TeSciA
+# Exécuté une seule fois, au push de cette branche : télécharge les PDF listés dans
+# annales-tescia/urls.txt (le sandbox de Claude ne peut pas joindre aores-sci.fr).
+on:
+  push:
+    branches: [annales-tescia]
+    paths: ['.github/workflows/annales-tescia.yml']
+permissions:
+  contents: write
+jobs:
+  telecharger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Télécharger
+        run: |
+          : > annales-tescia/telechargement.log
+          while read -r url; do
+            [ -z "$url" ] && continue
+            y=$(echo "$url" | awk -F/ '{print $(NF-1)}'); f=$(basename "$url")
+            mkdir -p "annales-tescia/$y"
+            if curl -fsSL -A "Mozilla/5.0" --retry 3 -o "annales-tescia/$y/$f" "$url" && head -c4 "annales-tescia/$y/$f" | grep -q '%PDF'; then
+              echo "OK  $y/$f $(stat -c%s "annales-tescia/$y/$f")" >> annales-tescia/telechargement.log
+            else
+              echo "ERR $y/$f" >> annales-tescia/telechargement.log; rm -f "annales-tescia/$y/$f"
+            fi
+          done < annales-tescia/urls.txt
+          cat annales-tescia/telechargement.log
+      - name: Enregistrer
+        run: |
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add annales-tescia
+          git commit -m "Annales TeSciA 2021-2026 (PDF téléchargés depuis aores-sci.fr)" || true
+          git push
