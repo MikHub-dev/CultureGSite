@@ -133,6 +133,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .note b{font-family:var(--f-ui);font-weight:600;color:var(--tc)}
 .fig{margin:2px 0;display:grid;gap:8px;justify-items:start;max-width:68ch}
 .fig img{display:block;width:100%;max-width:480px;height:auto;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--trait);border-radius:10px;background:rgba(5,13,34,.55)}
+.fig.large img{max-width:640px;aspect-ratio:1200/1210;object-fit:contain}
 .fig figcaption{font:400 .8rem/1.5 var(--f-math);color:var(--texte-doux)}
 .tablewrap{overflow-x:auto;border:1px solid var(--trait);border-radius:10px;background:rgba(5,13,34,.55);max-width:100%}
 table{border-collapse:collapse;width:100%;min-width:520px;font:400 .95rem/1.45 var(--f-ui)}
@@ -503,11 +504,28 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   <article class="fiche" id="physique-dimensions">
     <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
     <h3>De 3 dimensions à 4 : une dimension supplémentaire enroulée</h3>
-    <p class="meta">De 3 dimensions à 4.png · schéma légendé en anglais</p>
+    <p class="meta">De 3 dimensions à 4.png · schéma légendé en anglais · illustration SVG ajoutée</p>
     <p><b>Ce que montre l'image.</b> Un cylindre gris, étiqueté « 3-dimensional space » (espace à trois dimensions), traversé par une ligne en pointillés. Sur sa face avant apparaît une courbe bleue enchevêtrée, comme un nœud, désignée par une flèche : « Compactified extra dimension » (dimension supplémentaire compactifiée).</p>
     <p><b>L'idée représentée.</b> Certaines théories de la physique, comme les théories de Kaluza-Klein et des cordes, supposent des dimensions d'espace en plus des trois que nous voyons. Elles seraient « compactifiées » : enroulées sur elles-mêmes à une échelle minuscule, ce qui expliquerait qu'on ne les perçoive pas. L'image de la face du cylindre dit la même chose : en s'approchant, ce qui semblait un point cache une petite structure à part.</p>
-    <p class="note"><b>Précision.</b> L'image ne porte que deux légendes. L'explication ci-dessus vient de connaissances générales en physique, pas du document. Le schéma est illustratif : la forme du nœud n'est pas celle d'un objet précis.</p>
-  </article>
+    <figure class="fig large">
+      <img src="images/dimension-compactifiee-univers.svg" width="1200" height="1210" loading="lazy" alt="Un tube de verre rempli de nébuleuses et de galaxies représente l'espace à trois dimensions. Sur sa face avant, un nœud en tube lumineux, de la taille de la longueur de Planck, représente la dimension supplémentaire enroulée. En bas, deux loupes : de loin, un simple point ; de près, le nœud.">
+      <figcaption>Illustration en SVG réalisée pour ce site, d'après l'image d'origine. Le tube représente les trois dimensions d'espace, le nœud la dimension supplémentaire enroulée. Schéma symbolique, non à l'échelle.</figcaption>
+    </figure>
+
+    <h4>La taille de la dimension supplémentaire</h4>
+    <p>La dimension supplémentaire est-elle plus petite que la longueur de Planck ? Pas vraiment : elle est plutôt de l'ordre de cette longueur, souvent un peu au-dessus.</p>
+    <ul>
+      <li>L'expression « mur de Planck » n'est pas un terme standard. On parle de l'échelle ou de la longueur de Planck, environ 1,6 × 10<sup>−35</sup> m, soit 1,6 × 10<sup>−33</sup> cm. C'est l'ordre de grandeur où gravité et mécanique quantique doivent se combiner, et où les théories actuelles ne suffisent plus.</li>
+      <li>Dans les théories de Kaluza-Klein et des cordes, la taille de l'enroulement est typiquement comparable à la longueur de Planck, ou un peu plus grande selon les modèles. Descendre en dessous n'aurait probablement pas de sens physique, car on ne sait pas définir une longueur à cette échelle. L'échelle « ~10<sup>−33</sup> cm » de l'illustration représente donc cette valeur, pas une taille inférieure.</li>
+      <li>Il existe des modèles à dimensions « larges », bien plus grandes que la longueur de Planck, mais les tests de la gravité à très courte portée les contraignent fortement.</li>
+    </ul>
+
+    <h4>« Dimension 4 » : deux façons de compter</h4>
+    <ul>
+      <li><b>Relativité.</b> L'espace et le temps sont unifiés en un seul espace-temps à 4 dimensions (3 d'espace et 1 de temps). Dans ce langage, « la 4<sup>e</sup> dimension » désigne le temps.</li>
+      <li><b>Théories de Kaluza-Klein et des cordes.</b> On ajoute des dimensions d'espace supplémentaires à ces quatre-là. Chez Kaluza-Klein, il y en a une seule, ce qui donne un espace-temps à 5 dimensions. En théorie des cordes, il y en a 6, ce qui donne un espace-temps à 10 dimensions.</li>
+    </ul>
+    <p>Dans l'image, le cylindre représente nos 3 dimensions d'espace, et le nœud est la dimension d'espace en plus, soit une 4<sup>e</sup> dimension d'espace. Ce n'est pas le temps, qui est déjà compté dans l'espace-temps usuel et n'est pas celui qui s'enroule sur lui-même.</p>  </article>
 
   <article class="fiche" id="physique-cl1">
     <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
