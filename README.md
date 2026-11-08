@@ -5,6 +5,7 @@ Site de culture générale : 9 vignettes thématiques (santé, géopolitique, é
 ## Fichiers
 
 - `index.html` : le site complet (HTML, CSS et JavaScript dans un seul fichier, sans dépendance à installer). La navigation entre thèmes et fiches repose sur le fragment d'URL (`#sante`, `#etudes-salaires`, etc.).
+- `images/` : illustrations des fiches (SVG réalisés pour le site, copies réduites des vignettes de J.-F. Colonna dans `images/colonna/`, © Jean-François Colonna).
 
 ## Utilisation
 
