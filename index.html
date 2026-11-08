@@ -131,6 +131,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .b-liste{color:var(--bleu);border-color:rgba(122,162,255,.4);background:rgba(122,162,255,.08)}
 .note{padding:12px 14px;border-left:3px solid var(--tc);border-radius:0 10px 10px 0;background:color-mix(in srgb,var(--tc) 10%,rgba(5,13,34,.6));font:400 .98rem/1.5 var(--f-serif);max-width:68ch}
 .note b{font-family:var(--f-ui);font-weight:600;color:var(--tc)}
+.fig{margin:2px 0;display:grid;gap:8px;justify-items:start;max-width:68ch}
+.fig img{display:block;width:100%;max-width:480px;height:auto;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--trait);border-radius:10px;background:rgba(5,13,34,.55)}
+.fig figcaption{font:400 .8rem/1.5 var(--f-math);color:var(--texte-doux)}
 .tablewrap{overflow-x:auto;border:1px solid var(--trait);border-radius:10px;background:rgba(5,13,34,.55);max-width:100%}
 table{border-collapse:collapse;width:100%;min-width:520px;font:400 .95rem/1.45 var(--f-ui)}
 th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--trait)}
@@ -511,6 +514,10 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     <h3>CL1, le premier ordinateur neurobiologique</h3>
     <p class="meta">Article CNews du 9 mars 2025 · capture de la page, publicités et menus comprises</p>
     <p>Le laboratoire australien Cortical Labs, à Melbourne, a fusionné une puce en silicium avec de vrais neurones cultivés en laboratoire, au lieu d'implanter une puce dans un cerveau humain. Le résultat, baptisé CL1, est présenté comme le premier ordinateur neurobiologique.</p>
+    <figure class="fig">
+      <img src="images/cl1.jpg" width="800" height="800" loading="lazy" alt="Rendu de neurones aux longs filaments blancs, posés sur une carte électronique">
+      <figcaption>Illustration : des neurones sur une puce. Ce n'est pas une photo du CL1. Source : publication LinkedIn d'août 2024, auteur non précisé.</figcaption>
+    </figure>
     <ul>
       <li>Il contient des dizaines de milliers de neurones, qui baignent dans un liquide nutritif dans un espace stérile. Ils réagissent aux informations envoyées par la puce, et certaines réponses justes renforcent l'apprentissage.</li>
       <li>Les chercheurs ont intégré ces cellules à un environnement de jeu simulé et les ont stimulées pour imiter le jeu d'arcade Pong.</li>
