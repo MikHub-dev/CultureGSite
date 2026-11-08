@@ -166,6 +166,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .fig.vect img{aspect-ratio:4/3;object-fit:contain;max-width:520px;background:#fbfaf6}
 .fig.photo img{aspect-ratio:auto;object-fit:contain;max-width:560px}
 .fig.schema svg{display:block;width:100%;max-width:560px;height:auto;border:1px solid var(--trait);border-radius:10px;background:#fff}
+.fig.graph img{aspect-ratio:auto;object-fit:contain;max-width:700px;background:#fff}
 .fig figcaption a{color:inherit}
 .fiche .desc{display:block;margin:.35rem 0 0;font:400 .84rem/1.55 var(--f-ui);color:var(--texte-doux)}
 .fiche p.desc{margin:1rem 0 0}
@@ -2091,14 +2092,68 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     <div class="badges"><span class="b">Page web</span><span class="b b-lu">Lu en entier</span></div>
     <h3>Quelles prépas pour intégrer Polytechnique ?</h3>
     <p class="meta">L'Étudiant, 1<sup>er</sup> juin 2026 · François Fromont, Clément Rocher, Eloïse Girard · infographies</p>
-    <p>À la rentrée 2025, près des trois quarts des admis à l'X viennent d'une prépa MP (42,1 %) ou PC (32,1 %). Suivent PSI (14,1 %), MPI (5,7 %), BCPST (3,1 %), PT (2,4 %) et TSI (0,5 %).</p>
+    <p>L'École polytechnique (« l'X ») est accessible après une prépa scientifique et seule une dizaine de lycées forment l'essentiel de son vivier. L'article de L'Étudiant classe, filière par filière, les prépas qui envoient le plus d'élèves à l'X. Les pourcentages des classements par lycée sont la part des élèves du lycée admis à l'X sur la période, et non la part des admis à l'X venant de ce lycée.</p>
+
+    <h4>De quelles filières viennent les admis ?</h4>
+    <p>À la rentrée 2025, près des trois quarts des admis à l'X viennent d'une prépa MP (42,1 %) ou PC (32,1 %). Suivent PSI (14,1 %), MPI (5,7 %), BCPST (3,1 %), PT (2,4 %) et TSI (0,5 %). La BCPST, tournée vers l'agronomie, envoie logiquement moins d'élèves à l'X ; les filières techniques PT et TSI sont les moins représentées.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-00-filieres.svg" width="740" height="362" loading="lazy" alt="Barres : MP 42,1 %, PC 32,1 %, PSI 14,1 %, MPI 5,7 %, BCPST 3,1 %, PT 2,4 %, TSI 0,5 %.">
+      <figcaption>Part des admis à l'X selon la filière de prépa, rentrée 2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Les lycées qui reviennent le plus</h4>
+    <p>Sainte-Geneviève (Versailles), Louis-le-Grand (Paris 5<sup>e</sup>) et Hoche (Versailles) se distinguent comme les lycées phares, avec Henri-IV. Ils sont aussi très sélectifs, car ils attirent les meilleurs élèves de France après la terminale. Les établissements parisiens et franciliens concentrent le plus grand nombre d'admis, mais en région Pierre-de-Fermat (Toulouse) et Le Parc (Lyon) envoient aussi beaucoup d'élèves à l'X.</p>
+
+    <h4>Quelle prépa MP ?</h4>
+    <p>La MP reste la voie privilégiée. Entre 2021 et 2025, 35 % des élèves de Sainte-Geneviève ont été admis à l'X, devant Louis-le-Grand (24 %). Hoche et Henri-IV complètent un podium 100 % francilien, à égalité à 18 %.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-mp.svg" width="740" height="362" loading="lazy" alt="Barres, de 2021 à 2025 : Sainte-Geneviève 35 %, Louis-le-Grand 24 %, Hoche 18 %, Henri-IV 18 %, Stanislas 15 %, Le Parc 11 %, Blaise-Pascal 10 %.">
+      <figcaption>Part des élèves de MP admis à l'X, 2021-2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Quelle prépa PC ?</h4>
+    <p>La PC reste une voie d'excellence. Sur les cinq dernières années, plus de 30 % des élèves de Sainte-Geneviève ont été admis à l'X, contre 23 % à Louis-le-Grand. Stanislas (Paris) prépare aussi ses élèves avec succès, et Aux Lazaristes (Lyon) affiche des taux de réussite constants.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-pc.svg" width="740" height="362" loading="lazy" alt="Barres, de 2021 à 2025 : Sainte-Geneviève 30,6 %, Louis-le-Grand 23,4 %, Stanislas 21,8 %, Henri-IV 20,4 %, Aux Lazaristes 14,4 %, Pasteur 9,3 %, Hoche 6,6 %.">
+      <figcaption>Part des élèves de PC admis à l'X, 2021-2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+    <p class="note">Le graphique d'origine indique « Hoche (Paris) » pour la dernière barre. Le reste de l'article place Hoche à Versailles, et je l'ai donc étiqueté ainsi ; l'écart vient probablement d'une erreur de la source.</p>
+
+    <h4>Quelle prépa PSI ?</h4>
+    <p>L'X réserve des places aux élèves de PSI. Hoche offre un excellent accompagnement : 18,4 % de ses élèves de PSI ont été admis entre 2021 et 2025. Pierre-de-Fermat (Toulouse) est presque à égalité (18,1 %), puis viennent Aux Lazaristes (Lyon) et Sainte-Geneviève.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-psi.svg" width="740" height="362" loading="lazy" alt="Barres, de 2021 à 2025 : Hoche 18,4 %, Pierre-de-Fermat 18,1 %, Aux Lazaristes 13,5 %, Sainte-Geneviève 13,3 %, Stanislas 13 %, Louis-le-Grand 8,2 %, Jules-Garnier 3,8 %.">
+      <figcaption>Part des élèves de PSI admis à l'X, 2021-2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Quelle prépa PT ?</h4>
+    <p>La filière PT reste méconnue pour qui vise l'X, et pourtant près de 10 % des élèves de PT de Sainte-Geneviève y sont admis. Jean-Baptiste-Say (Paris) suit avec un peu plus de 6 %.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-pt.svg" width="740" height="362" loading="lazy" alt="Barres, de 2021 à 2025 : Sainte-Geneviève 9,5 %, Jean-Baptiste-Say 6,4 %, Lachenal 2,2 %, La Salle - Passy-Buzenval 1,6 %, Jules-Renard 1,1 %, Déodat-de-Séverac 1 %, La Martinière-Monplaisir 1 %.">
+      <figcaption>Part des élèves de PT admis à l'X, 2021-2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Quelle prépa BCPST ?</h4>
+    <p>Les élèves de BCPST ont eux aussi une possibilité d'intégrer l'X : plus de 8 % de ceux de Sainte-Geneviève et de Henri-IV y sont admis. Le lycée Saint-Louis (Paris) complète le podium, loin derrière avec 1,4 %.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-bcpst.svg" width="740" height="362" loading="lazy" alt="Barres, de 2021 à 2025 : Sainte-Geneviève 8,5 %, Henri-IV 8,3 %, Saint-Louis 1,4 %, Hoche 1,2 %, Joffre 1 %, Le Parc 0,9 %, Janson-de-Sailly 0,7 %.">
+      <figcaption>Part des élèves de BCPST admis à l'X, 2021-2025. Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Quelle prépa MPI ?</h4>
+    <p>Créée il y a cinq ans, la filière MPI envoie elle aussi des élèves à l'X. Entre 2023 et 2025, un cinquième des élèves de Louis-le-Grand ont été admis (21 %), devant Aux Lazaristes (17 %). Hoche arrive troisième avec 7,8 %.</p>
+    <figure class="fig graph">
+      <img src="images/polytechnique-mpi.svg" width="740" height="362" loading="lazy" alt="Barres, de 2023 à 2025 : Louis-le-Grand 21 %, Aux Lazaristes 17 %, Hoche 7,8 %, Le Parc 6,4 %, Pierre-de-Fermat 4,1 %, Saint-Louis 3,9 %, Leconte-de-Lisle 2,9 %.">
+      <figcaption>Part des élèves de MPI admis à l'X, 2023-2025 (trois ans seulement, la filière étant récente). Graphique refait pour ce site d'après les données de L'Étudiant.</figcaption>
+    </figure>
+
+    <h4>Des prépas élitistes</h4>
     <ul>
-      <li>Les lycées qui reviennent le plus sont Sainte-Geneviève à Versailles, Louis-le-Grand, Hoche et Henri-IV. En région, Pierre-de-Fermat à Toulouse, du Parc et Aux Lazaristes à Lyon.</li>
-      <li>De 2021 à 2025, 35 % des élèves de MP de Sainte-Geneviève ont été admis à l'X.</li>
-      <li>Ces prépas sont très sélectives, avec des moyennes souvent au-dessus de 18/20 et une pension d'internat de 6 120 à 20 850 € à Sainte-Geneviève en 2026-2027.</li>
-      <li>L'école annonce des mesures d'ouverture : bourses, programmes d'égalité des chances et admissions sur titre.</li>
+      <li>Ces prépas sont très sélectives : une excellente moyenne, souvent au-dessus de 18/20, est attendue, et les meilleurs profils seuls sont retenus.</li>
+      <li>Elles accueillent aussi une forte proportion d'élèves de familles aisées. L'internat étant obligatoire, la pension à Sainte-Geneviève va de 6 120 à 20 850 € pour l'année 2026-2027.</li>
+      <li>Elles essaient de casser cette image avec des bourses et des programmes d'égalité des chances. L'école, consciente des critiques sur son ouverture sociale et géographique, propose aussi des admissions sur titre pour des étudiants venus d'autres formations (universités, écoles internationales).</li>
     </ul>
-    <p class="src">Lien : <a href="https://www.letudiant.fr/etudes/classes-prepa/quelles-sont-les-meilleures-prepas-pour-integrer-polytechnique-1.html" target="_blank" rel="noopener">letudiant.fr</a></p>
+    <p class="src">Lien : <a href="https://www.letudiant.fr/etudes/classes-prepa/quelles-sont-les-meilleures-prepas-pour-integrer-polytechnique-1.html" target="_blank" rel="noopener">letudiant.fr</a> · les graphiques de cette fiche reprennent les valeurs des infographies de l'article, redessinées pour le site.</p>
   </article>
 
   <article class="fiche" id="etudes-tescia">

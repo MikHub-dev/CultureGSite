@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 362" width="740" height="362" role="img" aria-labelledby="t d">
+<title id="t">Origine des admis à l'X par filière de prépa</title>
+<desc id="d">Barres : MP 42,1 %, PC 32,1 %, PSI 14,1 %, MPI 5,7 %, BCPST 3,1 %, PT 2,4 %, TSI 0,5 %.</desc>
+<rect width="740" height="362" fill="#ffffff"/>
+<text x="20" y="28" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#14213d">Origine des admis à l'X par filière de prépa</text>
+<text x="20" y="49" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#4a5568">Rentrée 2025, en % des admis à l'École polytechnique</text>
+<line x1="70.0" y1="68" x2="70.0" y2="334" stroke="#e2e6ee" stroke-width="1"/>
+<line x1="221.5" y1="68" x2="221.5" y2="334" stroke="#e2e6ee" stroke-width="1"/>
+<line x1="373.0" y1="68" x2="373.0" y2="334" stroke="#e2e6ee" stroke-width="1"/>
+<line x1="524.5" y1="68" x2="524.5" y2="334" stroke="#e2e6ee" stroke-width="1"/>
+<line x1="676.0" y1="68" x2="676.0" y2="334" stroke="#e2e6ee" stroke-width="1"/>
+<text x="60" y="90.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">MP</text>
+<rect x="70" y="74" width="606.0" height="24" rx="3" fill="#3b6fd8"/>
+<text x="684.0" y="90.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">42,1 %</text>
+<text x="60" y="128.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">PC</text>
+<rect x="70" y="112" width="462.1" height="24" rx="3" fill="#3b6fd8"/>
+<text x="540.1" y="128.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">32,1 %</text>
+<text x="60" y="166.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">PSI</text>
+<rect x="70" y="150" width="203.0" height="24" rx="3" fill="#3b6fd8"/>
+<text x="281.0" y="166.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">14,1 %</text>
+<text x="60" y="204.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">MPI</text>
+<rect x="70" y="188" width="82.0" height="24" rx="3" fill="#3b6fd8"/>
+<text x="160.0" y="204.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">5,7 %</text>
+<text x="60" y="242.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">BCPST</text>
+<rect x="70" y="226" width="44.6" height="24" rx="3" fill="#3b6fd8"/>
+<text x="122.6" y="242.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">3,1 %</text>
+<text x="60" y="280.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">PT</text>
+<rect x="70" y="264" width="34.5" height="24" rx="3" fill="#3b6fd8"/>
+<text x="112.5" y="280.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">2,4 %</text>
+<text x="60" y="318.5" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="12.5" fill="#1a202c">TSI</text>
+<rect x="70" y="302" width="7.2" height="24" rx="3" fill="#3b6fd8"/>
+<text x="85.2" y="318.5" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="700" fill="#14213d">0,5 %</text>
+<text x="728" y="354" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="10.5" fill="#6b7280">Données : L'Étudiant, 1er juin 2026 · graphique refait pour ce site</text>
+</svg>
