@@ -93,7 +93,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .theme{--tc:var(--cyan);--tcbg:color-mix(in srgb,var(--tc) 12%,transparent)}
 .t-sante{--tc:#7fe3b2}.t-geopolitique{--tc:var(--rouge)}.t-economie{--tc:#f2c879}.t-physique{--tc:var(--cyan)}
 .t-informatique{--tc:var(--bleu)}.t-maths{--tc:#b8a6ff}.t-etudes{--tc:var(--orange)}.t-philosophie{--tc:var(--menthe)}
-.t-langue{--tc:var(--rose)}.t-hors{--tc:var(--bleu)}
+.t-langue{--tc:var(--rose)}
 
 .vig{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:8px;min-height:175px;padding:14px;
   background:var(--verre);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid var(--trait);border-radius:12px;transition:border-color .2s,background-color .2s}
@@ -222,7 +222,6 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   <symbol id="i-etudes" viewBox="0 0 24 24"><path d="M2 9.5 12 5l10 4.5-10 4.5z"/><path d="M6 12v4.5c0 1.6 2.7 3 6 3s6-1.4 6-3V12M22 9.5V15"/></symbol>
   <symbol id="i-philosophie" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.5"/><path d="M12 3v18"/></symbol>
   <symbol id="i-langue" viewBox="0 0 24 24"><path d="M4 7h6v5.5c0 2.8-1.8 4.6-4.5 4.8M14 7h6v5.5c0 2.8-1.8 4.6-4.5 4.8"/></symbol>
-  <symbol id="i-hors" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
 </svg>
 
 <header class="entete">
@@ -255,7 +254,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 <!-- ======================= ACCUEIL ======================= -->
 <section class="view" id="v-accueil">
   <div class="themes-entete">
-    <h1 class="themes-titre">Neuf thèmes, <em>cent vingt-cinq</em> fiches de lecture</h1>
+    <h1 class="themes-titre">Neuf thèmes, <em>cent vingt-six</em> fiches de lecture</h1>
   </div>
 
   <div class="grid">
@@ -277,7 +276,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="s" d="M0 270h400"/><rect class="f" x="205" y="200" width="32" height="70"/><rect class="f" x="251" y="160" width="32" height="110"/><rect class="f" x="297" y="112" width="32" height="158"/><rect class="f" x="343" y="62" width="32" height="208"/><path d="M40 215l60-30 50 20 80-80 60-10" stroke-dasharray="7 6"/><circle class="d" cx="150" cy="205" r="5"/><circle class="d" cx="230" cy="125" r="5"/><circle class="f" cx="75" cy="250" r="38"/><circle class="s" cx="75" cy="250" r="26"/><text x="75" y="262" font-size="34" text-anchor="middle">€</text></svg>
       <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-economie"/></svg></span><h3><a href="#economie">Économie et finance</a></h3></div>
       <a class="cover" href="#economie" tabindex="-1" aria-hidden="true"></a>
-      <span class="count">4 fiches</span>
+      <span class="count">5 fiches</span>
     </article>
 
     <article class="vig theme t-physique">
@@ -323,16 +322,6 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     </article>
   </div>
 
-  <div class="side">
-    <article class="mini theme t-hors">
-      <h3><a href="#hors-theme">Hors thème · 1 fiche</a></h3>
-      <p>Une politique de confidentialité d'entreprise, sans lien avec la culture générale.</p>
-    </article>
-    <article class="mini theme t-hors">
-      <h3><a href="#en-attente">Liens à compléter · 2 liens</a></h3>
-      <p>Un lien Gmail et une recherche Google, non ouverts. Les neuf vidéos YouTube de la liste ont désormais leur fiche.</p>
-    </article>
-  </div>
 </section>
 
 <!-- ======================= SANTÉ ======================= -->
@@ -474,7 +463,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   <div class="thead">
     <span class="ico"><svg aria-hidden="true"><use href="#i-economie"/></svg></span>
     <h2>Économie et finance</h2>
-    <p>Trois documents : ce qui arrive aux épargnants quand l'État ne paie plus, la théorie qui explique comment répartir son épargne, et un panorama des entreprises cotées de l'informatique quantique. S'y ajoute une fiche de synthèse sur la loi de Pareto, la règle des 80/20. Ce sont des résumés de lecture, pas des conseils d'investissement.</p>
+    <p>Quatre documents : ce qui arrive aux épargnants quand l'État ne paie plus, la théorie qui explique comment répartir son épargne, et un panorama des entreprises cotées de l'informatique quantique et ce que contient une politique de confidentialité RH d'entreprise. S'y ajoute une fiche de synthèse sur la loi de Pareto, la règle des 80/20. Ce sont des résumés de lecture, pas des conseils d'investissement.</p>
   </div>
   <div class="col">
 
@@ -703,6 +692,28 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     </ul>
     <p class="note"><b>À retenir.</b> Une minorité de causes produit la majorité des effets : repérez-la, traitez-la d'abord, puis recommencez. Le ratio varie (70/30, 90/10), la logique de concentration demeure. Ne confondez pas concentration et causalité, ne négligez pas les 80 % restants, et n'appliquez jamais la règle mécaniquement aux personnes.</p>
     <p class="note"><b>Voir aussi.</b> <a href="#economie-portefeuille">La théorie moderne du portefeuille</a> : Taleb y reproche à la loi normale de sous-estimer les événements extrêmes et préfère les lois de puissance ou de Pareto.</p>
+  </article>
+
+  <article class="fiche" id="economie-confidentialite-rh">
+    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Politique de confidentialité RH : ce qu'elle contient dans une entreprise</h3>
+    <p class="meta">Fiche générique tirée d'une politique de confidentialité RH (version France, mars 2026, 16 pages) · seuls les points communs à la plupart des entreprises sont gardés</p>
+    <p>Une politique de confidentialité RH explique aux candidats, salariés et anciens salariés (CDI, CDD, intérim) comment leur employeur traite leurs données personnelles, au regard du RGPD. Le responsable de traitement est l'entité qui recrute ou emploie la personne ; en cas de doute, on s'adresse à la fonction RH ou au délégué à la protection des données (DPO).</p>
+    <ul>
+      <li><b>Données collectées :</b> identité et coordonnées, contacts d'urgence, pièces d'identité et droit de travailler, vérifications avant embauche, contrat et poste, rémunération et coordonnées bancaires, numéro de sécurité sociale, avantages, congés et absences (y compris des informations de santé), accès et sécurité informatique, évaluations, procédures disciplinaires, frais professionnels, démission ou licenciement, cookies des sites internes. Les données de diversité sont collectées sur la base du volontariat.</li>
+      <li><b>Finalités :</b> recrutement, intégration et départ, paie, avantages sociaux, gestion des performances, formation, absences et retours au travail, santé et sécurité, enquêtes internes, communication interne, statistiques sur les effectifs, surveillance des systèmes et des locaux, lancement d'alerte. Les données ne doivent servir qu'à des finalités définies, explicites et légitimes.</li>
+      <li><b>Bases légales :</b> l'exécution du contrat de travail, une obligation légale de l'employeur, l'intérêt légitime de l'entreprise et, pour certaines données, le consentement explicite. Pour les candidats, ce sont des mesures précontractuelles. Les données sensibles (santé, par exemple) ne sont traitées que lorsque c'est nécessaire à l'exercice des droits et obligations de l'employeur.</li>
+      <li><b>Surveillance :</b> l'entreprise peut surveiller l'usage de ses systèmes informatiques (réseaux, messagerie, appareils professionnels), les badges d'accès et la vidéosurveillance, pour la sécurité des personnes et des biens, la prévention de la fraude et des abus et la conservation de preuves.</li>
+      <li><b>Lancement d'alerte :</b> un dispositif permet de signaler des manquements, parfois par un prestataire externe et de façon anonyme. Les données sensibles ou pénales ne sont traitées que si l'enquête l'exige.</li>
+      <li><b>Données de diversité :</b> fournies librement, avec une option « préfère ne pas répondre », retirables à tout moment, sans conséquence sur la relation de travail ; les résultats ne sont communiqués que sous forme agrégée et anonymisée, et les données ne sont pas conservées plus longtemps que nécessaire.</li>
+      <li><b>Vos droits :</b> accès, rectification, effacement, opposition, limitation du traitement, portabilité, retrait du consentement, droit de ne pas faire l'objet d'une décision fondée uniquement sur un traitement automatisé (y compris le profilage), et plainte auprès de l'autorité de contrôle (la CNIL en France).</li>
+      <li><b>Partage :</b> sociétés du groupe, prestataires et sous-traitants, organismes d'avantages sociaux, administrations fiscales et sociales, autorités et tribunaux lorsque la loi l'impose, conseillers et auditeurs, et un éventuel acquéreur en cas de vente d'activité.</li>
+      <li><b>Transferts hors de l'Espace économique européen :</b> possibles, avec des garanties appropriées, notamment les clauses contractuelles types de la Commission européenne.</li>
+      <li><b>Conservation :</b> le temps nécessaire aux obligations légales et réglementaires, à la prévention de la fraude et aux intérêts légitimes de l'entreprise, selon sa politique interne de conservation ; le DPO peut en préciser les durées.</li>
+      <li><b>Sécurité :</b> mesures techniques et organisationnelles contre la perte, la destruction, l'altération, la divulgation ou l'accès non autorisés. Le mot de passe est personnel et ne se partage pas ; un compte piraté se signale immédiatement.</li>
+      <li><b>Modifications et contact :</b> les changements sont notifiés aux salariés (par le manager, l'intranet ou un courrier) ; pour toute question, on contacte la fonction RH ou le DPO.</li>
+    </ul>
+    <p class="note"><b>Précautions.</b> Cette fiche résume une seule politique d'entreprise (France) en ne gardant que les points courants. Chaque employeur a sa propre politique, ses propres durées de conservation et ses propres contacts : ce n'est pas un avis juridique.</p>
   </article>
 
   </div>
@@ -3832,62 +3843,6 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   <a class="back" href="#accueil">← Tous les thèmes</a>
 </section>
 
-<!-- ======================= HORS THÈME ======================= -->
-<section class="view theme t-hors" id="v-hors-theme">
-  <a class="back" href="#accueil">← Tous les thèmes</a>
-  <div class="thead">
-    <span class="ico"><svg aria-hidden="true"><use href="#i-hors"/></svg></span>
-    <h2>Hors thème</h2>
-    <p>Ce document n'entre dans aucun des neuf thèmes. Il a sans doute été déposé par erreur.</p>
-  </div>
-  <div class="col">
-
-  <article class="fiche" id="hors-theme-confidentialite-rh">
-    <div class="badges"><span class="b">PDF</span><span class="b b-lu">Lu en entier</span></div>
-    <h3>Politique de confidentialité RH : ce qu'elle contient dans une entreprise</h3>
-    <p class="meta">Fiche générique tirée d'une politique de confidentialité RH (version France, mars 2026, 16 pages) · seuls les points communs à la plupart des entreprises sont gardés</p>
-    <p>Une politique de confidentialité RH explique aux candidats, salariés et anciens salariés (CDI, CDD, intérim) comment leur employeur traite leurs données personnelles, au regard du RGPD. Le responsable de traitement est l'entité qui recrute ou emploie la personne ; en cas de doute, on s'adresse à la fonction RH ou au délégué à la protection des données (DPO).</p>
-    <ul>
-      <li><b>Données collectées :</b> identité et coordonnées, contacts d'urgence, pièces d'identité et droit de travailler, vérifications avant embauche, contrat et poste, rémunération et coordonnées bancaires, numéro de sécurité sociale, avantages, congés et absences (y compris des informations de santé), accès et sécurité informatique, évaluations, procédures disciplinaires, frais professionnels, démission ou licenciement, cookies des sites internes. Les données de diversité sont collectées sur la base du volontariat.</li>
-      <li><b>Finalités :</b> recrutement, intégration et départ, paie, avantages sociaux, gestion des performances, formation, absences et retours au travail, santé et sécurité, enquêtes internes, communication interne, statistiques sur les effectifs, surveillance des systèmes et des locaux, lancement d'alerte. Les données ne doivent servir qu'à des finalités définies, explicites et légitimes.</li>
-      <li><b>Bases légales :</b> l'exécution du contrat de travail, une obligation légale de l'employeur, l'intérêt légitime de l'entreprise et, pour certaines données, le consentement explicite. Pour les candidats, ce sont des mesures précontractuelles. Les données sensibles (santé, par exemple) ne sont traitées que lorsque c'est nécessaire à l'exercice des droits et obligations de l'employeur.</li>
-      <li><b>Surveillance :</b> l'entreprise peut surveiller l'usage de ses systèmes informatiques (réseaux, messagerie, appareils professionnels), les badges d'accès et la vidéosurveillance, pour la sécurité des personnes et des biens, la prévention de la fraude et des abus et la conservation de preuves.</li>
-      <li><b>Lancement d'alerte :</b> un dispositif permet de signaler des manquements, parfois par un prestataire externe et de façon anonyme. Les données sensibles ou pénales ne sont traitées que si l'enquête l'exige.</li>
-      <li><b>Données de diversité :</b> fournies librement, avec une option « préfère ne pas répondre », retirables à tout moment, sans conséquence sur la relation de travail ; les résultats ne sont communiqués que sous forme agrégée et anonymisée, et les données ne sont pas conservées plus longtemps que nécessaire.</li>
-      <li><b>Vos droits :</b> accès, rectification, effacement, opposition, limitation du traitement, portabilité, retrait du consentement, droit de ne pas faire l'objet d'une décision fondée uniquement sur un traitement automatisé (y compris le profilage), et plainte auprès de l'autorité de contrôle (la CNIL en France).</li>
-      <li><b>Partage :</b> sociétés du groupe, prestataires et sous-traitants, organismes d'avantages sociaux, administrations fiscales et sociales, autorités et tribunaux lorsque la loi l'impose, conseillers et auditeurs, et un éventuel acquéreur en cas de vente d'activité.</li>
-      <li><b>Transferts hors de l'Espace économique européen :</b> possibles, avec des garanties appropriées, notamment les clauses contractuelles types de la Commission européenne.</li>
-      <li><b>Conservation :</b> le temps nécessaire aux obligations légales et réglementaires, à la prévention de la fraude et aux intérêts légitimes de l'entreprise, selon sa politique interne de conservation ; le DPO peut en préciser les durées.</li>
-      <li><b>Sécurité :</b> mesures techniques et organisationnelles contre la perte, la destruction, l'altération, la divulgation ou l'accès non autorisés. Le mot de passe est personnel et ne se partage pas ; un compte piraté se signale immédiatement.</li>
-      <li><b>Modifications et contact :</b> les changements sont notifiés aux salariés (par le manager, l'intranet ou un courrier) ; pour toute question, on contacte la fonction RH ou le DPO.</li>
-    </ul>
-    <p class="note"><b>Précautions.</b> Cette fiche résume une seule politique d'entreprise (France) en ne gardant que les points courants. Chaque employeur a sa propre politique, ses propres durées de conservation et ses propres contacts : ce n'est pas un avis juridique.</p>
-  </article>
-
-  </div>
-  <a class="back" href="#accueil">← Tous les thèmes</a>
-</section>
-
-<!-- ======================= EN ATTENTE ======================= -->
-<section class="view theme t-hors" id="v-en-attente">
-  <a class="back" href="#accueil">← Tous les thèmes</a>
-  <div class="thead">
-    <span class="ico"><svg aria-hidden="true"><use href="#i-hors"/></svg></span>
-    <h2>Liens à compléter</h2>
-    <p>Deux liens de la liste « Document sans titre 3 » qui restent sans fiche. Les neuf vidéos YouTube qui figuraient ici ont été lues et classées dans leur thème.</p>
-  </div>
-  <div class="col">
-    <div class="tablewrap"><table>
-      <thead><tr><th>Lien</th><th>Ce qu'on en sait</th></tr></thead>
-      <tbody>
-        <tr><td>Lien vers un message de votre boîte Gmail</td><td>Lien privé, volontairement non ouvert</td></tr>
-        <tr><td>Recherche Google « pereto principle »</td><td>Probablement une recherche sur le principe de Pareto (la règle des 80/20), cité dans la fiche <a href="#economie-portefeuille">Théorie moderne du portefeuille</a>. Les résultats de recherche n'ont pas été ouverts.</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note" style="margin-top:16px"><b>Déjà classés dans leur thème :</b> <a href="#philosophie-fins-ia">la vidéo sur les fins possibles de l'IA</a> (résumée par chapitres, dans Philosophie et Sagesse), <a href="#informatique-internet">histoire d'Internet</a>, <a href="#maths-jeux">théorie des jeux</a>, <a href="#etudes-tescia">site de l'Aores</a> et <a href="#philosophie-precepteur">la chaîne Le Précepteur</a>. Les neuf vidéos lues le 8 novembre 2026 : <a href="#physique-interrupteur">allumer la lumière</a> (Physique), <a href="#maths-ens-1966">l'épreuve de l'ENS 1966</a> et <a href="#maths-einstein">la géométrie des équations d'Einstein</a> (Mathématiques), <a href="#philosophie-stoicisme">dix principes stoïciens</a> (Philosophie et Sagesse), <a href="#etudes-oraux-x-1988">les oraux de l'X en 1988</a>, <a href="#etudes-mauvaises-notes">les mauvaises notes en prépa</a>, <a href="#etudes-ginette-erreurs">sept erreurs à Ginette</a>, <a href="#etudes-epfl-suisse">étudier à l'EPFL</a> et <a href="#etudes-centrale-x">Centrale contre Polytechnique</a> (Études et orientation).</p>
-  </div>
-  <a class="back" href="#accueil">← Tous les thèmes</a>
-</section>
 
   </main>
 
