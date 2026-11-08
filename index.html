@@ -119,7 +119,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .fiche p,.fiche li{font-family:var(--f-serif);font-size:1.05rem;line-height:1.6}
 .fiche p{margin:0;max-width:68ch}
 .fiche h4{margin:6px 0 0;font:600 .76rem/1 var(--f-ui);text-transform:uppercase;letter-spacing:.14em;color:var(--menthe)}
-.fiche ul{margin:0;padding-left:1.15rem;display:grid;gap:6px;max-width:68ch}
+.fiche ul,.fiche ol{margin:0;padding-left:1.15rem;display:grid;gap:6px;max-width:68ch}
+.fiche ol{padding-left:2rem}
 .fiche li::marker{color:var(--tc)}
 .fiche b{font-weight:600}
 .meta{font:400 .8rem/1.5 var(--f-math)!important;color:var(--texte-doux)}
@@ -266,7 +267,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       <svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><path class="f" d="M180 60h170a24 24 0 0 1 24 24v70a24 24 0 0 1-24 24H260l-40 34v-34h-40a24 24 0 0 1-24-24V84a24 24 0 0 1 24-24z"/><text x="277" y="136" font-size="56" text-anchor="middle">Aa</text><path class="s" d="M40 215q40-50 80 0t80 0 80 0 80 0"/><path class="s" d="M60 255q40-30 80 0t80 0 80 0 80 0"/><circle class="d" cx="58" cy="72" r="5"/><text x="40" y="160" font-size="34" opacity=".7">«»</text></svg>
       <div class="vhead"><span class="ico"><svg aria-hidden="true"><use href="#i-langue"/></svg></span><h3><a href="#langue">Langue française</a></h3></div>
       <a class="cover" href="#langue" tabindex="-1" aria-hidden="true"></a>
-      <span class="count">3 fiches</span>
+      <span class="count">2 fiches</span>
     </article>
   </div>
 
@@ -1834,32 +1835,72 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   <div class="thead">
     <span class="ico"><svg aria-hidden="true"><use href="#i-langue"/></svg></span>
     <h2>Langue française</h2>
-    <p>Trois images de virelangues, ces phrases difficiles à prononcer vite. Je décris leur contenu sans recopier les textes.</p>
+    <p>Deux fiches pour travailler la diction : des phrases d'articulation et des virelangues, à dire à voix haute.</p>
   </div>
   <div class="col">
 
-  <article class="fiche" id="langue-exercices">
-    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
-    <h3>28 exercices d'articulation</h3>
-    <p class="meta">Articulations.png · feuille intitulée « Exercices d'articulation »</p>
-    <p>Une feuille de 28 phrases numérotées. On y trouve des classiques à base de répétitions de sons proches : les « s » et « ch » des saucissons, les « r » des rats, les « p » et « b » du pêcheur et du dragon, les « t » et « d » d'un petit train de mots, ou les « c » de scies et de cigares. D'autres jouent sur des noms propres à rallonge ou sur des phrases presque identiques qui ne diffèrent que d'une lettre.</p>
-    <p>Elle mêle phrases courtes à répéter vite et textes longs, comme celui du pêcheur qui prépare toute une liste d'objets. La phrase 25 est un petit dialogue autour d'une tortue et d'un tatou.</p>
+  <article class="fiche" id="langue-articulation">
+    <div class="badges"><span class="b">Texte</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Articulation (capacité motrice)</h3>
+    <p class="meta">Document sans titre.txt · 28 phrases</p>
+    <ol>
+      <li>Fruits frais, fruits frits, fruits cuits, fruits crus.</li>
+      <li>Trois très gros, gras, grands rats gris grattent.</li>
+      <li>Mur gâté, trou s'y fit, rat s'y mit.</li>
+      <li>Un dragon gradé dégrade un gradé dragon.</li>
+      <li>Didon dîna, dit-on, du dos d'un dodu dindon.</li>
+      <li>Donnez-lui à minuit huit fruits cuits et si ces huit fruits cuits lui nuisent, donnez-lui huit fruits crus.</li>
+      <li>Papa boit dans les pins. Papa peint dans les bois. Dans les bois, papa boit et peint.</li>
+      <li>Ciel si c'est cinq sous ces six ou sept saucissons-ci, c'est cent cinq sous ces cent sept saucissons aussi.</li>
+      <li>Madame Coutufon dit à Madame Foncoutu: "Bonjour, madame Foncoutu; y a-t-il beaucoup de Foncoutus à Coutufon?" - "Il y a autant de Foncoutus à Coutufon qu'il y a de Coutufons à Foncoutu".</li>
+      <li>La cavale au Valaque avala l'eau du lac et l'eau du lac lava la cavale au Valaque.</li>
+      <li>Les chemises de l'archiduchesse sont-elles sèches, archi-sèches?</li>
+      <li>Rat vit rôt, rôt tenta rat, rat mit patte à rôt, rot brûla pattes à rat, rat secoua pattes et quitta rôt.</li>
+      <li>Un pêcheur péchait sous un pécher qui l'empêchait de bien pécher.</li>
+      <li>Un pêcheur prépare pitance, plaid, pliant, pipe, parapluie, prend panier percé pour ne pas perdre petits poissons, place dans poche petit pot parfaite piquette, puis part pédestrement pêcher pendant période permise par police.</li>
+      <li>Le fisc fixe exprès chaque taxe excessive exclusivement au luxe et à l'exquis.</li>
+      <li>Mille millions de merveilleux musiciens murmurent des mélodies multiples et mirifiques.</li>
+      <li>Dans la gendarmerie, quand un gendarme rit, tous les gendarmes rient dans la gendarmerie.</li>
+      <li>Je dis que tu l'as dit à Didi ce que j'ai dit jeudi.</li>
+      <li>Ce ver vert sévère sait verser ses verres verts.</li>
+      <li>Les vers verts levèrent le verre vert vers le ver vert.</li>
+      <li>Huit huîtres crues, huit truites cuites.</li>
+      <li>L'assassin sur son sein suçait son sang sans cesse.</li>
+      <li>Trois très gros rats dans trois très grands trous rongèrent trois très gros grains d'orge.</li>
+      <li>Si six cent scies scient six cent saucisses, six cent six scies scieront six cent six saucissons.</li>
+      <li>Tatie, ton thé t'a-t-il ôté ta toux tenace, disait la tortue au tatou. Mais pas du tout, dit le tatou. Je tousse tant que l'on m'entend de Tahiti au Toumbouctou.</li>
+      <li>Mon thé a-t-il ôté ta toue? Oui ton thé a ôté ma toue! Ma toue a été ôtée par ton thé!</li>
+      <li>Un chasseur sachant chasser sans son chien de chasse est un bon chasseur. Un bon chasseur est un chasseur sachant chasser sans son chien de chasse.</li>
+      <li>La sole a salé son lit mais la mer a lavé le lit que la sole a salé et la sole rissole dans la casserole.</li>
+    </ol>
   </article>
 
-  <article class="fiche" id="langue-serie-1">
-    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
-    <h3>Série de virelangues, numéros 1 à 8</h3>
-    <p class="meta">Articulations2.png · huit phrases en gras</p>
-    <p>Huit virelangues, dont certains sont aussi dans la feuille de 28 exercices : le « donnez-lui à minuit », le dialogue de Madame Foncoutu, le papa qui boit dans les pins, le pêcheur et sa liste, les saucissons de « ciel si c'est cinq sous ». S'y ajoutent une série autour d'une marchande de foie à Foix, une phrase sur les « grains d'orge » et une longue phrase sur trente-trois cuillères d'or argentées.</p>
-  </article>
-
-  <article class="fiche" id="langue-serie-2">
-    <div class="badges"><span class="b">Image</span><span class="b b-lu">Lu en entier</span></div>
-    <h3>Série de virelangues, numéros 9 à 19</h3>
-    <p class="meta">Articulations3.png · suite de la série précédente</p>
-    <p>Onze virelangues supplémentaires. Les plus longs jouent sur la répétition de préfixes et de verbes : un ange qui change de visage, une pomme à « dépépiner », l'Américain à « désaméricaniser », la cathédrale à « décathédraliser ». D'autres reposent sur des sons serrés : six sachets chers, six cents scies, six cigares, un cordier qui corde une corde.</p>
-    <p>On y retrouve aussi le dragon gradé, le rat qui vit un rot et la cavale du Valaque, qui figurent déjà dans la feuille de 28 exercices.</p>
-    <p class="note"><b>Conseil d'usage.</b> Dire chaque phrase d'abord lentement, en détachant chaque syllabe, puis accélérer sans perdre la netteté. C'est la pratique courante pour ce type d'exercice, pas une indication des documents.</p>
+  <article class="fiche" id="langue-virelangues">
+    <div class="badges"><span class="b">Texte</span><span class="b b-lu">Lu en entier</span></div>
+    <h3>Virelangues (entraînement)</h3>
+    <p class="meta">Document sans titre.txt · 19 virelangues</p>
+    <ol>
+      <li>Donnez-lui à minuit huit fruits cuits et si ces huit fruits cuits lui nuisent, donnez-lui huit fruits crus.</li>
+      <li>Madame Coutufon dit à Madame Foncoutu: "Bonjour, madame Foncoutu; y a-t-il beaucoup de Foncoutus à Coutufon?"-"Il y a autant de Foncoutus à Coutufon qu'il y a de Coutufons à Foncoutu."</li>
+      <li>Papa boit dans les pins. Papa peint dans les bois. Dans les bois, papa boit et peint.</li>
+      <li>Un pêcheur prépare pitance, plaid, pliant, pipe, parapluie, prend panier percé pour ne pas perdre petits poissons, place dans poche petit pot parfaite piquette, puis part pédestrement pêcher pendant période permise par police.</li>
+      <li>Dis-moi gros gras grand grain d'orge, quand te dégros gras grand grain d'orgeras-tu ? Je me dégros grand grain d'orgerai quand tous les gros gras grands grains d'orge se dégros gras grand grain d'orgeront.</li>
+      <li>Il était une fois Une marchande de Foix Qui vendait du foie Dans la Ville de Foix Elle se dit: "Ma foi, C'est la dernière fois Que je vends du foie Dans la ville de Foix, car il fait trop froid."</li>
+      <li>Ciel si c'est cinq sous ces six ou sept saucissons-ci, c'est cent cinq sous ces cent sept saucissons aussi.</li>
+      <li>Grand doreur quand redoreras-tu sûrement et d'un goût rare mes trente-trois ou trente-quatre grandes cuillers d'or trop argentées ? Je redorerai sûrement et d'un goût rare les trente-trois ou trente-quatre grandes cuillers d'or trop argentées, quand j'aurai redoré sûrement et d'un goût rare les trente-trois ou trente-quatre autres grandes cuillers d'or trop argentées.</li>
+      <li>Un ange qui songeait à changer son visage pour donner le change, se vit si changé, que loin de louanger ce changement, il jugea que tous les autres anges jugeraient que jamais ange ainsi changé ne rechangerait jamais, et jamais plus ange ne songea à se changer.</li>
+      <li>Ces cent six sachets si chers qu'Alix à Nice exprès, tout en le sachant, chez Chasachax, choisit, sont si cher chaque, si cher, qu'ils charment peu.</li>
+      <li>Dis-moi, petite pomme, quand te dépetitepommeras-tu ? Je me dépetitepommerai quand toutes les petites pommes se dépetitepommeront. Or, comme toutes les petites pommes ne se dépetitepommeront jamais, petite pomme ne se dépetitepommera, jamais.</li>
+      <li>Six cents scies scient cent cigares, six cents scies scient six cents cigares, six cents scies scient six cent six cigares.</li>
+      <li>Un dragon gradé, un gradé dragon.</li>
+      <li>Quand un cordier cordant veut corder une corde, pour sa corde corder, trois cordon il accorde. Mais si l'un des cordons de la corde décorde, le cordon décordant fait décorder la corde.</li>
+      <li>Rat vit rôt, rôt tenta rat, rat mit patte à rôt, rot brûla pattes à rat, rat secoua pattes et quitta rôt.</li>
+      <li>J'ai un point dans mon pourpoint qui me pique et qui me pointe, si je savais celui qui a mis ce point dans mon pourpoint qui me pique et qui ne pointe, je lui mettrais un point dans son pourpoint qui le pique et qui le pointe.</li>
+      <li>Si l'Américain se désaméricaniserait comment le réaméricaniserions-nous, l'Américain ? On le réaméricaniserait comme on l'a désaméricanisé, l'Américain.</li>
+      <li>La cavale au Valaque avala l'eau du lac et l'eau du lac lava la cavale au Valaque.</li>
+      <li>Si la cathédrale se décathédraliserait, comment la recathédraliserait-on, la cathédrale ? On la recathédraliserait comme on l'a décathédralisées, la cathédrale.</li>
+    </ol>
+    <p class="note"><b>Conseil d'usage.</b> Dire chaque phrase d'abord lentement, en détachant chaque syllabe, puis accélérer sans perdre la netteté. C'est la pratique courante pour ce type d'exercice, pas une indication du document.</p>
   </article>
 
   </div>
