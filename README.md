@@ -1,6 +1,6 @@
 # CultureGSite
 
-Site de culture générale : 9 vignettes thématiques (santé, géopolitique, économie, physique, informatique, mathématiques, études, philosophie, langue française). Chaque vignette ouvre une page de thème qui liste et résume les documents, pages web et vidéos associés, avec le statut de lecture de chaque source.
+Site de culture générale : 9 vignettes thématiques (santé, géopolitique, économie, physique, informatique, mathématiques, études, philosophie et sagesse, langue française). Chaque vignette ouvre une page de thème qui liste et résume les documents, pages web et vidéos associés, avec le statut de lecture de chaque source.
 
 ## Fichiers
 
