@@ -5,6 +5,7 @@ Site de culture générale : 9 vignettes thématiques (santé, géopolitique, é
 ## Fichiers
 
 - `index.html` : le site complet (HTML, CSS et JavaScript dans un seul fichier, sans dépendance à installer). La navigation entre thèmes et fiches repose sur le fragment d'URL (`#sante`, `#etudes-salaires`, etc.).
+- `fiches-ses/` : six cours interactifs pour lycéens (fiches et quiz) sur les SES, la finance personnelle, l'entreprise et les marchés, avec une page d'accueil `accueil-ses.html`. Pages autonomes (HTML, CSS et JavaScript dans chaque fichier), ouvertes depuis le thème « Économie et finance ».
 - `images/` : illustrations des fiches (SVG réalisés pour le site).
 
 ## Utilisation
