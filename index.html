@@ -250,7 +250,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 <!-- ======================= ACCUEIL ======================= -->
 <section class="view" id="v-accueil">
   <div class="themes-entete">
-    <h1 class="themes-titre">Neuf thèmes, <em>cent trente-trois</em> fiches de lecture</h1>
+    <h1 class="themes-titre">Neuf thèmes, <em>133</em> fiches de lecture</h1>
   </div>
 
   <div class="grid">
@@ -4030,20 +4030,6 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   });
 
   /* ---------- compteurs : recalculés d'après les fiches présentes dans la page ---------- */
-  function enLettres(n){
-    var u = ['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf'];
-    var d = ['','','vingt','trente','quarante','cinquante','soixante'];
-    function moins100(n){
-      if (n < 20) return u[n];
-      var dz = Math.floor(n / 10), r = n % 10;
-      if (dz === 7 || dz === 9) { var b = (dz === 7 ? 60 : 80), x = n - b; return (dz === 7 ? 'soixante' : 'quatre-vingt') + (dz === 7 && x === 11 ? ' et ' : '-') + u[x]; }
-      if (dz === 8) return r ? 'quatre-vingt-' + u[r] : 'quatre-vingts';
-      return d[dz] + (r === 1 ? ' et un' : r ? '-' + u[r] : '');
-    }
-    if (n < 100) return moins100(n);
-    var c = Math.floor(n / 100), r = n % 100, pre = c === 1 ? 'cent' : u[c] + ' cent';
-    return pre + (r ? ' ' + moins100(r) : (c > 1 ? 's' : ''));
-  }
   (function(){
     var total = 0;
     document.querySelectorAll('.vig').forEach(function(v){
@@ -4055,7 +4041,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       c.textContent = n + (n > 1 ? ' fiches' : ' fiche'); total += n;
     });
     var em = document.querySelector('.themes-titre em');
-    if (em && total) em.textContent = enLettres(total);
+    if (em && total) em.textContent = total;
   })();
 
   function show(){
