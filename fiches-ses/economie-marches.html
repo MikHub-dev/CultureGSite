@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Économie et marchés — Fiches et quiz</title>
+<meta name="description" content="Offre et demande, concurrence, prix, échanges internationaux, rôle de l&#x27;État et effets des politiques publiques.">
+<style>
+:root{
+  --accent:#0e7490;
+  --bg:#faf8f4; --card:#ffffff; --ink:#1d2330; --muted:#5a6477; --line:#e7e2d9;
+  --accent-text:var(--accent);
+  --soft:color-mix(in srgb,var(--accent) 9%,var(--card));
+  --soft2:color-mix(in srgb,var(--accent) 16%,var(--card));
+  --ok:#157a3c; --okbg:#e6f5ea; --ko:#b42318; --kobg:#fdeceb; --warn:#fff5dc; --warnline:#e8b93a; --warnink:#6b4a00;
+  --radius:16px; --shadow:0 1px 2px rgba(20,24,40,.05),0 6px 20px rgba(20,24,40,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#12141a;--card:#1b1f27;--ink:#eceff5;--muted:#a4adbe;--line:#2c323e;
+    --accent-text:color-mix(in srgb,var(--accent) 55%,#ffffff);
+    --soft:color-mix(in srgb,var(--accent) 16%,var(--card));--soft2:color-mix(in srgb,var(--accent) 26%,var(--card));
+    --ok:#5fd68a;--okbg:#12301f;--ko:#ff8a80;--kobg:#3b1816;--warn:#2e2610;--warnline:#a6791a;--warnink:#f1d58a;
+    --shadow:none}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;margin:0}
+a{color:var(--accent-text)}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+.hero{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:#fff;padding:26px 0 34px}
+.hero a{color:#fff;opacity:.9;text-decoration:none;font-size:.92rem}
+.hero a:hover{text-decoration:underline;opacity:1}
+.kicker{margin:18px 0 6px;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;opacity:.85;font-weight:600}
+.hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)}
+.hero p.lead{margin:12px 0 0;max-width:62ch;font-size:1.06rem;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);padding:3px 12px;border-radius:99px;font-size:.85rem}
+nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:9px 18px;scrollbar-width:thin}
+nav.toc a{white-space:nowrap;text-decoration:none;font-size:.88rem;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent-text)}
+nav.toc a.q{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+main{padding:28px 0 20px}
+h2.sec{font-size:1.5rem;margin:6px 0 16px}
+.fiche{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 20px;margin:0 0 18px;position:relative}
+.fiche h3{font-size:1.28rem;margin:0 0 12px;padding-left:46px;min-height:34px;display:flex;align-items:center}
+.num{position:absolute;left:20px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-family:system-ui,sans-serif}
+.def{border-left:4px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 12px}
+.formule{margin:12px 0;padding:11px 14px;text-align:center;font-weight:650;background:var(--soft2);border-radius:10px;font-size:1.02rem;overflow-wrap:anywhere}
+ul.pts{margin:10px 0;padding-left:1.2em}
+ul.pts li{margin:6px 0}
+ul.pts li::marker{color:var(--accent)}
+.ex,.pg{margin:12px 0 0;padding:10px 14px;border-radius:10px;font-size:.97rem}
+.ex{background:color-mix(in srgb,var(--ink) 5%,var(--card));border:1px dashed var(--line)}
+.pg{background:var(--warn);border:1px solid var(--warnline);color:var(--warnink)}
+.lbl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:1px 8px;border-radius:6px;vertical-align:1px}
+.ex .lbl{background:var(--accent);color:#fff}
+.pg .lbl{background:var(--warnline);color:#1b1300}
+.mots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.mots span{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent-text);border:1px solid var(--soft2);font-weight:600}
+.memo{background:var(--ink);color:var(--bg);border-radius:var(--radius);padding:20px 22px;margin:26px 0 0}
+.memo h3{font-size:1.2rem;margin-bottom:8px}
+.memo ul{margin:0;padding-left:1.2em}.memo li{margin:6px 0}
+.quizbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:6px}
+.qhead{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--muted);margin-bottom:8px;font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--soft2);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qtext{font-size:1.15rem;font-weight:650;margin:0 0 14px;outline:none}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--soft)}
+.opt:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;background:var(--soft2);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--accent-text)}
+.opt:disabled{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt.good .k{background:var(--ok);color:#fff}.opt.bad .k{background:var(--ko);color:#fff}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.98rem}
+.fb.good{background:var(--okbg);border:1px solid var(--ok)}.fb.bad{background:var(--kobg);border:1px solid var(--ko)}
+.fb b{display:block;margin-bottom:2px}
+.btn{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:12px;padding:11px 20px;background:var(--accent);color:#fff;margin-top:14px}
+.btn:hover{filter:brightness(1.08)}.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--accent-text);border:2px solid var(--accent)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.score{text-align:center;padding:8px 0}
+.score .big{font-size:3rem;font-weight:800;color:var(--accent-text);font-family:Georgia,serif}
+.score p{margin:4px 0}
+.rev{margin-top:14px;text-align:left}
+.rev h4{margin:0 0 8px;font-size:1rem}
+.rev .item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.95rem}
+.rev .item small{display:block;margin-top:4px;color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 10px}
+.pager a{flex:1 1 240px;text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;color:var(--ink)}
+.pager a:hover{border-color:var(--accent)}
+.pager small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager .nx{text-align:right}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 18px 40px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:8px 0 28px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .12s}
+.card:hover{transform:translateY(-3px)}
+.card .ic{font-size:1.8rem}
+.card h3{font-size:1.15rem;margin:6px 0}
+.card p{margin:0 0 12px;color:var(--muted);font-size:.93rem;flex:1}
+.card .meta{font-size:.8rem;font-weight:700;color:var(--accent-text)}
+.howto{background:var(--soft);border:1px solid var(--soft2);border-radius:var(--radius);padding:16px 20px;margin:0 0 26px}
+.howto ol{margin:6px 0 0;padding-left:1.3em}
+@media(max-width:560px){body{font-size:16px}.fiche{padding:18px 16px}.num{left:14px;top:16px}.fiche h3{padding-left:42px}}
+@media print{
+  nav.toc,#quiz-sec,.pager,.hero a,.chips{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}.hero{background:none!important;color:#000;padding:0}
+  .fiche{box-shadow:none;break-inside:avoid;border:1px solid #999}.memo{background:#eee;color:#000}
+  .num{background:#444!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<a href="accueil-ses.html">← Tous les thèmes</a>
+<div class="kicker">Culture économique</div>
+<h1>🌍 Économie et marchés</h1>
+<p class="lead">Offre et demande, concurrence, prix, échanges internationaux, rôle de l&#x27;État et effets des politiques publiques.</p>
+<div class="chips"><span class="chip">9 fiches</span><span class="chip">13 questions de quiz</span><span class="chip">≈ 18 min</span></div>
+</div></header>
+<nav class="toc" aria-label="Sommaire"><div class="wrap"><a href="#f1">1 · Marchés</a><a href="#f2">2 · Offre et demande</a><a href="#f3">3 · Concurrence</a><a href="#f4">4 · Prix et inflation</a><a href="#f5">5 · Échanges</a><a href="#f6">6 · Rôle de l&#x27;État</a><a href="#f7">7 · Politiques publiques</a><a href="#f8">8 · Économie mondiale</a><a href="#f9">9 · Décisions politiques</a><a class="q" href="#quiz-sec">Quiz</a></div></nav>
+<main class="wrap">
+<h2 class="sec">Les fiches</h2>
+<article class="fiche" id="f1" aria-labelledby="t1">
+<span class="num" aria-hidden="true">1</span><h3 id="t1">Le fonctionnement des marchés</h3>
+<p class="def">Un <strong>marché</strong> est un lieu, physique ou virtuel, où des vendeurs et des acheteurs échangent un bien, un service ou un actif à un certain prix.</p>
+<ul class="pts"><li>Il existe des marchés de <strong>biens et services</strong>, du <strong>travail</strong> (emplois et salaires), des <strong>capitaux</strong> (bourse, crédit) et des <strong>changes</strong> (monnaies).</li><li>Les marchés coordonnent les décisions de nombreux agents grâce aux <strong>prix</strong>, sans autorité centrale.</li><li><strong>Économie de marché</strong> : les prix et les décisions des agents jouent le rôle principal. <strong>Économie planifiée</strong> : l'État décide de la production. La plupart des pays, dont la France, ont une <strong>économie mixte</strong> : marchés et intervention de l'État.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Un site de vente en ligne est un marché virtuel : des vendeurs affichent des prix, des acheteurs comparent et choisissent.</p>
+<div class="mots" aria-label="Mots-clés"><span>marché</span><span>économie mixte</span><span>économie de marché</span></div>
+</article>
+<article class="fiche" id="f2" aria-labelledby="t2">
+<span class="num" aria-hidden="true">2</span><h3 id="t2">L'offre et la demande</h3>
+<p class="def">L'<strong>offre</strong> est la quantité que les producteurs veulent vendre à un prix donné. La <strong>demande</strong> est la quantité que les consommateurs veulent acheter à ce prix.</p>
+<ul class="pts"><li>Quand le prix monte, la demande a tendance à <strong>baisser</strong> et l'offre à <strong>augmenter</strong>.</li><li>Le <strong>prix d'équilibre</strong> est celui pour lequel offre et demande sont égales.</li><li><strong>Demande qui augmente</strong> (mode, hausse des revenus) : le prix d'équilibre monte. <strong>Demande qui baisse</strong> : il baisse.</li><li><strong>Offre qui augmente</strong> (progrès technique, baisse des coûts) : le prix baisse. <strong>Offre qui baisse</strong> (mauvaise récolte) : le prix monte.</li><li>Pour les produits de première nécessité, la demande réagit peu aux variations de prix.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Une mauvaise récolte réduit l'offre de blé : si la demande reste la même, le prix du blé augmente.</p>
+<div class="mots" aria-label="Mots-clés"><span>offre</span><span>demande</span><span>équilibre</span><span>déplacement de courbe</span></div>
+</article>
+<article class="fiche" id="f3" aria-labelledby="t3">
+<span class="num" aria-hidden="true">3</span><h3 id="t3">La concurrence</h3>
+<p class="def">La <strong>concurrence</strong> existe lorsque plusieurs vendeurs se disputent les mêmes clients.</p>
+<ul class="pts"><li><strong>Concurrence pure et parfaite</strong> : modèle théorique (très nombreux vendeurs et acheteurs, produits identiques, libre entrée sur le marché, information complète).</li><li><strong>Monopole</strong> : un seul vendeur ; <strong>oligopole</strong> : quelques grands vendeurs (téléphonie mobile, grande distribution) ; <strong>concurrence monopolistique</strong> : nombreux vendeurs aux produits différenciés (restaurants, vêtements).</li><li>Effets positifs de la concurrence : prix plus bas, meilleure qualité, innovation et choix plus large pour les consommateurs.</li><li>Risques : <strong>ententes</strong> (des entreprises se mettent d'accord sur les prix) et <strong>abus de position dominante</strong>. L'Autorité de la concurrence et la Commission européenne les surveillent.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Si plusieurs opérateurs mobiles s'entendent secrètement pour garder des prix élevés, c'est une entente illicite et ils risquent de lourdes amendes.</p>
+<div class="mots" aria-label="Mots-clés"><span>concurrence</span><span>monopole</span><span>oligopole</span><span>entente</span></div>
+</article>
+<article class="fiche" id="f4" aria-labelledby="t4">
+<span class="num" aria-hidden="true">4</span><h3 id="t4">Les prix</h3>
+<p class="def">Le <strong>prix</strong> est la somme à payer pour obtenir un bien ou un service. Il résulte de la rencontre de l'offre et de la demande, mais aussi des coûts, de la concurrence et des taxes.</p>
+<div class="formule">Taux de variation = (valeur finale − valeur initiale) ÷ valeur initiale × 100</div>
+<ul class="pts"><li>Fonctions des prix : <strong>signal</strong> (un prix élevé indique la rareté), <strong>incitation</strong> (produire plus ou consommer moins), <strong>répartition</strong> des ressources.</li><li><strong>Inflation</strong> : hausse générale et durable du niveau des prix. <strong>Déflation</strong> : baisse générale et durable. On mesure l'inflation avec l'indice des prix à la consommation (IPC).</li><li>Le <strong>pouvoir d'achat</strong> dépend à la fois du revenu et des prix : si les prix augmentent plus vite que les revenus, le pouvoir d'achat baisse.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Si les prix augmentent de 2 % et les revenus de 3 %, le pouvoir d'achat augmente d'environ 1 %.</p>
+<p class="pg"><span class="lbl">Attention</span>La hausse du prix d'un seul produit (par exemple le café) <strong>n'est pas de l'inflation</strong> : l'inflation concerne le niveau général des prix.</p>
+<div class="mots" aria-label="Mots-clés"><span>prix</span><span>inflation</span><span>IPC</span><span>pouvoir d'achat</span></div>
+</article>
+<article class="fiche" id="f5" aria-labelledby="t5">
+<span class="num" aria-hidden="true">5</span><h3 id="t5">Les échanges nationaux et internationaux</h3>
+<p class="def">Les <strong>échanges</strong> se font à l'intérieur d'un pays (entre régions, entreprises et ménages) et entre pays (<strong>importations</strong> et <strong>exportations</strong>).</p>
+<div class="formule">Solde commercial = Exportations − Importations</div>
+<ul class="pts"><li>Excédent commercial : on exporte plus qu'on importe. Déficit commercial : l'inverse.</li><li>Pourquoi échanger ? Pour accéder à des produits non disponibles, bénéficier de prix plus bas et se <strong>spécialiser</strong>. Selon David Ricardo (avantage comparatif), chaque pays gagne à produire ce qu'il fait relativement le mieux.</li><li><strong>Libre-échange</strong> : peu de barrières. <strong>Protectionnisme</strong> : droits de douane, quotas, normes pour protéger la production nationale.</li><li>L'Union européenne forme un <strong>marché unique</strong> où les marchandises, services, capitaux et personnes circulent librement.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>La France exporte des avions et des produits de luxe, et importe du pétrole et des produits électroniques.</p>
+<div class="mots" aria-label="Mots-clés"><span>exportation</span><span>importation</span><span>libre-échange</span><span>protectionnisme</span><span>avantage comparatif</span></div>
+</article>
+<article class="fiche" id="f6" aria-labelledby="t6">
+<span class="num" aria-hidden="true">6</span><h3 id="t6">Le rôle de l'État dans l'économie</h3>
+<p class="def">Les marchés ne suffisent pas toujours : l'État intervient pour corriger leurs défaillances et poursuivre des objectifs collectifs.</p>
+<ul class="pts"><li><strong>Allocation</strong> : produire des biens et services collectifs (routes, éclairage public, justice) et corriger les <strong>externalités</strong> comme la pollution.</li><li><strong>Redistribution</strong> : réduire les inégalités par les impôts progressifs et les prestations sociales.</li><li><strong>Stabilisation</strong> : limiter les fluctuations de l'activité, du chômage et de l'inflation.</li><li><strong>Régulation</strong> : fixer des règles (concurrence, normes sanitaires et environnementales).</li><li>L'intervention de l'État a aussi des limites : coût pour les finances publiques, risque d'inefficacité, effets imprévus.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Une taxe sur les émissions de CO2 vise à faire payer le coût de la pollution à ceux qui la causent (externalité).</p>
+<div class="mots" aria-label="Mots-clés"><span>externalité</span><span>redistribution</span><span>stabilisation</span><span>régulation</span><span>bien public</span></div>
+</article>
+<article class="fiche" id="f7" aria-labelledby="t7">
+<span class="num" aria-hidden="true">7</span><h3 id="t7">Les politiques publiques</h3>
+<p class="def">Une <strong>politique publique</strong> est un ensemble de décisions et d'actions des pouvoirs publics (État, collectivités, Union européenne) pour atteindre un objectif.</p>
+<ul class="pts"><li><strong>Politique budgétaire</strong> : choix des dépenses et des recettes de l'État (relance ou rigueur).</li><li><strong>Politique monétaire</strong> : menée par la Banque centrale (la BCE pour la zone euro), qui agit notamment sur les taux d'intérêt pour contrôler l'inflation et soutenir l'activité.</li><li>Autres politiques : de l'emploi, fiscale, de la concurrence, industrielle, environnementale, sociale.</li><li><strong>Déficit public</strong> : chaque année, les dépenses dépassent les recettes. <strong>Dette publique</strong> : cumul des déficits passés non remboursés.</li><li>Une politique publique suit des étapes : constat, décision, mise en œuvre, évaluation.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Une prime à l'achat de vélos électriques est une politique environnementale qui passe par une dépense publique.</p>
+<p class="pg"><span class="lbl">Attention</span><strong>Déficit ≠ dette</strong> : le déficit est un flux (une année), la dette est un stock (l'accumulation).</p>
+<div class="mots" aria-label="Mots-clés"><span>politique budgétaire</span><span>politique monétaire</span><span>BCE</span><span>déficit</span><span>dette</span></div>
+</article>
+<article class="fiche" id="f8" aria-labelledby="t8">
+<span class="num" aria-hidden="true">8</span><h3 id="t8">Les liens entre économie nationale et économie mondiale</h3>
+<p class="def">La <strong>mondialisation</strong> est l'intensification des échanges de biens, de services, de capitaux, d'informations et de personnes dans le monde entier.</p>
+<ul class="pts"><li>Les <strong>chaînes de valeur mondiales</strong> : un produit est souvent conçu dans un pays, fabriqué dans plusieurs autres et vendu dans le monde entier.</li><li>Les <strong>firmes multinationales</strong> organisent leur production à l'échelle mondiale.</li><li><strong>Interdépendance</strong> : une crise ou une décision dans un pays se transmet aux autres (crise financière de 2008, pénuries de composants après la pandémie, variation du prix de l'énergie).</li><li><strong>Taux de change</strong> : un euro fort rend les produits européens plus chers pour les acheteurs étrangers (exportations plus difficiles) mais les importations moins chères.</li><li>Avantages : choix, prix plus bas, croissance. Risques : dépendance, délocalisations, inégalités, pression sur l'environnement.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Un smartphone peut être conçu en Californie, avec des composants fabriqués dans plusieurs pays d'Asie et d'Europe, assemblé en Asie et vendu partout.</p>
+<div class="mots" aria-label="Mots-clés"><span>mondialisation</span><span>chaîne de valeur</span><span>multinationale</span><span>taux de change</span><span>interdépendance</span></div>
+</article>
+<article class="fiche" id="f9" aria-labelledby="t9">
+<span class="num" aria-hidden="true">9</span><h3 id="t9">Les effets économiques de certaines décisions politiques</h3>
+<p class="def">Toute mesure a des effets sur différents acteurs, dans le court et le long terme, voulus ou non. L'économie aide à les analyser.</p>
+<ul class="pts"><li><strong>Taxe sur un produit</strong> : en général, hausse du prix et baisse de la consommation, avec des recettes pour l'État.</li><li><strong>Prix plafonné en dessous du prix d'équilibre</strong> : la demande dépasse l'offre, d'où <strong>pénurie</strong> et risque de marché noir.</li><li><strong>Droits de douane</strong> : protègent les producteurs nationaux et font monter les prix des produits importés, mais risquent de provoquer des représailles et pénalisent les consommateurs.</li><li><strong>Salaire minimum</strong> : augmente le revenu des salariés concernés ; ses effets sur l'emploi font l'objet de débats entre économistes.</li><li><strong>Subvention</strong> : réduit le prix pour l'acheteur ou le coût pour le producteur, mais se finance par les impôts ou la dette.</li><li><strong>Méthode</strong> : 1) quelle mesure et quel objectif ? 2) qui est concerné ? 3) effets directs et indirects ? 4) court terme et long terme ? 5) bilan : qui gagne, qui perd ?</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Si l'État plafonne le prix d'un produit en dessous du prix d'équilibre, les consommateurs veulent en acheter beaucoup, mais les producteurs en proposent moins : les rayons se vident.</p>
+<div class="mots" aria-label="Mots-clés"><span>taxe</span><span>plafonnement</span><span>droits de douane</span><span>subvention</span><span>effets</span></div>
+</article>
+<aside class="memo"><h3>À retenir</h3><ul><li>Un marché confronte <strong>offre et demande</strong> ; le prix d'équilibre égalise les deux.</li><li>La concurrence profite aux consommateurs, mais doit être <strong>surveillée</strong> (ententes, abus de position dominante).</li><li>L'État a trois fonctions : <strong>allocation, redistribution, stabilisation</strong>.</li><li>Pour analyser une décision publique, il faut examiner <strong>qui gagne, qui perd, à court et à long terme</strong>.</li></ul></aside>
+<section id="quiz-sec" style="margin-top:34px">
+<h2 class="sec">Quiz d'évaluation</h2>
+<div class="quizbox"><div id="quiz"><noscript>Le quiz nécessite JavaScript.</noscript></div></div>
+</section>
+<div class="pager"><a href="entreprise-entrepreneuriat.html"><small>← Précédent</small>Entreprise et entrepreneuriat</a><a class="nx" href="accueil-ses.html"><small>Terminé →</small>Retour à l'accueil</a></div>
+</main>
+<footer>CultureGSite · Fiches pour lycéens · Les chiffres des exemples sont donnés à titre d'illustration.</footer>
+<script>
+(function(){
+  var Q=[{"q": "Quand la quantité offerte est égale à la quantité demandée, on dit que le marché est :", "o": ["En pénurie", "À l'équilibre", "En excédent d'offre", "En monopole"], "a": 1, "e": "Le prix correspondant est le prix d'équilibre."}, {"q": "Un produit devient très à la mode, alors que l'offre reste inchangée. Quel effet est le plus probable ?", "o": ["Une baisse du prix d'équilibre", "Une hausse du prix d'équilibre", "Aucun effet sur le prix", "La disparition de la demande"], "a": 1, "e": "Une demande plus forte face à une offre inchangée fait monter le prix."}, {"q": "Un progrès technique réduit les coûts de production d'un bien. Que se passe-t-il, toutes choses égales par ailleurs ?", "o": ["L'offre augmente et le prix tend à baisser", "L'offre baisse et le prix augmente", "La demande disparaît", "Le prix ne change jamais"], "a": 0, "e": "Des coûts plus faibles incitent les producteurs à offrir davantage : le prix d'équilibre baisse."}, {"q": "Comment appelle-t-on un marché où il n'y a qu'un seul vendeur ?", "o": ["Un oligopole", "Un monopole", "Une concurrence parfaite", "Un marché du travail"], "a": 1, "e": "Monopole : un seul vendeur. Oligopole : quelques vendeurs."}, {"q": "Des entreprises concurrentes s'accordent en secret pour fixer leurs prix. Cette pratique est :", "o": ["Une entente illicite, sanctionnée par les autorités de la concurrence", "Une forme normale de concurrence", "Une politique monétaire", "Une subvention"], "a": 0, "e": "Les ententes sur les prix privent les consommateurs des bénéfices de la concurrence."}, {"q": "Qu'est-ce que l'inflation ?", "o": ["La hausse du prix d'un seul produit", "La hausse générale et durable du niveau des prix", "La baisse du chômage", "L'augmentation des salaires"], "a": 1, "e": "On la mesure avec un indice des prix à la consommation."}, {"q": "Les prix augmentent de 2 % et les revenus de 3 %. Que devient le pouvoir d'achat ?", "o": ["Il baisse", "Il augmente", "Il est nul", "On ne peut pas savoir"], "a": 1, "e": "Les revenus progressent plus vite que les prix : le pouvoir d'achat augmente d'environ 1 %."}, {"q": "Un pays exporte pour 300 milliards d'euros et importe pour 320 milliards d'euros. Quel est son solde commercial ?", "o": ["Un excédent de 20 milliards", "Un déficit de 20 milliards", "Un excédent de 620 milliards", "Un solde nul"], "a": 1, "e": "Solde commercial = exportations − importations = 300 − 320 = −20 milliards : c'est un déficit."}, {"q": "Selon la théorie de l'avantage comparatif de Ricardo, pourquoi les pays ont-ils intérêt à échanger ?", "o": ["Pour que chaque pays produise tout lui-même", "Pour que chacun se spécialise dans ce qu'il fait relativement le mieux", "Pour supprimer toute concurrence", "Pour que les prix augmentent"], "a": 1, "e": "La spécialisation suivie d'échanges permet d'augmenter la richesse totale."}, {"q": "Quelle fonction de l'État est illustrée par les impôts progressifs et les prestations sociales ?", "o": ["La stabilisation", "La redistribution", "La régulation de la concurrence", "L'émission de monnaie"], "a": 1, "e": "La redistribution réduit les inégalités de revenus."}, {"q": "Quelle est la différence entre déficit public et dette publique ?", "o": ["Le déficit est l'écart annuel entre dépenses et recettes, la dette est l'accumulation des déficits", "Ce sont deux mots pour la même chose", "La dette est annuelle, le déficit est cumulé", "Le déficit concerne les entreprises, la dette les ménages"], "a": 0, "e": "Le déficit est un flux annuel, la dette un stock accumulé."}, {"q": "Qui mène la politique monétaire dans la zone euro ?", "o": ["Le Parlement français", "La Banque centrale européenne (BCE)", "Les entreprises", "Les syndicats"], "a": 1, "e": "La BCE agit notamment sur les taux d'intérêt pour maintenir la stabilité des prix."}, {"q": "L'État plafonne le prix d'un produit en dessous de son prix d'équilibre. Quelle conséquence est probable ?", "o": ["Une pénurie", "Des invendus", "Une baisse de la demande", "Un prix d'équilibre inchangé et un marché normal"], "a": 0, "e": "À prix bas, la demande dépasse l'offre : les produits manquent, avec un risque de marché noir."}];
+  var KEY="cgs-quiz-economie-marches";
+  var root=document.getElementById("quiz");
+  var LET=["A","B","C","D","E"];
+  var st=null;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+  function best(){try{return parseInt(localStorage.getItem(KEY)||"-1",10);}catch(e){return -1;}}
+  function saveBest(v){try{if(v>best())localStorage.setItem(KEY,String(v));}catch(e){}}
+  function start(list){st={list:list,i:0,score:0,wrong:[],done:false};render();}
+  function render(){
+    root.innerHTML="";
+    if(st.i>=st.list.length){return finish();}
+    var q=st.list[st.i];
+    var head=el("div","qhead");
+    head.appendChild(el("span",null,"Question "+(st.i+1)+" / "+st.list.length));
+    head.appendChild(el("span",null,"Score : "+st.score));
+    var bar=el("div","bar");bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax",st.list.length);bar.setAttribute("aria-valuenow",st.i);
+    var fill=el("i");fill.style.width=(st.i/st.list.length*100)+"%";bar.appendChild(fill);
+    var qt=el("p","qtext",q.q);qt.tabIndex=-1;
+    var opts=el("div","opts");opts.setAttribute("role","group");opts.setAttribute("aria-label","Réponses possibles");
+    var items=shuffle(q.o.map(function(t,k){return {t:t,k:k};}));
+    var fb=el("div");fb.setAttribute("aria-live","polite");
+    var next=null;
+    items.forEach(function(it,idx){
+      var b=el("button","opt");b.type="button";b.dataset.k=it.k;
+      b.appendChild(el("span","k",LET[idx]));b.appendChild(el("span",null,it.t));
+      b.addEventListener("click",function(){choose(b,it.k===q.a);});
+      opts.appendChild(b);
+    });
+    function choose(btn,ok){
+      var all=opts.querySelectorAll("button");
+      for(var i=0;i<all.length;i++){all[i].disabled=true;if(parseInt(all[i].dataset.k,10)===q.a)all[i].classList.add("good");}
+      if(ok){st.score++;}else{btn.classList.add("bad");st.wrong.push(q);}
+      fb.className="fb "+(ok?"good":"bad");
+      fb.innerHTML="<b>"+(ok?"Bonne réponse !":"Pas tout à fait.")+"</b>"+q.e;
+      head.lastChild.textContent="Score : "+st.score;
+      fill.style.width=((st.i+1)/st.list.length*100)+"%";
+      next=el("button","btn",st.i+1<st.list.length?"Question suivante →":"Voir mon résultat");next.type="button";
+      next.addEventListener("click",function(){st.i++;render();});
+      root.appendChild(next);next.focus();
+    }
+    root.appendChild(head);root.appendChild(bar);root.appendChild(qt);root.appendChild(opts);root.appendChild(fb);
+    qt.focus({preventScroll:true});
+  }
+  function finish(){
+    var n=st.list.length,s=st.score;
+    var prev=best();saveBest(s);
+    var msg=s===n?"Parfait, sans faute !":(s>=n*0.8?"Très bien, les notions sont solides.":(s>=n*0.5?"Bon début : relisez les fiches des questions manquées.":"À retravailler : reprenez les fiches puis refaites le quiz."));
+    root.innerHTML="";
+    var box=el("div","score");
+    box.appendChild(el("div","big",s+" / "+n));
+    box.appendChild(el("p",null,"<strong>"+msg+"</strong>"));
+    if(st.list.length===Q.length&&prev>=0&&prev!==s){box.appendChild(el("p",null,"Meilleur score sur cet appareil : "+Math.max(prev,s)+" / "+n));}
+    root.appendChild(box);
+    var btns=el("div","btns");
+    var again=el("button","btn","Recommencer le quiz");again.type="button";
+    again.addEventListener("click",function(){start(shuffle(Q));window.scrollTo({top:document.getElementById("quiz-sec").offsetTop-60});});
+    btns.appendChild(again);
+    if(st.wrong.length){
+      var redo=el("button","btn alt","Refaire les questions manquées ("+st.wrong.length+")");redo.type="button";
+      var w=st.wrong.slice();
+      redo.addEventListener("click",function(){start(shuffle(w));});
+      btns.appendChild(redo);
+    }
+    root.appendChild(btns);
+    if(st.wrong.length){
+      var rev=el("div","rev");rev.appendChild(el("h4",null,"À revoir"));
+      st.wrong.forEach(function(q){
+        var it=el("div","item","<strong>"+q.q+"</strong><small>Réponse : "+q.o[q.a]+" — "+q.e+"</small>");
+        rev.appendChild(it);
+      });
+      root.appendChild(rev);
+    }
+  }
+  document.addEventListener("keydown",function(e){
+    if(!root||e.ctrlKey||e.metaKey||e.altKey)return;
+    var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"))return;
+    var r=root.getBoundingClientRect();if(r.bottom<0||r.top>window.innerHeight)return;
+    var k=parseInt(e.key,10);
+    if(k>=1&&k<=4){var bs=root.querySelectorAll(".opt:not(:disabled)");if(bs[k-1]){bs[k-1].click();e.preventDefault();}}
+  });
+  start(shuffle(Q));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SES, finance et économie — Fiches et quiz pour lycéens</title>
+<meta name="description" content="Fiches de révision et quiz interactifs : bases des SES, finance personnelle, entreprise et entrepreneuriat, économie et marchés.">
+<style>
+:root{
+  --accent:#334155;
+  --bg:#faf8f4; --card:#ffffff; --ink:#1d2330; --muted:#5a6477; --line:#e7e2d9;
+  --accent-text:var(--accent);
+  --soft:color-mix(in srgb,var(--accent) 9%,var(--card));
+  --soft2:color-mix(in srgb,var(--accent) 16%,var(--card));
+  --ok:#157a3c; --okbg:#e6f5ea; --ko:#b42318; --kobg:#fdeceb; --warn:#fff5dc; --warnline:#e8b93a; --warnink:#6b4a00;
+  --radius:16px; --shadow:0 1px 2px rgba(20,24,40,.05),0 6px 20px rgba(20,24,40,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#12141a;--card:#1b1f27;--ink:#eceff5;--muted:#a4adbe;--line:#2c323e;
+    --accent-text:color-mix(in srgb,var(--accent) 55%,#ffffff);
+    --soft:color-mix(in srgb,var(--accent) 16%,var(--card));--soft2:color-mix(in srgb,var(--accent) 26%,var(--card));
+    --ok:#5fd68a;--okbg:#12301f;--ko:#ff8a80;--kobg:#3b1816;--warn:#2e2610;--warnline:#a6791a;--warnink:#f1d58a;
+    --shadow:none}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;margin:0}
+a{color:var(--accent-text)}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+.hero{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:#fff;padding:26px 0 34px}
+.hero a{color:#fff;opacity:.9;text-decoration:none;font-size:.92rem}
+.hero a:hover{text-decoration:underline;opacity:1}
+.kicker{margin:18px 0 6px;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;opacity:.85;font-weight:600}
+.hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)}
+.hero p.lead{margin:12px 0 0;max-width:62ch;font-size:1.06rem;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);padding:3px 12px;border-radius:99px;font-size:.85rem}
+nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:9px 18px;scrollbar-width:thin}
+nav.toc a{white-space:nowrap;text-decoration:none;font-size:.88rem;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent-text)}
+nav.toc a.q{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+main{padding:28px 0 20px}
+h2.sec{font-size:1.5rem;margin:6px 0 16px}
+.fiche{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 20px;margin:0 0 18px;position:relative}
+.fiche h3{font-size:1.28rem;margin:0 0 12px;padding-left:46px;min-height:34px;display:flex;align-items:center}
+.num{position:absolute;left:20px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-family:system-ui,sans-serif}
+.def{border-left:4px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 12px}
+.formule{margin:12px 0;padding:11px 14px;text-align:center;font-weight:650;background:var(--soft2);border-radius:10px;font-size:1.02rem;overflow-wrap:anywhere}
+ul.pts{margin:10px 0;padding-left:1.2em}
+ul.pts li{margin:6px 0}
+ul.pts li::marker{color:var(--accent)}
+.ex,.pg{margin:12px 0 0;padding:10px 14px;border-radius:10px;font-size:.97rem}
+.ex{background:color-mix(in srgb,var(--ink) 5%,var(--card));border:1px dashed var(--line)}
+.pg{background:var(--warn);border:1px solid var(--warnline);color:var(--warnink)}
+.lbl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:1px 8px;border-radius:6px;vertical-align:1px}
+.ex .lbl{background:var(--accent);color:#fff}
+.pg .lbl{background:var(--warnline);color:#1b1300}
+.mots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.mots span{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent-text);border:1px solid var(--soft2);font-weight:600}
+.memo{background:var(--ink);color:var(--bg);border-radius:var(--radius);padding:20px 22px;margin:26px 0 0}
+.memo h3{font-size:1.2rem;margin-bottom:8px}
+.memo ul{margin:0;padding-left:1.2em}.memo li{margin:6px 0}
+.quizbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:6px}
+.qhead{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--muted);margin-bottom:8px;font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--soft2);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qtext{font-size:1.15rem;font-weight:650;margin:0 0 14px;outline:none}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--soft)}
+.opt:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;background:var(--soft2);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--accent-text)}
+.opt:disabled{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt.good .k{background:var(--ok);color:#fff}.opt.bad .k{background:var(--ko);color:#fff}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.98rem}
+.fb.good{background:var(--okbg);border:1px solid var(--ok)}.fb.bad{background:var(--kobg);border:1px solid var(--ko)}
+.fb b{display:block;margin-bottom:2px}
+.btn{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:12px;padding:11px 20px;background:var(--accent);color:#fff;margin-top:14px}
+.btn:hover{filter:brightness(1.08)}.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--accent-text);border:2px solid var(--accent)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.score{text-align:center;padding:8px 0}
+.score .big{font-size:3rem;font-weight:800;color:var(--accent-text);font-family:Georgia,serif}
+.score p{margin:4px 0}
+.rev{margin-top:14px;text-align:left}
+.rev h4{margin:0 0 8px;font-size:1rem}
+.rev .item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.95rem}
+.rev .item small{display:block;margin-top:4px;color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 10px}
+.pager a{flex:1 1 240px;text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;color:var(--ink)}
+.pager a:hover{border-color:var(--accent)}
+.pager small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager .nx{text-align:right}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 18px 40px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:8px 0 28px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .12s}
+.card:hover{transform:translateY(-3px)}
+.card .ic{font-size:1.8rem}
+.card h3{font-size:1.15rem;margin:6px 0}
+.card p{margin:0 0 12px;color:var(--muted);font-size:.93rem;flex:1}
+.card .meta{font-size:.8rem;font-weight:700;color:var(--accent-text)}
+.howto{background:var(--soft);border:1px solid var(--soft2);border-radius:var(--radius);padding:16px 20px;margin:0 0 26px}
+.howto ol{margin:6px 0 0;padding-left:1.3em}
+@media(max-width:560px){body{font-size:16px}.fiche{padding:18px 16px}.num{left:14px;top:16px}.fiche h3{padding-left:42px}}
+@media print{
+  nav.toc,#quiz-sec,.pager,.hero a,.chips{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}.hero{background:none!important;color:#000;padding:0}
+  .fiche{box-shadow:none;break-inside:avoid;border:1px solid #999}.memo{background:#eee;color:#000}
+  .num{background:#444!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<a href="../index.html#economie">← CultureGSite · Économie et finance</a>
+<div class="kicker">CultureGSite · Lycée</div>
+<h1>SES, finance et économie</h1>
+<p class="lead">Des fiches claires et des quiz corrigés pour comprendre l'économie, la société, la politique et la gestion de l'argent.</p>
+<div class="chips"><span class="chip">6 thèmes</span><span class="chip">44 fiches</span><span class="chip">69 questions</span></div>
+</div></header>
+<main class="wrap">
+<div class="howto"><strong>Comment travailler ?</strong>
+<ol><li>Lire les fiches du thème (définition, exemple, point d'attention).</li><li>Répondre au quiz : chaque réponse est corrigée et expliquée.</li><li>Refaire les questions manquées jusqu'à les réussir.</li></ol></div>
+<h2 class="sec">Les bases des SES</h2><div class="cards"><a class="card" style="--accent:#2563eb" href="ses-economie.html"><span class="ic">📈</span><h3>Science économique</h3><p>Comment une société utilise-t-elle des ressources rares pour satisfaire des besoins illimités ? Les acteurs, la création de richesse, le PIB et le marché.</p><span class="meta">5 fiches · 10 questions</span></a><a class="card" style="--accent:#c2410c" href="ses-sociologie.html"><span class="ic">👥</span><h3>Sociologie</h3><p>Comment la société influence-t-elle nos comportements, nos goûts, nos croyances et nos choix de vie ? Socialisation, groupes sociaux et mobilité.</p><span class="meta">6 fiches · 10 questions</span></a><a class="card" style="--accent:#7c3aed" href="ses-science-politique.html"><span class="ic">🏛️</span><h3>Science politique</h3><p>Qui détient le pouvoir, comment est-il exercé et comment les citoyens y participent-ils ? Pouvoir, démocratie, séparation des pouvoirs et vote.</p><span class="meta">6 fiches · 10 questions</span></a></div><h2 class="sec">Culture économique et citoyenne</h2><div class="cards"><a class="card" style="--accent:#047857" href="finance-personnelle.html"><span class="ic">💶</span><h3>Finance personnelle</h3><p>Gérer son argent au quotidien : budget, revenus, épargne, crédit, assurances, moyens de paiement et coût réel des achats.</p><span class="meta">9 fiches · 13 questions</span></a><a class="card" style="--accent:#be185d" href="entreprise-entrepreneuriat.html"><span class="ic">🏭</span><h3>Entreprise et entrepreneuriat</h3><p>À quoi servent les entreprises, comment créent-elles de la valeur, quels sont leurs métiers et comment monter son projet ?</p><span class="meta">9 fiches · 13 questions</span></a><a class="card" style="--accent:#0e7490" href="economie-marches.html"><span class="ic">🌍</span><h3>Économie et marchés</h3><p>Offre et demande, concurrence, prix, échanges internationaux, rôle de l&#x27;État et effets des politiques publiques.</p><span class="meta">9 fiches · 13 questions</span></a></div>
+</main>
+<footer>Les fiches peuvent être imprimées (le quiz est masqué à l'impression).</footer>
+</body>
+</html>
