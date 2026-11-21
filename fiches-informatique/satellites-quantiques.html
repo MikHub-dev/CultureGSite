@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Satellites quantiques — Fiches et quiz</title>
+<meta name="description" content="Pourquoi envoyer des photons par satellite, comment BB84 fabrique une clé secrète et détecte un espion, les limites techniques, le débat avec la cryptographie post-quantique et les projets européens.">
+<style>
+:root{
+  --accent:#4f46e5;
+  --bg:#faf8f4; --card:#ffffff; --ink:#1d2330; --muted:#5a6477; --line:#e7e2d9;
+  --accent-text:var(--accent);
+  --soft:color-mix(in srgb,var(--accent) 9%,var(--card));
+  --soft2:color-mix(in srgb,var(--accent) 16%,var(--card));
+  --ok:#157a3c; --okbg:#e6f5ea; --ko:#b42318; --kobg:#fdeceb; --warn:#fff5dc; --warnline:#e8b93a; --warnink:#6b4a00;
+  --radius:16px; --shadow:0 1px 2px rgba(20,24,40,.05),0 6px 20px rgba(20,24,40,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#12141a;--card:#1b1f27;--ink:#eceff5;--muted:#a4adbe;--line:#2c323e;
+    --accent-text:color-mix(in srgb,var(--accent) 55%,#ffffff);
+    --soft:color-mix(in srgb,var(--accent) 16%,var(--card));--soft2:color-mix(in srgb,var(--accent) 26%,var(--card));
+    --ok:#5fd68a;--okbg:#12301f;--ko:#ff8a80;--kobg:#3b1816;--warn:#2e2610;--warnline:#a6791a;--warnink:#f1d58a;
+    --shadow:none}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;margin:0}
+a{color:var(--accent-text)}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+.hero{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:#fff;padding:26px 0 34px}
+.hero a{color:#fff;opacity:.9;text-decoration:none;font-size:.92rem}
+.hero a:hover{text-decoration:underline;opacity:1}
+.kicker{margin:18px 0 6px;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;opacity:.85;font-weight:600}
+.hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)}
+.hero p.lead{margin:12px 0 0;max-width:62ch;font-size:1.06rem;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);padding:3px 12px;border-radius:99px;font-size:.85rem}
+nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:9px 18px;scrollbar-width:thin}
+nav.toc a{white-space:nowrap;text-decoration:none;font-size:.88rem;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent-text)}
+nav.toc a.q{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+main{padding:28px 0 20px}
+h2.sec{font-size:1.5rem;margin:6px 0 16px}
+.fiche{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 20px;margin:0 0 18px;position:relative}
+.fiche h3{font-size:1.28rem;margin:0 0 12px;padding-left:46px;min-height:34px;display:flex;align-items:center}
+.num{position:absolute;left:20px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-family:system-ui,sans-serif}
+.def{border-left:4px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 12px}
+.formule{margin:12px 0;padding:11px 14px;text-align:center;font-weight:650;background:var(--soft2);border-radius:10px;font-size:1.02rem;overflow-wrap:anywhere}
+ul.pts,ol.pts{margin:10px 0;padding-left:1.2em}
+ul.pts li,ol.pts li{margin:6px 0}
+ul.pts li::marker,ol.pts li::marker{color:var(--accent);font-weight:700}
+.ex,.pg{margin:12px 0 0;padding:10px 14px;border-radius:10px;font-size:.97rem}
+.ex{background:color-mix(in srgb,var(--ink) 5%,var(--card));border:1px dashed var(--line)}
+.pg{background:var(--warn);border:1px solid var(--warnline);color:var(--warnink)}
+.lbl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:1px 8px;border-radius:6px;vertical-align:1px}
+.ex .lbl{background:var(--accent);color:#fff}
+.pg .lbl{background:var(--warnline);color:#1b1300}
+.mots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.mots span{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent-text);border:1px solid var(--soft2);font-weight:600}
+.memo{background:var(--ink);color:var(--bg);border-radius:var(--radius);padding:20px 22px;margin:26px 0 0}
+.memo h3{font-size:1.2rem;margin-bottom:8px}
+.memo ul{margin:0;padding-left:1.2em}.memo li{margin:6px 0}
+.quizbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:6px}
+.qhead{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--muted);margin-bottom:8px;font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--soft2);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qtext{font-size:1.15rem;font-weight:650;margin:0 0 14px;outline:none}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--soft)}
+.opt:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;background:var(--soft2);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--accent-text)}
+.opt:disabled{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt.good .k{background:var(--ok);color:#fff}.opt.bad .k{background:var(--ko);color:#fff}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.98rem}
+.fb.good{background:var(--okbg);border:1px solid var(--ok)}.fb.bad{background:var(--kobg);border:1px solid var(--ko)}
+.fb b{display:block;margin-bottom:2px}
+.btn{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:12px;padding:11px 20px;background:var(--accent);color:#fff;margin-top:14px}
+.btn:hover{filter:brightness(1.08)}.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--accent-text);border:2px solid var(--accent)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.score{text-align:center;padding:8px 0}
+.score .big{font-size:3rem;font-weight:800;color:var(--accent-text);font-family:Georgia,serif}
+.score p{margin:4px 0}
+.rev{margin-top:14px;text-align:left}
+.rev h4{margin:0 0 8px;font-size:1rem}
+.rev .item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.95rem}
+.rev .item small{display:block;margin-top:4px;color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 10px}
+.pager a{flex:1 1 240px;text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;color:var(--ink)}
+.pager a:hover{border-color:var(--accent)}
+.pager small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager .nx{text-align:right}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 18px 40px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:8px 0 28px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .12s}
+.card:hover{transform:translateY(-3px)}
+.card .ic{font-size:1.8rem}
+.card h3{font-size:1.15rem;margin:6px 0}
+.card p{margin:0 0 12px;color:var(--muted);font-size:.93rem;flex:1}
+.card .meta{font-size:.8rem;font-weight:700;color:var(--accent-text)}
+.howto{background:var(--soft);border:1px solid var(--soft2);border-radius:var(--radius);padding:16px 20px;margin:0 0 26px}
+.howto ol{margin:6px 0 0;padding-left:1.3em}
+@media(max-width:560px){body{font-size:16px}.fiche{padding:18px 16px}.num{left:14px;top:16px}.fiche h3{padding-left:42px}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ex>.tbl:first-child{margin-top:0}
+.tbl{overflow-x:auto;margin:10px 0 2px;-webkit-overflow-scrolling:touch}
+.tbl table{border-collapse:collapse;width:100%;min-width:560px;font-size:.88rem}
+.tbl th,.tbl td{border:1px solid var(--line);padding:5px 8px;text-align:center;white-space:nowrap}
+.tbl th{text-align:left;font-weight:650;background:var(--soft);position:sticky;left:0}
+@media(max-width:560px){.tbl table{min-width:430px;font-size:.82rem}.tbl th,.tbl td{padding:4px 6px}.tbl th{white-space:normal;min-width:6.2em}}
+.tbl tr.key td{background:var(--soft2);font-weight:800}
+details.rep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 10px}
+details.rep summary{cursor:pointer;font-weight:650}
+details.rep summary:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:3px;border-radius:6px}
+details.rep p{margin:10px 0 0;color:var(--muted);font-size:.97rem}
+details.rep[open] p{color:var(--ink)}
+@media print{
+  nav.toc,#quiz-sec,.pager,.hero a,.chips{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}.hero{background:none!important;color:#000;padding:0}
+  .fiche{box-shadow:none;break-inside:avoid;border:1px solid #999}.memo{background:#eee;color:#000}
+  details.rep:not(.src){break-inside:avoid}
+  .num{background:#444!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<a href="../index.html#informatique">← CultureGSite · Informatique et technologies</a>
+<div class="kicker">Informatique et technologies · Cours interactif</div>
+<h1>🛰️ Internet quantique par satellite</h1>
+<p class="lead">Un satellite envoie deux photons jumeaux à deux villes éloignées. Avec eux, elles fabriquent une clé secrète, et un espion laisse des traces.</p>
+<div class="chips"><span class="chip">9 fiches</span><span class="chip">25 questions de quiz</span><span class="chip">≈ 25 min</span><span class="chip">État au 21 novembre 2026</span></div>
+</div></header>
+<nav class="toc" aria-label="Sommaire"><div class="wrap"><a href="#f1">1 · Fibre</a><a href="#f2">2 · Satellite</a><a href="#f3">3 · Intrication</a><a href="#f4">4 · BB84</a><a href="#f5">5 · Espion</a><a href="#f6">6 · Limites</a><a href="#f7">7 · Attaques</a><a href="#f8">8 · QKD ou PQC</a><a href="#f9">9 · Projets</a><a class="q" href="#quiz-sec">Quiz</a></div></nav>
+<main class="wrap">
+<h2 class="sec">Les fiches</h2>
+<article class="fiche" id="f1" aria-labelledby="t1">
+<span class="num" aria-hidden="true">1</span><h3 id="t1">La fibre optique et ses pertes</h3>
+<p class="def">Un <strong>photon</strong> est le plus petit grain de lumière. Pour transporter de l'information quantique, on envoie les photons <strong>un par un</strong>, mais dans une fibre optique ils se perdent peu à peu.</p>
+<div class="formule">fraction reçue = 10<sup>−dB/10</sup> avec dB = 0,2 × distance (km)</div>
+<ul class="pts"><li>Une bonne fibre absorbe environ <strong>0,2 dB par kilomètre</strong>. Le décibel (dB) mesure un rapport : tous les 10 dB, il arrive <strong>10 fois moins</strong> de photons.</li><li>On ne peut pas amplifier un photon porteur d'information quantique : le <strong>théorème de non-clonage</strong> interdit de copier parfaitement un état quantique inconnu.</li><li>Portée pratique des liaisons directes en fibre : environ <strong>150 km</strong> (valeur citée par l'ESA et Thales Alenia Space). Record de laboratoire : <strong>1 002 km</strong>, mais seulement 0,0034 bit de clé par seconde, soit un bit toutes les cinq minutes environ.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Sur 100 km : 0,2 × 100 = 20 dB, donc 1 photon sur 100. Sur 1 000 km : 200 dB, donc 1 photon sur 10<sup>20</sup>.</p>
+<p class="pg"><span class="lbl">Attention</span>« 150 km » est une portée <strong>pratique</strong>. Le record de 1 002 km (protocole <em>twin-field</em>, détecteurs supraconducteurs) est un exploit de laboratoire, trop lent pour servir.</p>
+<div class="mots" aria-label="Mots-clés"><span>photon</span><span>décibel</span><span>non-clonage</span><span>perte exponentielle</span></div>
+</article>
+<article class="fiche" id="f2" aria-labelledby="t2">
+<span class="num" aria-hidden="true">2</span><h3 id="t2">Le satellite comme relais</h3>
+<p class="def">Un <strong>satellite quantique</strong> ne calcule pas : il transporte des photons au-dessus de l'atmosphère pour relier deux points très éloignés.</p>
+<ul class="pts"><li>Dans le vide, <strong>rien n'absorbe</strong> le faisceau, qui ne traverse de l'air qu'à la fin de son trajet. La perte vient surtout de l'<strong>étalement du faisceau</strong>, comme une lampe torche dont le cercle de lumière grandit : elle augmente doucement avec la distance, pas de façon exponentielle.</li><li><strong>Orbite basse</strong> (environ 500 km) : pertes plus faibles, mais le satellite défile et reste quelques minutes au-dessus d'une station. Couvrir le monde en continu demande une <strong>constellation</strong>.</li><li><strong>Orbite géostationnaire</strong> (environ 35 786 km) : le satellite reste fixe dans le ciel et sert la même zone en permanence, mais tout est environ 70 fois plus loin, donc les pertes sont bien plus fortes.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Le satellite chinois <strong>Micius</strong> (lancé le 16 août 2016, orbite de 500 km) a distribué en 2017 des paires de photons intriqués à deux stations distantes de 1 203 km. Son efficacité de liaison dépassait de plus de 12 ordres de grandeur celle de la meilleure fibre commerciale sur la même distance.</p>
+<p class="pg"><span class="lbl">Attention</span>Le satellite n'est pas une solution à tout : en orbite basse, la visibilité est brève ; en orbite géostationnaire, les pertes sont énormes.</p>
+<div class="mots" aria-label="Mots-clés"><span>Micius</span><span>orbite basse</span><span>orbite géostationnaire</span><span>étalement du faisceau</span><span>constellation</span></div>
+</article>
+<article class="fiche" id="f3" aria-labelledby="t3">
+<span class="num" aria-hidden="true">3</span><h3 id="t3">L'intrication</h3>
+<p class="def">Deux photons sont <strong>intriqués</strong> quand ils sont créés ensemble : si Alice et Bob mesurent leur photon avec le même réglage, leurs résultats sont <strong>corrélés</strong>.</p>
+<ul class="pts"><li>Les résultats sont liés (identiques, ou toujours opposés selon la paire fabriquée), mais, pris seul, chaque résultat est <strong>parfaitement aléatoire</strong>.</li><li>Ce n'est pas comme deux gants dans deux boîtes, où le résultat serait décidé dès le départ. Les expériences sur les <strong>inégalités de Bell</strong> montrent qu'aucun résultat caché n'est fixé à l'avance. Alain Aspect, John Clauser et Anton Zeilinger ont reçu le prix Nobel de physique 2022 pour ces expériences.</li><li>La corrélation n'apparaît que lorsque Alice et Bob <strong>comparent leurs listes</strong> par un canal ordinaire.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Alice lit 0 1 1 0 1 0 et Bob lit 0 1 1 0 1 0. Chacun voit une suite qui semble tirée au hasard ; ce n'est qu'en comparant leurs listes qu'ils constatent qu'elles coïncident.</p>
+<p class="pg"><span class="lbl">Attention</span><strong>Aucun message ne voyage plus vite que la lumière</strong> : Alice ne choisit pas ce qu'elle lit, et Bob voit une suite aléatoire de son côté.</p>
+<div class="mots" aria-label="Mots-clés"><span>intrication</span><span>corrélation</span><span>inégalités de Bell</span><span>aléatoire</span></div>
+</article>
+<article class="fiche" id="f4" aria-labelledby="t4">
+<span class="num" aria-hidden="true">4</span><h3 id="t4">La QKD et le protocole BB84</h3>
+<p class="def">La <strong>QKD</strong> (<em>Quantum Key Distribution</em>, distribution quantique de clés) ne transporte pas le message : elle fabrique une <strong>clé secrète</strong> que seuls Alice et Bob connaissent. Ils chiffrent ensuite le message avec cette clé et l'envoient par l'Internet ordinaire.</p>
+<ol class="pts"><li><strong>BB84</strong> a été inventé par Charles Bennett et Gilles Brassard en 1984. Un photon est <strong>polarisé</strong> : l'orientation de sa vibration code un bit. Il existe deux <strong>bases</strong> de mesure : + (vertical ou horizontal) et × (deux obliques).</li><li>Alice tire au hasard un bit et une base, puis envoie le photon polarisé correspondant.</li><li>Bob ne connaît pas la base : il en tire une au hasard et mesure. S'il se trompe de base, son résultat est 0 ou 1 au hasard.</li><li>Alice et Bob annoncent publiquement leurs <strong>bases</strong>, jamais leurs bits.</li><li>Ils gardent les positions où les bases sont identiques, soit environ <strong>la moitié</strong>. Ces bits forment la clé.</li></ol>
+<div class="ex"><span class="lbl">Exemple</span>Avec huit photons, la clé gardée est <strong>0001</strong>. Aux positions 2, 3, 5 et 6, Bob s'est trompé de base : ces positions sont écartées.<div class="tbl"><table><caption class="sr">Exemple de BB84 avec huit photons</caption><tbody><tr><th scope="row">Photon n°</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr><th scope="row">Bit d'Alice</th><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><th scope="row">Base d'Alice</th><td>+</td><td>×</td><td>+</td><td>×</td><td>×</td><td>+</td><td>×</td><td>+</td></tr><tr><th scope="row">Base de Bob</th><td>+</td><td>+</td><td>×</td><td>×</td><td>+</td><td>×</td><td>×</td><td>+</td></tr><tr><th scope="row">Bob mesure</th><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><th scope="row">Bases identiques ?</th><td>oui</td><td>non</td><td>non</td><td>oui</td><td>non</td><td>non</td><td>oui</td><td>oui</td></tr><tr class="key"><th scope="row">Clé gardée</th><td>0</td><td>·</td><td>·</td><td>0</td><td>·</td><td>·</td><td>0</td><td>1</td></tr></tbody></table></div></div>
+<p class="pg"><span class="lbl">Attention</span>On annonce les bases, <strong>jamais les bits</strong> : annoncer un bit révélerait la clé. Le canal public doit aussi être <strong>authentifié</strong>, pour qu'Eve ne se fasse pas passer pour Alice ou Bob.</p>
+<div class="mots" aria-label="Mots-clés"><span>QKD</span><span>BB84</span><span>polarisation</span><span>base</span><span>clé</span></div>
+</article>
+<article class="fiche" id="f5" aria-labelledby="t5">
+<span class="num" aria-hidden="true">5</span><h3 id="t5">Détecter un espion</h3>
+<p class="def">Dans BB84, une espionne (<strong>Eve</strong>) ne peut pas copier le photon : elle doit le <strong>mesurer</strong>, et sa mesure laisse des <strong>erreurs</strong> que voient Alice et Bob.</p>
+<ul class="pts"><li>Eve ne connaît pas la base d'Alice : elle se trompe <strong>une fois sur deux</strong>. Dans ce cas, Bob se trompe à son tour une fois sur deux. Taux d'erreur : 1/2 × 1/2 = <strong>25 %</strong>.</li><li>Alice et Bob comparent publiquement un <strong>échantillon</strong> de leur clé. Si le taux d'erreur dépasse un seuil (environ <strong>11 %</strong> pour BB84 idéal), ils jettent la clé.</li><li>Sinon, une <strong>correction d'erreurs</strong> puis une <strong>amplification de confidentialité</strong> réduisent ce qu'Eve aurait pu apprendre.</li><li>Avec très peu de photons, Eve peut passer inaperçue par chance : la statistique demande un échantillon assez grand.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Si Eve intercepte chaque photon et que 1 000 positions sont gardées, on attend environ 250 erreurs. Sans espion, il n'y en a que quelques-unes, dues au bruit du matériel.</p>
+<p class="pg"><span class="lbl">Attention</span>« Il est impossible d'espionner sans être détecté » est <strong>trop fort</strong>. C'est vrai pour le protocole idéal ; avec du matériel réel, des failles existent (fiche 7).</p>
+<div class="mots" aria-label="Mots-clés"><span>espion</span><span>taux d'erreur</span><span>non-clonage</span><span>correction d'erreurs</span><span>amplification de confidentialité</span></div>
+</article>
+<article class="fiche" id="f6" aria-labelledby="t6">
+<span class="num" aria-hidden="true">6</span><h3 id="t6">Les limites techniques</h3>
+<p class="def">Un satellite quantique est une machine de <strong>précision</strong>, sensible à la météo, chère et lente. Son intérêt est de relier des points très éloignés, pas de remplacer Internet.</p>
+<ul class="pts"><li><strong>Météo et lumière du jour</strong> : un nuage épais coupe la liaison, la turbulence fait scintiller le faisceau et la lumière du Soleil noie les rares photons. La plupart des liaisons se font <strong>de nuit</strong>.</li><li><strong>Pointage</strong> : à 500 km d'altitude, une erreur d'1 µrad décale le faisceau d'environ 0,5 m. Micius pointait avec une précision de l'ordre de 1,2 µrad vers des télescopes d'environ 1 m.</li><li><strong>Très peu de photons</strong> arrivent : il faut des détecteurs de photons uniques et des horloges très précisément synchronisées.</li><li><strong>Débit faible</strong> (de l'ordre du kbit/s pour Micius) et <strong>coût élevé</strong> (environ 100 millions de dollars pour Micius, puis plusieurs satellites pour couvrir le globe).</li><li><strong>Nœud de confiance</strong> : si le satellite fabrique la clé, il la connaît. Un satellite ou une station pirates compromettent toutes les clés qui passent par eux.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>À 1 kbit/s, les 256 bits d'une clé de chiffrement s'obtiennent en un quart de seconde environ (ordre de grandeur, une fois la liaison établie). Un débit faible suffit, car on ne transmet que des clés courtes, pas les données.</p>
+<p class="pg"><span class="lbl">Attention</span>Un <strong>Internet quantique complet</strong>, qui relierait des ordinateurs quantiques, reste un objectif futur : il demande des mémoires et des répéteurs quantiques qui n'existent pas encore à cette échelle. Aujourd'hui, l'usage réaliste est la QKD.</p>
+<div class="mots" aria-label="Mots-clés"><span>pointage</span><span>nœud de confiance</span><span>débit</span><span>turbulence</span><span>répéteur quantique</span></div>
+</article>
+<article class="fiche" id="f7" aria-labelledby="t7">
+<span class="num" aria-hidden="true">7</span><h3 id="t7">Quand le matériel trahit la théorie</h3>
+<p class="def">La théorie suppose des détecteurs parfaits. Les détecteurs réels ont des défauts : une attaquante intelligente vise l'<strong>appareil</strong> plutôt que la physique quantique.</p>
+<ul class="pts"><li>En 2010, Lydersen et ses collègues (<em>Nature Photonics</em>) ont piraté en laboratoire deux systèmes commerciaux de QKD : en éclairant fortement les détecteurs, ils les ont commandés à distance et ont récupéré la clé sans laisser de trace. C'est l'<strong>attaque par aveuglement</strong>.</li><li>Autres attaques : <strong>efficacité inégale</strong> des détecteurs, <strong>décalage temporel</strong> des photons, <strong>cheval de Troie</strong> (de la lumière envoyée chez Bob et analysée à son retour), <strong>lumière parasite</strong>.</li><li>Parades : surveiller la lumière reçue, doubler les détecteurs, tirer au hasard les fenêtres de détection, poser des isolateurs optiques et des filtres.</li><li><strong>MDI-QKD</strong> (<em>measurement-device-independent</em>, Lo, Curty et Qi, 2012) : Alice et Bob envoient chacun leurs photons à un relais central qui mesure et annonce le résultat. Ce relais peut être contrôlé par Eve sans compromettre la clé : les failles de la mesure disparaissent.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Détecteur normal : il « clique » quand il reçoit un photon et la physique quantique protège la clé. Détecteur aveuglé : une lumière intense le fait basculer en mode classique, et il répond aux impulsions d'Eve au lieu de répondre aux photons.</p>
+<p class="pg"><span class="lbl">Attention</span>La physique quantique reste valable : c'est le <strong>matériel</strong> qui est imparfait. La MDI-QKD protège la mesure, mais les <strong>sources</strong> d'Alice et Bob restent à protéger ; le montage est plus complexe et le débit généralement plus faible.</p>
+<div class="mots" aria-label="Mots-clés"><span>aveuglement</span><span>cheval de Troie</span><span>détecteur</span><span>MDI-QKD</span></div>
+</article>
+<article class="fiche" id="f8" aria-labelledby="t8">
+<span class="num" aria-hidden="true">8</span><h3 id="t8">QKD ou cryptographie post-quantique ?</h3>
+<p class="def">Deux réponses à la menace d'un futur ordinateur quantique : la <strong>QKD</strong> fait reposer la sécurité sur la <strong>physique</strong> ; la <strong>cryptographie post-quantique</strong> (PQC) utilise de nouveaux algorithmes mathématiques qui tournent sur les ordinateurs actuels.</p>
+<ul class="pts"><li><strong>La menace</strong> : en 1994, Peter Shor a montré qu'un ordinateur quantique assez grand casserait vite RSA, Diffie-Hellman et les courbes elliptiques. Il n'en existe pas encore à cette taille.</li><li><strong>QKD</strong> : infrastructure dédiée (fibres, télescopes, détecteurs, satellites), portée limitée sans relais. Faiblesse principale : le matériel réel est imparfait.</li><li><strong>PQC</strong> : logiciel sur les machines existantes, sans limite de distance. Faiblesse principale : une sécurité fondée sur des hypothèses mathématiques. Le NIST américain a publié ses trois premières normes (FIPS 203, 204 et 205) le 13 août 2024.</li><li><strong>Un débat réel</strong> : le 25 janvier 2024, l'ANSSI française et ses homologues allemand, néerlandais et suédois ont jugé que la QKD ne convient qu'à des usages de niche et que sa maturité de sécurité est insuffisante. Ils recommandent de donner la priorité à la PQC. L'ESA présente au contraire ses projets comme un moyen d'assurer la souveraineté numérique de l'Europe et de préparer les futurs réseaux quantiques.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Un document confidentiel chiffré avec RSA et intercepté aujourd'hui pourrait être lu dans quelques années, si un grand ordinateur quantique existe alors : c'est pourquoi on migre déjà vers de nouveaux algorithmes.</p>
+<p class="pg"><span class="lbl">Attention</span>« Sûre en théorie » ne veut pas dire « sûre en pratique ». Les deux approches ne s'excluent pas : elles peuvent aussi se combiner.</p>
+<div class="mots" aria-label="Mots-clés"><span>Shor</span><span>RSA</span><span>PQC</span><span>NIST</span><span>ANSSI</span></div>
+</article>
+<article class="fiche" id="f9" aria-labelledby="t9">
+<span class="num" aria-hidden="true">9</span><h3 id="t9">Les projets européens</h3>
+<p class="def">Aujourd'hui, les satellites quantiques européens sont des <strong>projets de recherche et des démonstrateurs</strong>, pas un réseau en service (état au 21 novembre 2026).</p>
+<ul class="pts"><li><strong>TeQuantS</strong> : projet de l'ESA (contrat du 23 janvier 2023). Thales Alenia Space est maître d'œuvre, avec le CNES, l'agence autrichienne, Airbus Defence and Space et des PME. Il développe les briques d'une liaison espace-Terre et prépare QINSAT.</li><li><strong>QINSAT</strong> : futur satellite de démonstration de Thales Alenia Space, qui distribuera des photons intriqués à des stations au sol. Lancement visé d'ici la fin de la décennie.</li><li><strong>QKD-GEO</strong> : Thales Alenia Space (Espagne) et Hispasat. Premier système de QKD depuis l'orbite géostationnaire (35 786 km). Essais au sol aux Canaries, dont une liaison d'environ 140 km entre La Palma et Tenerife ; pas encore en orbite.</li><li><strong>SAGA</strong> : mission de l'ESA et de la Commission européenne (initiative EuroQCI), consortium dirigé par Thales Alenia Space. Un satellite en orbite basse et quatre nœuds d'accès au sol, pour des clés destinées aux gouvernements. Contrat de 50 M€ signé le 1er octobre 2025.</li><li><strong>Eagle-1</strong> : piloté par SES (Luxembourg), avec l'ESA et la Commission européenne ; satellite de SITAEL, charge utile de Tesat. Lancement annoncé fin 2026 ou 2027 selon les pages de l'ESA, après plusieurs reports.</li></ul>
+<p class="ex"><span class="lbl">En bref</span>TeQuantS prépare les technologies, QINSAT vise l'intrication, SAGA, Eagle-1 et QKD-GEO visent la QKD.</p>
+<p class="pg"><span class="lbl">Attention</span>Méfie-toi de formules comme « le réseau de satellites quantiques de Thales » : aucun projet n'est un service opérationnel. Thales Alenia Space est une société commune de Thales (67 %) et Leonardo (33 %) ; l'ESA est distincte de l'Union européenne ; Eagle-1 n'est pas un projet de Thales Alenia Space.</p>
+<div class="mots" aria-label="Mots-clés"><span>ESA</span><span>EuroQCI</span><span>TeQuantS</span><span>QINSAT</span><span>QKD-GEO</span><span>SAGA</span><span>Eagle-1</span></div>
+</article>
+<aside class="memo"><h3>À retenir</h3><ul><li>Un satellite quantique <strong>transporte des photons</strong> : il ne calcule pas. Son usage réaliste aujourd'hui est la <strong>QKD</strong>, la fabrication de clés secrètes.</li><li>Dans une fibre, les pertes sont <strong>exponentielles</strong> (0,2 dB/km) et un photon ne s'amplifie pas ; depuis l'espace, la perte vient surtout de l'étalement du faisceau.</li><li>L'intrication donne des résultats <strong>corrélés mais aléatoires</strong> : aucun message n'est plus rapide que la lumière.</li><li>Dans BB84, on garde les positions à bases identiques (environ la moitié) ; un espion provoque environ <strong>25 % d'erreurs</strong>, et au-dessus d'environ 11 % on jette la clé.</li><li>La théorie est solide, le <strong>matériel</strong> est imparfait : aveuglement des détecteurs, nœud de confiance, sources à protéger.</li><li>QKD ou PQC ? L'ANSSI et ses partenaires placent la <strong>cryptographie post-quantique</strong> en priorité (2024). Les projets européens sont des <strong>démonstrateurs</strong>.</li></ul></aside>
+<section id="quiz-sec" style="margin-top:34px">
+<h2 class="sec">Quiz d'évaluation</h2>
+<div class="quizbox"><div id="quiz"><noscript>Le quiz nécessite JavaScript.</noscript></div></div>
+</section>
+<section id="reflexion" style="margin-top:34px">
+<h2 class="sec">Pour réfléchir</h2>
+<p style="margin:0 0 12px;color:var(--muted)">Réponds sur une feuille, puis ouvre la réponse type.</p>
+<details class="rep"><summary>Explique en deux phrases pourquoi un espion est détecté dans BB84.</summary><p>Pour lire un photon, Eve doit le mesurer sans connaître la base d'Alice. Une fois sur deux elle se trompe de base et modifie le photon, ce qui provoque environ 25 % d'erreurs que voient Alice et Bob en comparant un échantillon de leur clé.</p></details>
+<details class="rep"><summary>RSA et QKD : en quoi la nature de leur sécurité diffère-t-elle ?</summary><p>RSA repose sur la difficulté d'un problème de mathématiques (factoriser un grand nombre), qu'un grand ordinateur quantique résoudrait vite grâce à l'algorithme de Shor. La QKD repose sur les lois de la physique : on ne peut pas copier un état quantique inconnu ni le mesurer sans le perturber. Sa limite est ailleurs : le matériel réel est imparfait.</p></details>
+<details class="rep"><summary>Un ministre te demande si l'Europe doit remplacer ses chiffrements par de la QKD par satellite. Donne un avis nuancé.</summary><p>Pistes. Contre un remplacement général : l'ANSSI et ses partenaires jugent la QKD limitée à des usages de niche et pas assez mature, et recommandent de donner la priorité à la cryptographie post-quantique, qui se déploie sur le matériel existant. Pour des projets spatiaux : souveraineté numérique, besoins gouvernementaux sur de longues distances, expérience technologique et base d'un futur Internet quantique. Une approche combinée est possible. Précise aussi les risques propres aux satellites : météo, nœud de confiance, coût, failles du matériel.</p></details>
+<details class="rep src"><summary>Sources consultées le 21 novembre 2026</summary>
+<p><strong>Projets européens.</strong> ESA, TeQuantS, et communiqué de Thales Alenia Space du 23 janvier 2023 (contrat, partenaires, portée des fibres) · Thales Alenia Space et SpeQtral, QINSAT (3 juillet 2025) · Thales Alenia Space et Hispasat, QKD-GEO (essais La Palma – Tenerife) · ESA, contrat SAGA (1er octobre 2025) et nœuds de confiance · ESA, Eagle-1.</p>
+<p><strong>Physique et expériences.</strong> Yin et al., distribution d'intrication sur 1 203 km (<em>Science</em>, 2017) · Liao et al., QKD satellite-sol (2017) · Liu et al., twin-field QKD sur 1 002 km (2023) · Lydersen et al., aveuglement de détecteurs (<em>Nature Photonics</em>, 2010) · Lo, Curty et Qi, MDI-QKD (2012).</p>
+<p><strong>Cryptographie et sécurité.</strong> ANSSI et partenaires, <em>La distribution quantique de clé, son utilisation et ses limites</em> (25 janvier 2024) · NIST, premières normes de cryptographie post-quantique (13 août 2024).</p>
+<p>Le seuil d'environ 11 %, le calcul des 25 % d'erreurs, le théorème de non-clonage, le prix Nobel 2022 et l'algorithme de Shor sont des connaissances classiques. Les dates de lancement des projets évoluent : vérifier les sources.</p>
+</details>
+</section>
+<div class="pager"><a class="nx" href="../index.html#informatique"><small>Terminé →</small>Retour à Informatique et technologies</a></div>
+</main>
+<footer>CultureGSite · Fiches pour lycéens · Les chiffres sont arrondis ; les projets évoluent vite, vérifie les dates sur les sources.</footer>
+<script>
+(function(){
+  var Q=[{"q": "Que fait surtout un satellite quantique ?", "o": ["Il effectue des calculs quantiques en orbite", "Il transporte des photons pour distribuer des clés ou de l'intrication", "Il remplace les câbles sous-marins d'Internet", "Il chiffre les messages avec RSA"], "a": 1, "e": "Il ne calcule pas : il distribue des photons. Son débit, de l'ordre du kilobit par seconde, est très loin de celui d'Internet."}, {"q": "QKD signifie :", "o": ["Quick Key Detector", "Quantum Knowledge Database", "Quantum Key Distribution", "Quasi-Keyless Data"], "a": 2, "e": "Distribution quantique de clés : on fabrique une clé secrète commune."}, {"q": "Que fabrique la QKD ?", "o": ["Un message chiffré", "Une clé secrète partagée", "Un nouvel algorithme de chiffrement", "Un mot de passe Wi-Fi"], "a": 1, "e": "Le message voyage ensuite par l'Internet ordinaire, chiffré avec cette clé."}, {"q": "Pourquoi la fibre optique est-elle limitée pour l'information quantique ?", "o": ["Elle coûte trop cher", "Les pertes croissent exponentiellement et un photon unique ne s'amplifie pas sans être détruit", "La lumière y va trop lentement", "Elle bloque les photons polarisés"], "a": 1, "e": "Environ 0,2 dB/km, et le théorème de non-clonage interdit d'amplifier un état quantique inconnu."}, {"q": "Grâce à l'intrication, Alice peut envoyer un message à Bob plus vite que la lumière.", "o": ["Vrai", "Faux"], "a": 1, "e": "Faux. Chaque résultat est aléatoire. La corrélation n'apparaît qu'après comparaison par un canal classique."}, {"q": "Quelle portée pratique les liaisons quantiques directes en fibre ont-elles, d'après l'ESA et Thales Alenia Space ?", "o": ["15 km", "150 km", "1 500 km", "15 000 km"], "a": 1, "e": "Environ 150 km. Le record de laboratoire de 1 002 km s'obtient avec un débit de 0,0034 bit/s."}, {"q": "Pourquoi l'espace est-il favorable aux liaisons quantiques longue distance ?", "o": ["Les photons y sont plus gros", "Le vide n'absorbe rien : seule la fin du trajet traverse de l'air", "La lumière y va plus vite", "Le vide amplifie les photons"], "a": 1, "e": "La perte vient surtout de l'étalement du faisceau, qui croît doucement avec la distance, pas exponentiellement."}, {"q": "Pourquoi un espion peut-il être détecté ?", "o": ["Il laisse son adresse IP", "Mesurer un photon perturbe son état, ce qui fait apparaître des erreurs", "Il chauffe les photons", "Il ne peut pas être détecté"], "a": 1, "e": "L'espion ne peut pas copier le photon (non-clonage). Il doit le mesurer, et sa mesure laisse des erreurs statistiques."}, {"q": "Alice envoie un photon en base ×. Bob mesure en base +. Que lit-il ?", "o": ["Toujours le bon bit", "Toujours le mauvais bit", "0 ou 1 au hasard, une chance sur deux", "Rien du tout"], "a": 2, "e": "Avec la mauvaise base, le résultat est aléatoire. C'est pourquoi on jette les positions où les bases diffèrent."}, {"q": "Alice envoie 1 000 photons et Bob choisit ses bases au hasard. Combien de positions gardent-ils environ ?", "o": ["100", "250", "500", "1 000"], "a": 2, "e": "Deux bases possibles : elles coïncident dans la moitié des cas."}, {"q": "Eve intercepte chaque photon, le mesure dans une base choisie au hasard, puis le renvoie. Quel taux d'erreur apparaît environ sur les positions gardées ?", "o": ["0 %", "12,5 %", "25 %", "50 %"], "a": 2, "e": "Eve se trompe de base une fois sur deux, et dans ce cas Bob se trompe une fois sur deux : 1/2 × 1/2 = 25 %."}, {"q": "Une fibre perd 0,2 dB/km. Quelle fraction des photons arrive après 100 km ?", "o": ["1/10", "1/100", "1/1 000", "1/10 000"], "a": 1, "e": "0,2 × 100 = 20 dB. Tous les 10 dB, on divise par 10 : 20 dB donnent 10⁻², soit 1/100."}, {"q": "Même fibre sur 1 000 km : quelle fraction des photons arrive ?", "o": ["10⁻²", "10⁻²⁰", "10⁻²⁰⁰", "1/1 000"], "a": 1, "e": "0,2 × 1 000 = 200 dB. 200 dB divisés par 10 donnent l'exposant −20 : un photon sur 10²⁰."}, {"q": "À 500 km d'altitude, une erreur de pointage d'1 microradian décale le faisceau d'environ :", "o": ["5 mm", "50 cm", "5 m", "50 m"], "a": 1, "e": "10⁻⁶ rad × 500 000 m = 0,5 m. C'est comparable au diamètre d'un télescope au sol."}, {"q": "Quel est l'avantage principal d'un satellite géostationnaire pour la QKD, et son inconvénient ?", "o": ["Il couvre une zone fixe en permanence, mais il est bien plus loin donc les pertes sont bien plus fortes", "Il coûte moins cher à lancer, mais il passe trop vite", "Il survole tout le globe, mais manque d'énergie", "Il évite la météo, mais il est trop proche"], "a": 0, "e": "À 35 786 km, il reste fixe dans le ciel. Mais le faisceau s'étale sur une bien plus grande distance."}, {"q": "Quelle phrase distingue le mieux SAGA et QINSAT ?", "o": ["SAGA vise de la QKD pour les gouvernements européens, QINSAT vise à distribuer des photons intriqués", "SAGA est un projet chinois, QINSAT un projet européen", "QINSAT est déjà en orbite, SAGA non", "SAGA et QINSAT sont le même projet"], "a": 0, "e": "SAGA est une mission de l'ESA pour des clés quantiques gouvernementales. QINSAT est le démonstrateur d'intrication de Thales Alenia Space, visé vers 2030."}, {"q": "Pourquoi les liaisons quantiques satellite-sol se font-elles surtout de nuit ?", "o": ["Le Soleil ajoute une lumière parasite qui noie les rares photons", "Les satellites sont éteints le jour", "Il n'y a pas d'atmosphère la nuit", "La Lune amplifie les photons"], "a": 0, "e": "Les photons utiles sont très peu nombreux : le fond lumineux du jour les masque."}, {"q": "Pourquoi dit-on que la QKD résiste aux ordinateurs quantiques ?", "o": ["Sa sécurité ne repose pas sur la difficulté d'un calcul, mais sur les lois de la physique", "Elle utilise des clés de 4 096 bits", "Elle utilise l'algorithme de Shor", "Elle est trop lente pour être attaquée"], "a": 0, "e": "Un ordinateur quantique ne change rien : l'espion doit mesurer les photons, et sa mesure laisse des traces."}, {"q": "L'attaque par aveuglement exploite :", "o": ["Une faille de la mécanique quantique", "Un défaut du détecteur réel, poussé hors de son mode de fonctionnement", "L'absence de pointage", "La vitesse du satellite"], "a": 1, "e": "La physique quantique reste valable. L'attaque vise le matériel, qui obéit à une lumière intense au lieu de répondre à des photons uniques."}, {"q": "Que garantit la MDI-QKD ?", "o": ["Les sources d'Alice peuvent être piratées sans conséquence", "Les détecteurs de mesure peuvent être contrôlés par Eve sans compromettre la clé", "Elle est plus rapide que BB84", "Elle supprime le besoin de canal public"], "a": 1, "e": "Elle élimine les failles de la mesure. Les sources restent à protéger, le montage est plus complexe et le débit plus faible."}, {"q": "Qu'est-ce qu'un nœud de confiance ?", "o": ["Un relais qui connaît la clé et doit donc rester sécurisé", "Un détecteur sans erreur", "Un satellite sans batterie", "Un protocole d'authentification"], "a": 0, "e": "Si le satellite fabrique la clé, il la connaît. Le distributeur d'intrication évite en principe cette hypothèse."}, {"q": "En 2024, quelle est la position de l'ANSSI et de ses partenaires sur la QKD ?", "o": ["Il faut la généraliser immédiatement", "Usages de niche et maturité de sécurité insuffisante, priorité à la cryptographie post-quantique", "Il faut l'interdire", "Elle est identique à la cryptographie post-quantique"], "a": 1, "e": "C'est la conclusion de leur document de synthèse publié le 25 janvier 2024."}, {"q": "Quel énoncé est faux ?", "o": ["Un satellite en orbite basse reste peu de temps au-dessus d'une station", "L'intrication transmet l'information instantanément", "Le débit de clé reste faible", "Un nuage épais peut interrompre une liaison"], "a": 1, "e": "Faux : l'intrication ne transmet aucune information toute seule. Les trois autres énoncés sont vrais."}, {"q": "Un débit de clé de l'ordre du kilobit par seconde peut suffire à protéger beaucoup de données, parce que :", "o": ["On ne transmet que des clés courtes (par exemple 256 bits), utilisées ensuite par un chiffrement classique rapide", "Chaque photon transporte 1 Go", "On compresse les données avant l'envoi", "Il ne suffit pas"], "a": 0, "e": "Les données passent par l'Internet ordinaire. Les photons ne servent qu'à renouveler les clés."}, {"q": "Pourquoi la phrase « avec la QKD, il est impossible d'espionner sans être détecté » est-elle trop forte ?", "o": ["L'espionnage laisse des traces statistiques, à condition que l'appareil réel respecte les hypothèses de la théorie", "Parce que l'espion peut copier les photons", "Parce que la QKD n'utilise pas de photons", "Parce qu'Alice et Bob n'ont pas besoin de se comparer"], "a": 0, "e": "Le protocole idéal détecte l'espion. Les détecteurs et les sources réels peuvent avoir des failles (fiche 7)."}];
+  var KEY="cgs-quiz-satellites-quantiques";
+  var root=document.getElementById("quiz");
+  var LET=["A","B","C","D","E"];
+  var st=null;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+  function best(){try{return parseInt(localStorage.getItem(KEY)||"-1",10);}catch(e){return -1;}}
+  function saveBest(v){try{if(v>best())localStorage.setItem(KEY,String(v));}catch(e){}}
+  function start(list){st={list:list,i:0,score:0,wrong:[],done:false};render();}
+  function render(){
+    root.innerHTML="";
+    if(st.i>=st.list.length){return finish();}
+    var q=st.list[st.i];
+    var head=el("div","qhead");
+    head.appendChild(el("span",null,"Question "+(st.i+1)+" / "+st.list.length));
+    head.appendChild(el("span",null,"Score : "+st.score));
+    var bar=el("div","bar");bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax",st.list.length);bar.setAttribute("aria-valuenow",st.i);
+    var fill=el("i");fill.style.width=(st.i/st.list.length*100)+"%";bar.appendChild(fill);
+    var qt=el("p","qtext",q.q);qt.tabIndex=-1;
+    var opts=el("div","opts");opts.setAttribute("role","group");opts.setAttribute("aria-label","Réponses possibles");
+    var items=shuffle(q.o.map(function(t,k){return {t:t,k:k};}));
+    var fb=el("div");fb.setAttribute("aria-live","polite");
+    var next=null;
+    items.forEach(function(it,idx){
+      var b=el("button","opt");b.type="button";b.dataset.k=it.k;
+      b.appendChild(el("span","k",LET[idx]));b.appendChild(el("span",null,it.t));
+      b.addEventListener("click",function(){choose(b,it.k===q.a);});
+      opts.appendChild(b);
+    });
+    function choose(btn,ok){
+      var all=opts.querySelectorAll("button");
+      for(var i=0;i<all.length;i++){all[i].disabled=true;if(parseInt(all[i].dataset.k,10)===q.a)all[i].classList.add("good");}
+      if(ok){st.score++;}else{btn.classList.add("bad");st.wrong.push(q);}
+      fb.className="fb "+(ok?"good":"bad");
+      fb.innerHTML="<b>"+(ok?"Bonne réponse !":"Pas tout à fait.")+"</b>"+q.e;
+      head.lastChild.textContent="Score : "+st.score;
+      fill.style.width=((st.i+1)/st.list.length*100)+"%";
+      next=el("button","btn",st.i+1<st.list.length?"Question suivante →":"Voir mon résultat");next.type="button";
+      next.addEventListener("click",function(){st.i++;render();});
+      root.appendChild(next);next.focus();
+    }
+    root.appendChild(head);root.appendChild(bar);root.appendChild(qt);root.appendChild(opts);root.appendChild(fb);
+    qt.focus({preventScroll:true});
+  }
+  function finish(){
+    var n=st.list.length,s=st.score;
+    var prev=best();saveBest(s);
+    var msg=s===n?"Parfait, sans faute !":(s>=n*0.8?"Très bien, les notions sont solides.":(s>=n*0.5?"Bon début : relisez les fiches des questions manquées.":"À retravailler : reprenez les fiches puis refaites le quiz."));
+    root.innerHTML="";
+    var box=el("div","score");
+    box.appendChild(el("div","big",s+" / "+n));
+    box.appendChild(el("p",null,"<strong>"+msg+"</strong>"));
+    if(st.list.length===Q.length&&prev>=0&&prev!==s){box.appendChild(el("p",null,"Meilleur score sur cet appareil : "+Math.max(prev,s)+" / "+n));}
+    root.appendChild(box);
+    var btns=el("div","btns");
+    var again=el("button","btn","Recommencer le quiz");again.type="button";
+    again.addEventListener("click",function(){start(shuffle(Q));window.scrollTo({top:document.getElementById("quiz-sec").offsetTop-60});});
+    btns.appendChild(again);
+    if(st.wrong.length){
+      var redo=el("button","btn alt","Refaire les questions manquées ("+st.wrong.length+")");redo.type="button";
+      var w=st.wrong.slice();
+      redo.addEventListener("click",function(){start(shuffle(w));});
+      btns.appendChild(redo);
+    }
+    root.appendChild(btns);
+    if(st.wrong.length){
+      var rev=el("div","rev");rev.appendChild(el("h4",null,"À revoir"));
+      st.wrong.forEach(function(q){
+        var it=el("div","item","<strong>"+q.q+"</strong><small>Réponse : "+q.o[q.a]+" — "+q.e+"</small>");
+        rev.appendChild(it);
+      });
+      root.appendChild(rev);
+    }
+  }
+  document.addEventListener("keydown",function(e){
+    if(!root||e.ctrlKey||e.metaKey||e.altKey)return;
+    var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"))return;
+    var r=root.getBoundingClientRect();if(r.bottom<0||r.top>window.innerHeight)return;
+    var k=parseInt(e.key,10);
+    if(k>=1&&k<=4){var bs=root.querySelectorAll(".opt:not(:disabled)");if(bs[k-1]){bs[k-1].click();e.preventDefault();}}
+  });
+  start(shuffle(Q));
+})();
+</script>
+</body>
+</html>
