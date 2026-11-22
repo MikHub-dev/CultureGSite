@@ -423,7 +423,7 @@ def parcours():
 
 
 # ---------------------------------------------------------------- pages HTML
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -477,7 +477,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Archive INA, 1973</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « Raymond Aron analyse la puissance américaine et l\'avenir de l\'Europe »</h1>\n'
              '<p class="meta">Chaîne INA Culture · 9 min 50 s · mise en ligne le 22 février 2026 · extrait de l\'émission <i>Le temps de lire</i> (ORTF, 12 mars 1973), entretien avec Pierre Dumayet · en français · transcription lue en entier · pas de chapitres : découpage proposé en 7 parties</p>\n'
@@ -500,7 +500,7 @@ def page_fiche():
     h.append('<article class="fiche" id="precautions">\n<h3>Précautions</h3>\n'
              '<p class="note">C\'est une archive de 1973 : Aron parle de l\'Europe de la guerre froide (URSS, RFA, bloc soviétique) et donne son analyse personnelle, sans contradicteur. Ses jugements, par exemple sur ce que voulait le général de Gaulle, sont ceux d\'un intervenant et ne sont pas vérifiés ici. La description de la chaîne et les commentaires présentent l\'entretien comme « visionnaire » : c\'est une appréciation, pas un fait.</p>\n'
              '<p class="note">La transcription est automatique et déforme des noms : j\'ai lu « Raymond Aaron » comme Raymond Aron, « Calman Levi » comme Calmann-Lévy, « 1945-172 » comme 1945-1972, « Montes qui » comme Montesquieu, « Tville » comme Tocqueville, « la coucheuse de l\'histoire » comme l\'accoucheuse de l\'histoire et « chien de faillance » comme chiens de faïence.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 

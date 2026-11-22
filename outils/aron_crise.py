@@ -345,7 +345,7 @@ def parcours():
 
 # ---------------------------------------------------------------- pages HTML
 
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -400,7 +400,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Archive télé, 1974</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « 1974 - Raymond Aron et le concept de crise »</h1>\n'
              '<p class="meta">Chaîne INA Podcasts (podcast <i>Échos</i>) · 8 min 53 s · mise en ligne le 23 mai 2023 · extrait de l\'émission <i>Variances</i> de Michèle Arnaud, ORTF, 13 décembre 1974, questions de Bernard Bonilauri · en français · transcription automatique lue en entier · pas de chapitres : découpage proposé en %d parties</p>\n'
@@ -424,7 +424,7 @@ def page_fiche():
     h.append('<article class="fiche" id="precautions">\n<h3>Précautions</h3>\n'
              '<p class="note">C\'est un extrait de huit minutes d\'un entretien télévisé de 1974, remonté en podcast par l\'INA avec une présentation ajoutée. Aron y donne son analyse personnelle, sans contradicteur. Ses constats sur la violence et les suicides sont ceux qu\'il tire des études de l\'époque, sans chiffres précis : ils ne sont pas vérifiés ici. Ses horizons de 5 à 8 ans et d\'un demi-siècle sont des pronostics de 1974.</p>\n'
              '<p class="note">La transcription est automatique. J\'ai lu « durkem » comme Durkheim, « Marc a dit » comme « Marx a dit » et « bonnilori » comme Bonilauri (orthographe de la description de la vidéo). Les citations entre guillemets sont légèrement resserrées.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 

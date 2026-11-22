@@ -408,7 +408,7 @@ def parcours():
 
 # ---------------------------------------------------------------- pages HTML
 
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -463,7 +463,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Entretien, 2026</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « Comprendre le réalisme géopolitique – Jacques Sapir et Pierre-Yves Rougeyron »</h1>\n'
              '<p class="meta">Chaîne Front Populaire · 50 min 24 s · mise en ligne le 5 août 2026 · entretien avec Jacques Sapir (économiste) et Pierre-Yves Rougeyron (président du Cercle Aristote) · en français · transcription automatique lue en entier · %d chapitres fournis par la vidéo</p>\n'
@@ -488,7 +488,7 @@ def page_fiche():
              '<p class="note">C\'est un entretien d\'opinion publié par Front Populaire, média souverainiste qui le présente comme tel. Les deux invités partagent la même école de pensée et il n\'y a pas de contradicteur. Plusieurs thèses sont discutées par les historiens et les spécialistes : la responsabilité de l\'idéalisme wilsonien dans la Seconde Guerre mondiale, la lecture de la guerre froide comme un « roman » servant la puissance américaine, le jugement très sévère de Jacques Sapir sur Kissinger, présenté comme responsable de millions de morts au Cambodge, et la critique de la diplomatie européenne. La fiche les rapporte comme leurs opinions. Quelques propos tenus de façon polémique dans la vidéo (sur l\'Europe, ou des insultes visant des personnes) ne sont pas repris.</p>\n'
              '<p class="note">Faits et attributions non vérifiés ici : la phrase « nous allons vous priver d\'ennemi », attribuée dans la vidéo à l\'ambassadeur soviétique à l\'ONU (on la prête souvent au conseiller soviétique Gueorgui Arbatov) ; la formule sur les dictateurs « fils de… », prêtée à un président américain sans source sûre ; « la force prime le droit », prêtée à Bismarck ; l\'anecdote du conseil de De Gaulle à Nixon sur la Chine ; l\'élection de Kissinger à l\'Académie des sciences de Russie en 2016. J\'ai corrigé la fonction de Kissinger, présenté dans la vidéo comme « président du Conseil de sécurité nationale » : il en était le conseiller avant de devenir secrétaire d\'État.</p>\n'
              '<p class="note">La transcription est automatique. J\'ai lu « Grossus » comme Grotius, « Mernir », « Mné » et « Méternique » comme Metternich, « vilsonnien » comme wilsonien, « Boudre Wilson » comme Woodrow Wilson, « Morgan Tao » comme Morgenthau, « Henrique Singer » comme Henry Kissinger, « Din Chesson » comme Dean Acheson, « les frères de l\'us » comme les frères Dulles, « Brezinski » comme Brzezinski, « Guiseau » comme Guizot, « Circle Aristote » comme Cercle Aristote, « Sapierre » comme Sapir et « Blincen » comme Blinken.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 

@@ -448,7 +448,7 @@ def parcours():
 
 # ---------------------------------------------------------------- pages HTML
 
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -503,7 +503,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Archive télé, 1974</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « Raymond Aron analyse la crise de 1974, le marxisme et la politique mondiale »</h1>\n'
              '<p class="meta">Chaîne INA Culture · 57 min 13 s · mise en ligne le 28 septembre 2025 · émission <i>Variances</i> de Michèle Arnaud, ORTF, 13 décembre 1974 · en français · transcription automatique lue en entier · pas de chapitres : découpage proposé en %d parties</p>\n'
@@ -527,7 +527,7 @@ def page_fiche():
     h.append('<article class="fiche" id="precautions">\n<h3>Précautions</h3>\n'
              '<p class="note">C\'est un entretien télévisé de 1974 où Aron parle de lui-même, sans contradicteur : ses souvenirs (Allemagne, Londres, Kennedy, Kissinger) et ses jugements sont rapportés comme il les donne, sans vérification. Ses chiffres d\'inflation sont ceux qu\'il cite de mémoire pour 1974, et ses pronostics (marché commun, durée de la crise) sont ceux de cette date. Le nom du journaliste, Bernard Bonilauri, vient de la description de l\'extrait publié par l\'INA, pas de celle de cette vidéo. J\'ai ajouté quelques repères (guerre du Kippour en octobre 1973, titre exact des <i>Dix-huit leçons</i>).</p>\n'
              '<p class="note">La transcription est automatique et déforme des noms. J\'ai lu « Toinb » comme Toynbee, « le rein » comme le Rhin, « Maxweb » comme Max Weber, « Kanes » comme Keynes, « Crouchef » comme Khrouchtchev, « Kipour » comme Kippour, « Henrique Singer » et « Kissigur » comme Kissinger, « McGeorge Bandy » comme McGeorge Bundy, « Maavel » comme Machiavel, « Pétin » comme Pétain, « Ain Touren » comme Alain Touraine, « Les 18 sur la société industrielle » comme <i>Dix-huit leçons sur la société industrielle</i>, « l\'année 601 » comme l\'année universitaire 1960-1961 et « Eris Dabay » comme l\'allemand <i>er ist dabei</i> (« il est présent »). Le titre de l\'article contre le programme commun qu\'il cite est illisible : je ne l\'ai pas repris.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 

@@ -418,7 +418,7 @@ def parcours():
 
 # ---------------------------------------------------------------- pages HTML
 
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -473,7 +473,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Cours, 1963-1964</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « Raymond Aron, cours du cycle Philosophie et Histoire à la Sorbonne »</h1>\n'
              '<p class="meta">Chaîne Artes2 · 4 h 47 min · mise en ligne le 11 mai 2021 · cours 1 à 5 du cycle « Philosophie et Histoire » (1963-1964), enregistrés pour Radio Sorbonne et rediffusés par France Culture · en français · transcription automatique lue en entier · pas de chapitres : découpage proposé en %d parties</p>\n'
@@ -497,7 +497,7 @@ def page_fiche():
     h.append('<article class="fiche" id="precautions">\n<h3>Précautions</h3>\n'
              '<p class="note">Ce sont des cours de 1963-1964, enregistrés pour Radio Sorbonne puis rediffusés par France Culture (« Les conférences du soir »), et mis en ligne par une chaîne qui n\'est pas l\'éditeur d\'origine. Les dates des cours 2 à 5 viennent des présentations radiophoniques. Aron y expose sa propre lecture : sa présentation de la crise de juillet 1914, plutôt modérée sur les responsabilités, et celle des thèses d\'A. J. P. Taylor sur 1939 sont rapportées comme il les donne, dans l\'état du débat de 1964 (avant que la thèse de Fritz Fischer, qu\'il évoque sans le nommer, ne s\'impose largement). Quelques précisions de contexte sont ajoutées ici, comme la date de la thèse (1938).</p>\n'
              '<p class="note">La transcription est automatique, sans ponctuation, et déforme presque tous les noms propres. J\'ai lu « igle », « eagle » et « hic » comme Hegel ; « les ombres un chèque » comme Léon Brunschvicg ; « rigueur tu » et « ricker » comme Rickert ; « deal taille » comme Dilthey ; « max payne » comme Max Weber ; « rank vie est ce que chaînistes » comme la formule de Ranke <i>wie es eigentlich gewesen</i> ; « ja spurs » comme Jaspers ; « gaye stevie saône shaft » comme <i>Geisteswissenschaften</i> (sciences de l\'esprit) ; « met à l\'eau ponty » comme Merleau-Ponty ; « tu si dit » comme Thucydide ; « ni cias » comme Nicias ; « egypt élan taylor » comme A. J. P. Taylor ; « rossbach » comme le rapport Hossbach ; « delbrück » comme Hans Delbrück ; « normal enjoy » comme Norman Angell ; « louis saez » comme Louis XVI ; « aller tester ya prof à 6 » comme l\'expression grecque <i>alêthestatê prophasis</i> (« la cause la plus vraie »). Les citations entre guillemets sont reformulées d\'après cette transcription et peuvent s\'écarter un peu des mots exacts.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 

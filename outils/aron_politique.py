@@ -382,7 +382,7 @@ def parcours():
 
 
 # ---------------------------------------------------------------- pages HTML
-MENU = [('sante', 'Santé'), ('geopolitique', 'Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
+MENU = [('sante', 'Santé'), ('geopolitique', 'Politique et Géopolitique'), ('economie', 'Économie'), ('physique', 'Physique'),
         ('informatique', 'Informatique'), ('maths', 'Maths'), ('etudes', 'Études'), ('philosophie', 'Philosophie et Sagesse'), ('langue', 'Langue')]
 
 
@@ -437,7 +437,7 @@ def page_planche(e):
 def page_fiche():
     yt = 'https://youtu.be/%s' % VID
     h = ['<main class="wrap fiche-video">\n']
-    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n'
+    h.append('<div class="vid-tete">\n<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n'
              '<div class="badges"><span class="b">YouTube</span><span class="b">Archive radio, 1975</span><span class="b b-lu">Lu en entier</span></div>\n'
              '<h1>Vidéo : « Raymond Aron, entretien (Parti pris) : la politique est amorale et immorale »</h1>\n'
              '<p class="meta">Chaîne Artesquieu · 23 min 30 s · mise en ligne le 9 juin 2022 · entretien avec Jacques Paugam, émission <i>Parti pris</i>, France Culture (1975 selon la description) · en français · transcription automatique lue en entier · pas de chapitres : découpage proposé en %d parties</p>\n'
@@ -461,7 +461,7 @@ def page_fiche():
     h.append('<article class="fiche" id="precautions">\n<h3>Précautions</h3>\n'
              '<p class="note">C\'est un entretien d\'opinion de 1975, mis en ligne par une chaîne qui n\'est pas l\'éditeur d\'origine ; la date et l\'émission viennent de la description, je ne les ai pas vérifiées. Aron y donne son point de vue personnel, sans contradicteur, sur des sujets lourds (nazisme, stalinisme, union de la gauche). Sa comparaison des deux régimes et ses ordres de grandeur, par exemple le nombre de détenus dans les camps allemands et soviétiques au milieu des années 1930, sont rapportés comme il les donne et ne sont pas vérifiés ici. Ses pronostics sur l\'union de la gauche sont ceux de 1975.</p>\n'
              '<p class="note">La transcription est automatique, sans ponctuation, et déforme beaucoup de noms. J\'ai lu « seul génie tsin » et « soljénitsyne » comme Soljenitsyne, « l\'archipel bull hague » et « gulak » comme <i>L\'Archipel du Goulag</i>, « le chêne elle vaut » comme <i>Le Chêne et le Veau</i>, « où 14 » comme <i>Août 14</i>, « paix et guerre » comme <i>Guerre et Paix</i>, « heatley » comme Hitler, « phénologie » comme phénoménologie, « styles et tziganes » comme Slaves et Tziganes. Le passage sur le « conseiller du prince » cite un homme d\'État américain dont le nom est illisible (sans doute Kissinger) : je ne l\'ai pas nommé dans la fiche.</p>\n</article>\n')
-    h.append('<a class="back" href="../index.html#geopolitique">&larr; Géopolitique</a>\n</main>\n')
+    h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
 
 
