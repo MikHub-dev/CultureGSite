@@ -4105,6 +4105,42 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   Object.keys(themes).forEach(function(id){
     index.push({ id:id, titre:themes[id], theme:'Thème', texte:'', nt:norm(themes[id]), nx:'', estTheme:true });
   });
+  /* ---------- sous-pages (fiches-ses/, fiches-informatique/…) : chargées à la première recherche, une entrée par fiche ---------- */
+  var sousPages = [], sousEtat = 0; /* 0 : pas chargées, 1 : en cours, 2 : prêtes */
+  document.querySelectorAll('.view a[href]').forEach(function(a){
+    var h = a.getAttribute('href').split('#')[0];
+    if (!/\.html$/i.test(h) || /^[a-z]+:|^\/\//i.test(h) || /(^|\/)index\.html$/i.test(h) || sousPages.indexOf(h) !== -1) return;
+    sousPages.push(h);
+  });
+  function chargerSousPages(){
+    if (sousEtat || !sousPages.length || !window.fetch || !window.DOMParser) return;
+    sousEtat = 1;
+    Promise.all(sousPages.map(function(url){
+      return fetch(url).then(function(r){ if (!r.ok) throw r; return r.text(); }).then(function(html){
+        var doc = new DOMParser().parseFromString(html, 'text/html'), quiz = '';
+        doc.querySelectorAll('script').forEach(function(sc){ /* questions du quiz, écrites en JSON dans « var Q=[…] » */
+          var m = sc.textContent.match(/var Q\s*=\s*(\[[\s\S]*?\]);/);
+          if (m) try { JSON.parse(m[1]).forEach(function(x){ quiz += ' ' + [x.q].concat(x.o || [], x.e || []).join(' · '); }); } catch (er) {}
+        });
+        doc.querySelectorAll('script,style,noscript,template,.num').forEach(function(n){ n.remove(); });
+        doc.body.querySelectorAll('p,li,h1,h2,h3,h4,h5,h6,div,td,th,section,article,aside,dt,dd,blockquote,figcaption,br,.mots span,.lbl').forEach(function(n){ n.after(' '); }); /* sépare les blocs (sinon « marché.5 fiches ») */
+        var page = (doc.title || url).split(/\s+[—–-]\s+/)[0].trim(), court = page.split(/\s*:\s+/)[0];
+        var main = doc.querySelector('main') || doc.body, blocs = [];
+        Array.prototype.slice.call(main.children).forEach(function(b){
+          if (/^(h1|h2|nav)$/i.test(b.tagName)) return;
+          if (b.id === 'quiz-sec' || b.querySelector('#quiz')) { if (quiz) blocs.push({ id:b.id || 'quiz', titre:'Quiz : ' + court, texte:quiz }); return; }
+          var h = b.querySelector('h3,h2'), texte = b.textContent.replace(/\s+/g,' ').trim();
+          if (texte) blocs.push({ id:b.id, titre:h ? h.textContent.replace(/\s+/g,' ').trim() : page, texte:texte, bloc:!b.matches('article.fiche') });
+        });
+        /* page sans fiches (page d'accueil d'un cours) : une seule entrée pour toute la page */
+        if (!blocs.some(function(x){ return !x.bloc; })) blocs = [{ titre:page, texte:main.textContent.replace(/\s+/g,' ').trim() }].concat(blocs.filter(function(x){ return /^Quiz/.test(x.titre); }));
+        blocs.forEach(function(x){
+          var lien = url + (x.id ? '#' + x.id : ''), texte = x.texte.replace(/\s+/g,' ').trim();
+          index.push({ id:lien, url:lien, titre:x.titre, theme:court, texte:texte, nt:norm(x.titre), nx:norm(texte) });
+        });
+      }).catch(function(){ /* page absente ou ouverture en file:// : on cherche sans elle */ });
+    })).then(function(){ sousEtat = 2; if (document.activeElement === q && q.value.trim()) chercher(); });
+  }
   var courant = [], actif = -1;
   function esc(s){ return s.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function surligne(s, termes){
@@ -4126,6 +4162,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     return (d > 0 ? '…' : '') + surligne(e.texte.slice(d, f), termes) + (f < e.texte.length ? '…' : '');
   }
   function chercher(){
+    chargerSousPages();
     var termes = norm(q.value).split(/\s+/).filter(function(t){ return t.length > 1 || /\d/.test(t); });
     if (!termes.length) return fermer();
     var res = [];
@@ -4146,7 +4183,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
     else {
       html += '<li class="r-compte" aria-hidden="true">' + res.length + (res.length > 1 ? ' résultats' : ' résultat') + (res.length > courant.length ? ' (les ' + courant.length + ' premiers)' : '') + '</li>';
       courant.forEach(function(e, i){
-        html += '<li role="presentation"><a role="option" id="r' + i + '" href="#' + esc(e.id) + '" data-i="' + i + '">' +
+        html += '<li role="presentation"><a role="option" id="r' + i + '" href="' + (e.url ? '' : '#') + esc(e.id) + '" data-i="' + i + '">' +
           '<span class="r-titre"><span>' + surligne(e.titre, termes) + '</span><span class="r-theme">' + esc(e.theme) + '</span></span>' +
           (e.estTheme ? '' : '<span class="r-extrait">' + extrait(e, termes) + '</span>') + '</a></li>';
       });
@@ -4162,12 +4199,13 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   }
   function aller(i){
     var e = courant[i]; if (!e) return;
+    if (e.url) { fermer(); location.href = e.url; return; }
     var meme = location.hash === '#' + e.id;
     fermer(); q.blur();
     if (meme) show(); else location.hash = e.id;
   }
   q.addEventListener('input', chercher);
-  q.addEventListener('focus', function(){ if (q.value.trim()) chercher(); });
+  q.addEventListener('focus', function(){ chargerSousPages(); if (q.value.trim()) chercher(); });
   q.addEventListener('keydown', function(ev){
     if (ev.key === 'ArrowDown') { ev.preventDefault(); if (liste.hidden) chercher(); marquer(actif + 1); }
     else if (ev.key === 'ArrowUp') { ev.preventDefault(); marquer(actif - 1); }
