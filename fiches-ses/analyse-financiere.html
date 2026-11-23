@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lire les comptes d'une entreprise — Fiches et quiz</title>
+<meta name="description" content="Compte de résultat, bilan, trésorerie, KPI, rentabilité, endettement, bourse et signaux d'alerte : l'analyse financière expliquée aux lycéens, avec un exemple suivi et un calculateur.">
+<style>
+:root{
+  --accent:#a16207;
+  --bg:#faf8f4; --card:#ffffff; --ink:#1d2330; --muted:#5a6477; --line:#e7e2d9;
+  --accent-text:var(--accent);
+  --soft:color-mix(in srgb,var(--accent) 9%,var(--card));
+  --soft2:color-mix(in srgb,var(--accent) 16%,var(--card));
+  --ok:#157a3c; --okbg:#e6f5ea; --ko:#b42318; --kobg:#fdeceb; --warn:#fff5dc; --warnline:#e8b93a; --warnink:#6b4a00;
+  --radius:16px; --shadow:0 1px 2px rgba(20,24,40,.05),0 6px 20px rgba(20,24,40,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#12141a;--card:#1b1f27;--ink:#eceff5;--muted:#a4adbe;--line:#2c323e;
+    --accent-text:color-mix(in srgb,var(--accent) 55%,#ffffff);
+    --soft:color-mix(in srgb,var(--accent) 16%,var(--card));--soft2:color-mix(in srgb,var(--accent) 26%,var(--card));
+    --ok:#5fd68a;--okbg:#12301f;--ko:#ff8a80;--kobg:#3b1816;--warn:#2e2610;--warnline:#a6791a;--warnink:#f1d58a;
+    --shadow:none}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.2;margin:0}
+a{color:var(--accent-text)}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+.hero{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:#fff;padding:26px 0 34px}
+.hero a{color:#fff;opacity:.9;text-decoration:none;font-size:.92rem}
+.hero a:hover{text-decoration:underline;opacity:1}
+.kicker{margin:18px 0 6px;font-size:.82rem;letter-spacing:.09em;text-transform:uppercase;opacity:.85;font-weight:600}
+.hero h1{font-size:clamp(1.7rem,4.6vw,2.6rem)}
+.hero p.lead{margin:12px 0 0;max-width:62ch;font-size:1.06rem;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);padding:3px 12px;border-radius:99px;font-size:.85rem}
+nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:9px 18px;scrollbar-width:thin}
+nav.toc a{white-space:nowrap;text-decoration:none;font-size:.88rem;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent-text)}
+nav.toc a.q{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+main{padding:28px 0 20px}
+h2.sec{font-size:1.5rem;margin:6px 0 16px}
+.fiche{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 22px 20px;margin:0 0 18px;position:relative}
+.fiche h3{font-size:1.28rem;margin:0 0 12px;padding-left:46px;min-height:34px;display:flex;align-items:center}
+.num{position:absolute;left:20px;top:20px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-family:system-ui,sans-serif}
+.def{border-left:4px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 10px 10px 0;margin:0 0 12px}
+.formule{margin:12px 0;padding:11px 14px;text-align:center;font-weight:650;background:var(--soft2);border-radius:10px;font-size:1.02rem;overflow-wrap:anywhere}
+ul.pts{margin:10px 0;padding-left:1.2em}
+ul.pts li{margin:6px 0}
+ul.pts li::marker{color:var(--accent)}
+.ex,.pg{margin:12px 0 0;padding:10px 14px;border-radius:10px;font-size:.97rem}
+.ex{background:color-mix(in srgb,var(--ink) 5%,var(--card));border:1px dashed var(--line)}
+.pg{background:var(--warn);border:1px solid var(--warnline);color:var(--warnink)}
+.lbl{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:8px;padding:1px 8px;border-radius:6px;vertical-align:1px}
+.ex .lbl{background:var(--accent);color:#fff}
+.pg .lbl{background:var(--warnline);color:#1b1300}
+.mots{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.mots span{font-size:.78rem;padding:2px 10px;border-radius:99px;background:var(--soft);color:var(--accent-text);border:1px solid var(--soft2);font-weight:600}
+.memo{background:var(--ink);color:var(--bg);border-radius:var(--radius);padding:20px 22px;margin:26px 0 0}
+.memo h3{font-size:1.2rem;margin-bottom:8px}
+.memo ul{margin:0;padding-left:1.2em}.memo li{margin:6px 0}
+.quizbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:6px}
+.qhead{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--muted);margin-bottom:8px;font-weight:600}
+.bar{height:8px;border-radius:99px;background:var(--soft2);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qtext{font-size:1.15rem;font-weight:650;margin:0 0 14px;outline:none}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;font:inherit;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--soft)}
+.opt:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;background:var(--soft2);display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--accent-text)}
+.opt:disabled{cursor:default}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--ko);background:var(--kobg)}
+.opt.good .k{background:var(--ok);color:#fff}.opt.bad .k{background:var(--ko);color:#fff}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:.98rem}
+.fb.good{background:var(--okbg);border:1px solid var(--ok)}.fb.bad{background:var(--kobg);border:1px solid var(--ko)}
+.fb b{display:block;margin-bottom:2px}
+.btn{font:inherit;font-weight:650;cursor:pointer;border:0;border-radius:12px;padding:11px 20px;background:var(--accent);color:#fff;margin-top:14px}
+.btn:hover{filter:brightness(1.08)}.btn:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
+.btn.alt{background:transparent;color:var(--accent-text);border:2px solid var(--accent)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.score{text-align:center;padding:8px 0}
+.score .big{font-size:3rem;font-weight:800;color:var(--accent-text);font-family:Georgia,serif}
+.score p{margin:4px 0}
+.rev{margin-top:14px;text-align:left}
+.rev h4{margin:0 0 8px;font-size:1rem}
+.rev .item{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.95rem}
+.rev .item small{display:block;margin-top:4px;color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:30px 0 10px}
+.pager a{flex:1 1 240px;text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;color:var(--ink)}
+.pager a:hover{border-color:var(--accent)}
+.pager small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.pager .nx{text-align:right}
+footer{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 18px 40px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:8px 0 28px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:var(--radius);padding:18px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .12s}
+.card:hover{transform:translateY(-3px)}
+.card .ic{font-size:1.8rem}
+.card h3{font-size:1.15rem;margin:6px 0}
+.card p{margin:0 0 12px;color:var(--muted);font-size:.93rem;flex:1}
+.card .meta{font-size:.8rem;font-weight:700;color:var(--accent-text)}
+.howto{background:var(--soft);border:1px solid var(--soft2);border-radius:var(--radius);padding:16px 20px;margin:0 0 26px}
+.howto ol{margin:6px 0 0;padding-left:1.3em}
+@media(max-width:560px){body{font-size:16px}.fiche{padding:18px 16px}.num{left:14px;top:16px}.fiche h3{padding-left:42px}}
+@media print{
+  nav.toc,#quiz-sec,.pager,.hero a,.chips{display:none!important}
+  body{background:#fff;color:#000;font-size:11pt}.hero{background:none!important;color:#000;padding:0}
+  .fiche{box-shadow:none;break-inside:avoid;border:1px solid #999}.memo{background:#eee;color:#000}
+  .num{background:#444!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}
+table.t{border-collapse:collapse;width:100%;font-size:.94rem;min-width:420px}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+table.t th{background:var(--soft);font-weight:700;color:var(--accent-text)}
+table.t td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.t tr.tot td{font-weight:700;border-top:2px solid var(--accent)}
+table.t tr.moins td{color:var(--muted)}
+figure.sch{margin:14px 0;padding:12px;background:color-mix(in srgb,var(--ink) 3%,var(--card));border:1px solid var(--line);border-radius:12px}
+figure.sch svg{display:block;width:100%;height:auto}
+figure.sch figcaption{font-size:.86rem;color:var(--muted);margin-top:6px;text-align:center}
+.sch .bar-p{fill:var(--accent)}.sch .bar-m{fill:color-mix(in srgb,var(--ink) 22%,var(--card))}
+.sch .lab{fill:var(--ink);font:600 13px system-ui,sans-serif}.sch .val{fill:var(--muted);font:12px system-ui,sans-serif}
+.sch .guide{stroke:var(--line);stroke-dasharray:3 3}
+.sch .box{fill:var(--card);stroke:var(--accent);stroke-width:2}.sch .box2{fill:var(--soft2);stroke:var(--line)}
+.sch .arr{stroke:var(--muted);stroke-width:1.6;fill:none}
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0}
+.duo>div{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--card)}
+.duo h4{margin:0 0 4px;font-size:1rem;color:var(--accent-text)}
+.duo p{margin:0;font-size:.95rem}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 22px;margin:0 0 18px}
+.calc h3{font-size:1.28rem;margin:0 0 8px}
+.calc .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 14px;margin:12px 0}
+.calc label{display:flex;flex-direction:column;font-size:.86rem;font-weight:600;color:var(--muted)}
+.calc input{font:inherit;font-size:1rem;margin-top:4px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
+.calc input:focus-visible{outline:none;border-color:var(--accent)}
+.calc .res td.v{font-weight:700}
+.calc .ok{color:var(--ok)}.calc .ko{color:var(--ko)}.calc .mid{color:var(--warnink)}
+.gloss{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin:26px 0 0}
+.gloss h2{font-size:1.3rem;margin:0 0 6px}
+.gloss dl{margin:0;columns:2 300px;column-gap:28px}
+.gloss dt{font-weight:700;margin-top:10px;break-after:avoid}
+.gloss dd{margin:2px 0 0;font-size:.94rem;color:var(--muted);break-inside:avoid}
+.plan{background:var(--soft);border:1px solid var(--soft2);border-radius:var(--radius);padding:14px 20px;margin:0 0 22px}
+.plan ol{margin:6px 0 0;padding-left:1.3em}.plan li{margin:3px 0}
+@media print{.calc{display:none!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<a href="accueil-ses.html">← Tous les thèmes</a>
+<div class="kicker">Culture économique</div>
+<h1>🔎 Lire les comptes d'une entreprise</h1>
+<p class="lead">Une entreprise est-elle rentable, solide, chère en bourse, ou au bord de la faillite ? Les chiffres et les ratios qui permettent de répondre, expliqués pas à pas sur une même entreprise.</p>
+<div class="chips"><span class="chip">11 fiches</span><span class="chip">16 questions de quiz</span><span class="chip">≈ 30 min</span><span class="chip">Calculateur de ratios</span></div>
+</div></header>
+<nav class="toc" aria-label="Sommaire"><div class="wrap"><a href="#f1">1 · Compter ou décider</a><a href="#f2">2 · Compte de résultat</a><a href="#f3">3 · Bénéfice et cash</a><a href="#f4">4 · Bilan</a><a href="#f5">5 · BFR</a><a href="#f6">6 · Clients</a><a href="#f7">7 · Rentabilité</a><a href="#f8">8 · Dettes</a><a href="#f9">9 · Bourse</a><a href="#f10">10 · Cher ou pas ?</a><a href="#f11">11 · Alertes</a><a href="#calculateur">Calculateur</a><a href="#lexique">Lexique</a><a class="q" href="#quiz-sec">Quiz</a></div></nav>
+<main class="wrap">
+<div class="plan"><strong>Le fil rouge : Rouleo</strong>, une entreprise (imaginaire) qui vend et répare des vélos. Toutes les fiches utilisent ses chiffres, ce qui permet de voir comment les indicateurs se répondent.
+<ol><li>Fiches 1 à 5 : <strong>lire les comptes</strong> (compte de résultat, bilan, trésorerie).</li><li>Fiches 6 à 8 : <strong>juger la performance</strong> (clients, rentabilité, dettes).</li><li>Fiches 9 et 10 : <strong>la bourse</strong> (une action est-elle chère ?).</li><li>Fiche 11 : <strong>repérer une entreprise en danger</strong>, puis le calculateur pour s'entraîner.</li></ol></div>
+<h2 class="sec">Les fiches</h2>
+
+<article class="fiche" id="f1" aria-labelledby="t1">
+<span class="num" aria-hidden="true">1</span><h3 id="t1">Comptabilité et finance : compter le passé, décider l'avenir</h3>
+<p class="def">La <strong>comptabilité</strong> enregistre, selon des règles fixées par la loi, ce qui s'est déjà passé. La <strong>finance</strong> se sert de ces chiffres pour décider : investir, emprunter, acheter ou vendre une entreprise.</p>
+<div class="duo"><div><h4>📒 Comptabilité</h4><p>Regarde en arrière. Produit chaque année deux documents obligatoires : le <strong>compte de résultat</strong> (ce que l'année a rapporté) et le <strong>bilan</strong> (ce que l'entreprise possède et doit à la fin de l'année).</p></div><div><h4>🧭 Finance</h4><p>Regarde en avant. Calcule des <strong>ratios</strong> (des divisions entre deux chiffres) pour comparer, prévoir la trésorerie et estimer ce que vaut l'entreprise.</p></div></div>
+<p>Rouleo a vendu cette année pour <strong>800 000 €</strong> de vélos et de réparations. Ce chiffre seul ne dit pas si l'entreprise va bien : il faut savoir ce qu'il en reste, avec quel argent elle travaille et ce qu'elle doit.</p>
+<p class="pg"><span class="lbl">Attention</span>Un ratio seul ne veut rien dire. On le compare toujours à <strong>l'année précédente</strong> et aux <strong>concurrents du même secteur</strong> : une marge de 3 % est faible pour un éditeur de logiciels, normale pour un supermarché.</p>
+<div class="mots" aria-label="Mots-clés"><span>comptabilité</span><span>finance</span><span>compte de résultat</span><span>bilan</span><span>ratio</span></div>
+</article>
+
+<article class="fiche" id="f2" aria-labelledby="t2">
+<span class="num" aria-hidden="true">2</span><h3 id="t2">Le compte de résultat : du chiffre d'affaires au bénéfice</h3>
+<p class="def">Le <strong>compte de résultat</strong> part des ventes de l'année et retire les charges par étapes. Chaque étape donne un « solde » qui répond à une question différente.</p>
+<figure class="sch"><svg viewBox="0 0 640 340" role="img" aria-labelledby="cas-t cas-d"><title id="cas-t">Cascade du compte de résultat de Rouleo</title><desc id="cas-d">800 000 euros de chiffre d'affaires deviennent 42 000 euros de résultat net après les achats, les dépenses externes, les salaires et taxes, les amortissements, les intérêts et l'impôt.</desc>
+<g class="lab"><text x="0" y="25">Chiffre d'affaires</text><text x="0" y="55">− Achats de vélos et pièces</text><text x="0" y="85">= Marge brute</text><text x="0" y="115">− Loyer, énergie, publicité</text><text x="0" y="145">= Valeur ajoutée</text><text x="0" y="175">− Salaires, impôts et taxes</text><text x="0" y="205">= EBE</text><text x="0" y="235">− Amortissements</text><text x="0" y="265">= Résultat d'exploitation</text><text x="0" y="295">− Intérêts et impôt</text><text x="0" y="325">= Résultat net</text></g>
+<rect class="bar-p" x="175" y="10" width="400" height="20" rx="3"/><rect class="bar-m" x="335" y="40" width="240" height="20" rx="3"/><rect class="bar-p" x="175" y="70" width="160" height="20" rx="3"/><rect class="bar-m" x="295" y="100" width="40" height="20" rx="3"/><rect class="bar-p" x="175" y="130" width="120" height="20" rx="3"/><rect class="bar-m" x="215" y="160" width="80" height="20" rx="3"/><rect class="bar-p" x="175" y="190" width="40" height="20" rx="3"/><rect class="bar-m" x="205" y="220" width="10" height="20" rx="2"/><rect class="bar-p" x="175" y="250" width="30" height="20" rx="2"/><rect class="bar-m" x="196" y="280" width="9" height="20" rx="2"/><rect class="bar-p" x="175" y="310" width="21" height="20" rx="2"/>
+<g class="val"><text x="581" y="25">800 k€</text><text x="581" y="55">480 k€</text><text x="341" y="85">320 k€</text><text x="341" y="115">80 k€</text><text x="301" y="145">240 k€</text><text x="301" y="175">160 k€</text><text x="221" y="205">80 k€</text><text x="221" y="235">20 k€</text><text x="211" y="265">60 k€</text><text x="211" y="295">18 k€</text><text x="202" y="325">42 k€</text></g></svg>
+<figcaption>Sur 800 000 € de ventes, Rouleo garde 42 000 € de bénéfice : un peu plus de 5 €  pour 100 € vendus.</figcaption></figure>
+<div class="tw"><table class="t"><thead><tr><th>Solde</th><th>Question à laquelle il répond</th></tr></thead><tbody>
+<tr><td><strong>Marge brute</strong></td><td>Gagne-t-on de l'argent sur chaque produit vendu, avant les frais ?</td></tr>
+<tr><td><strong>Valeur ajoutée</strong></td><td>Quelle richesse l'entreprise crée-t-elle elle-même ? Elle sert à payer les salariés, l'État, les prêteurs et les propriétaires.</td></tr>
+<tr><td><strong>EBE</strong> (excédent brut d'exploitation, en anglais EBITDA)</td><td>Le métier lui-même rapporte-t-il, une fois les salaires payés ?</td></tr>
+<tr><td><strong>Résultat d'exploitation</strong> (EBIT)</td><td>Et en tenant compte de l'usure des machines et des locaux (amortissements) ?</td></tr>
+<tr><td><strong>Résultat net</strong></td><td>Que reste-t-il au final, après les intérêts des emprunts et l'impôt ? Positif : bénéfice. Négatif : perte.</td></tr>
+</tbody></table></div>
+<p class="ex"><span class="lbl">Exemple</span>Rouleo achète un vélo 600 € et le vend 1 000 € : 400 € de marge brute, soit un <strong>taux de marge brute de 40 %</strong> (400 ÷ 1 000). Sur l'année : 800 000 − 480 000 = 320 000 € de marge brute.</p>
+<p class="pg"><span class="lbl">Attention</span>Un <strong>amortissement</strong> n'est pas une dépense de l'année : c'est l'étalement du prix d'un équipement sur sa durée de vie. Une machine à 50 000 € utilisée 5 ans coûte 10 000 € par an dans le compte de résultat, même si elle a été payée en une fois.</p>
+<div class="mots" aria-label="Mots-clés"><span>chiffre d'affaires</span><span>marge brute</span><span>valeur ajoutée</span><span>EBE</span><span>EBITDA</span><span>résultat d'exploitation</span><span>résultat net</span><span>amortissement</span></div>
+</article>
+
+<article class="fiche" id="f3" aria-labelledby="t3">
+<span class="num" aria-hidden="true">3</span><h3 id="t3">Bénéfice n'est pas trésorerie : CAF et free cash flow</h3>
+<p class="def">La <strong>trésorerie</strong> est l'argent réellement disponible sur les comptes en banque. Une entreprise peut afficher un bénéfice et manquer d'argent : c'est la première cause de faillite des jeunes entreprises.</p>
+<div class="formule">CAF (capacité d'autofinancement) ≈ Résultat net + Amortissements</div>
+<div class="formule">Free cash flow = Argent dégagé par l'activité − Investissements</div>
+<ul class="pts"><li>La <strong>CAF</strong> rajoute les amortissements, qui sont une charge sans sortie d'argent cette année. Rouleo : 42 000 + 20 000 = <strong>62 000 €</strong> générés par son activité.</li><li>Mais une vente n'est pas encore de l'argent tant que le client n'a pas payé, et un vélo en stock a déjà été payé au fournisseur. Ces décalages (le <strong>BFR</strong>, fiche 5) absorbent une partie de la CAF.</li><li>Le <strong>free cash flow</strong> (FCF, flux de trésorerie disponible) est ce qui reste après ces décalages <em>et</em> les investissements (nouveaux équipements). C'est lui qui permet de rembourser les dettes ou de verser des dividendes.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Rouleo dégage 62 000 € ; la hausse de ses stocks lui coûte 12 000 € ; elle achète un nouvel atelier pour 30 000 €. Free cash flow : 62 000 − 12 000 − 30 000 = <strong>20 000 €</strong>.</p>
+<p class="pg"><span class="lbl">Attention</span>Ne pas compter deux fois le BFR. Si l'on part de l'« argent dégagé par l'activité » (flux de trésorerie d'exploitation), le BFR y est déjà inclus. Si l'on part de la CAF, il faut le retirer.</p>
+<div class="mots" aria-label="Mots-clés"><span>trésorerie</span><span>CAF</span><span>free cash flow</span><span>FCF</span><span>investissement</span></div>
+</article>
+
+<article class="fiche" id="f4" aria-labelledby="t4">
+<span class="num" aria-hidden="true">4</span><h3 id="t4">Le bilan : ce que l'entreprise possède, et qui l'a financé</h3>
+<p class="def">Le <strong>bilan</strong> est une photo prise le dernier jour de l'année. À gauche, l'<strong>actif</strong> : ce que l'entreprise possède. À droite, le <strong>passif</strong> : d'où vient l'argent qui a permis de l'acheter. Les deux colonnes ont toujours le même total.</p>
+<figure class="sch" style="max-width:560px;margin-inline:auto"><svg viewBox="0 0 440 250" role="img" aria-labelledby="bil-t bil-d"><title id="bil-t">Bilan de Rouleo</title><desc id="bil-d">Actif de 400 000 euros : immobilisations 240, stocks 90, créances clients 30, trésorerie 40. Passif de 400 000 euros : capitaux propres 200, emprunts 120, dettes fournisseurs 80.</desc>
+<text class="lab" x="110" y="16" text-anchor="middle">ACTIF · ce qu'elle possède</text><text class="lab" x="330" y="16" text-anchor="middle">PASSIF · qui l'a financé</text>
+<rect class="box" x="10" y="26" width="200" height="120"/><text class="lab" x="110" y="82" text-anchor="middle">Immobilisations 240 k€</text><text class="val" x="110" y="100" text-anchor="middle">magasin, atelier, outils</text>
+<rect class="box2" x="10" y="146" width="200" height="45"/><text class="lab" x="110" y="173" text-anchor="middle">Stocks 90 k€</text>
+<rect class="box2" x="10" y="191" width="200" height="15"/><text class="val" x="110" y="202.5" text-anchor="middle" style="font-size:11px">Créances clients 30 k€</text>
+<rect class="box" x="10" y="206" width="200" height="20"/><text class="lab" x="110" y="221" text-anchor="middle">Trésorerie 40 k€</text>
+<rect class="box" x="230" y="26" width="200" height="100"/><text class="lab" x="330" y="72" text-anchor="middle">Capitaux propres 200 k€</text><text class="val" x="330" y="90" text-anchor="middle">apports + bénéfices gardés</text>
+<rect class="box2" x="230" y="126" width="200" height="60"/><text class="lab" x="330" y="160" text-anchor="middle">Emprunts bancaires 120 k€</text>
+<rect class="box2" x="230" y="186" width="200" height="40"/><text class="lab" x="330" y="211" text-anchor="middle">Fournisseurs à payer 80 k€</text>
+<text class="val" x="110" y="244" text-anchor="middle">Total 400 k€</text><text class="val" x="330" y="244" text-anchor="middle">Total 400 k€</text></svg>
+<figcaption>Les hauteurs sont proportionnelles aux montants.</figcaption></figure>
+<ul class="pts"><li><strong>Capitaux propres</strong> : l'argent apporté par les associés (le <strong>capital social</strong>) plus les bénéfices des années passées laissés dans l'entreprise (les <strong>réserves</strong>). C'est ce qui « appartient » aux propriétaires.</li><li><strong>Dettes financières</strong> : les emprunts bancaires et les découverts.</li><li><strong>Dette nette</strong> = dettes financières − trésorerie. Rouleo : 120 000 − 40 000 = <strong>80 000 €</strong>. C'est ce qu'elle devrait encore si elle remboursait tout avec l'argent qu'elle a en banque.</li></ul>
+<p class="pg"><span class="lbl">Attention</span>Ne pas confondre <strong>capital social</strong> (apport de départ, souvent petit) et <strong>capitaux propres</strong> (apports + bénéfices accumulés − pertes accumulées).</p>
+<div class="mots" aria-label="Mots-clés"><span>bilan</span><span>actif</span><span>passif</span><span>capitaux propres</span><span>capital social</span><span>dette nette</span><span>immobilisations</span></div>
+</article>
+
+<article class="fiche" id="f5" aria-labelledby="t5">
+<span class="num" aria-hidden="true">5</span><h3 id="t5">Le BFR : pourquoi la croissance peut vider la caisse</h3>
+<p class="def">Le <strong>besoin en fonds de roulement</strong> (BFR) est l'argent bloqué dans l'activité : les produits achetés mais pas encore vendus (stocks) et les ventes pas encore encaissées (créances clients), moins ce que l'entreprise doit encore à ses fournisseurs.</p>
+<div class="formule">BFR = Stocks + Créances clients − Dettes fournisseurs</div>
+<div class="formule">Fonds de roulement (FR) = Ressources stables − Immobilisations &nbsp;·&nbsp; Trésorerie = FR − BFR</div>
+<ul class="pts"><li>Rouleo : BFR = 90 000 + 30 000 − 80 000 = <strong>40 000 €</strong>.</li><li>Son fonds de roulement : capitaux propres et emprunts (200 000 + 120 000) − immobilisations (240 000) = <strong>80 000 €</strong>. Il couvre le BFR, et le surplus forme la trésorerie : 80 000 − 40 000 = <strong>40 000 €</strong>. On retrouve le chiffre du bilan.</li><li>Si Rouleo double ses ventes, elle doit aussi doubler ses stocks avant d'encaisser : le BFR grossit et la trésorerie fond. Une croissance trop rapide peut tuer une entreprise rentable.</li><li>À l'inverse, un supermarché est payé à la caisse mais paie ses fournisseurs à 60 jours : son <strong>BFR est négatif</strong>. Plus il vend, plus il a de cash. C'est un atout que les investisseurs paient cher.</li></ul>
+<p class="ex"><span class="lbl">Exemple</span>Les <strong>délais</strong> se calculent en jours. Stocks de Rouleo : 90 000 ÷ 480 000 × 365 ≈ <strong>68 jours</strong> de ventes en réserve. Fournisseurs : 80 000 ÷ 480 000 × 365 ≈ <strong>61 jours</strong> pour les payer.</p>
+<p class="pg"><span class="lbl">Attention</span>Signal suspect : le chiffre d'affaires monte de 20 % mais le BFR de 50 %. L'entreprise « achète » peut-être ses ventes en laissant ses clients payer très tard, ou accumule des stocks qu'elle n'arrive pas à vendre.</p>
+<div class="mots" aria-label="Mots-clés"><span>BFR</span><span>fonds de roulement</span><span>stocks</span><span>créances clients</span><span>délai de paiement</span><span>BFR négatif</span></div>
+</article>
+
+<article class="fiche" id="f6" aria-labelledby="t6">
+<span class="num" aria-hidden="true">6</span><h3 id="t6">Les indicateurs clients (KPI) : vendre, garder, fidéliser</h3>
+<p class="def">Un <strong>KPI</strong> (<i>key performance indicator</i>, indicateur clé de performance) est un chiffre suivi régulièrement pour piloter l'entreprise. Les KPI commerciaux disent si l'on attire des clients, s'ils achètent et s'ils restent.</p>
+<div class="tw"><table class="t"><thead><tr><th>KPI</th><th>Calcul</th><th>Rouleo</th></tr></thead><tbody>
+<tr><td><strong>Panier moyen</strong></td><td>Chiffre d'affaires ÷ nombre de commandes</td><td class="n">800 000 ÷ 4 000 = 200 €</td></tr>
+<tr><td><strong>Taux de conversion</strong></td><td>Ventes ÷ visiteurs (ou prospects) × 100</td><td class="n">4 000 ÷ 50 000 = 8 %</td></tr>
+<tr><td><strong>Coût d'acquisition client</strong> (CAC)</td><td>Dépenses marketing et commerciales ÷ nouveaux clients</td><td class="n">30 000 ÷ 1 000 = 30 €</td></tr>
+<tr><td><strong>Valeur vie client</strong> (LTV)</td><td>Panier moyen × achats par an × années de fidélité</td><td class="n">200 × 1,5 × 3 = 900 €</td></tr>
+<tr><td><strong>Taux d'attrition</strong> (churn)</td><td>Clients perdus ÷ clients en début d'année × 100</td><td class="n">500 ÷ 2 500 = 20 %</td></tr>
+<tr><td><strong>Taux de rétention</strong></td><td>(Clients en fin d'année − nouveaux) ÷ clients en début d'année × 100</td><td class="n">(3 000 − 1 000) ÷ 2 500 = 80 %</td></tr>
+</tbody></table></div>
+<ul class="pts"><li>Rétention et attrition sont les deux faces d'une même mesure : 80 % + 20 % = 100 %.</li><li>Le rapport <strong>LTV ÷ CAC</strong> dit si un nouveau client rapporte plus qu'il ne coûte. Repère courant : au moins 3.</li></ul>
+<p class="pg"><span class="lbl">Attention</span>La LTV calculée avec le chiffre d'affaires surestime ce que rapporte un client. Il est plus juste d'utiliser la <strong>marge</strong> : 900 € × 40 % = 360 €, soit un LTV ÷ CAC de 360 ÷ 30 = <strong>12</strong>. Rouleo reste très au-dessus de 3.</p>
+<div class="mots" aria-label="Mots-clés"><span>KPI</span><span>panier moyen</span><span>taux de conversion</span><span>CAC</span><span>LTV</span><span>churn</span><span>attrition</span><span>rétention</span></div>
+</article>
+
+<article class="fiche" id="f7" aria-labelledby="t7">
+<span class="num" aria-hidden="true">7</span><h3 id="t7">La rentabilité : marges, ROE et ROCE</h3>
+<p class="def">Être <strong>rentable</strong>, c'est gagner plus que ce que l'on dépense. Deux questions différentes : combien reste-t-il sur chaque euro vendu (les <strong>marges</strong>) ? combien rapporte chaque euro investi (le <strong>ROE</strong> et le <strong>ROCE</strong>) ?</p>
+<div class="tw"><table class="t"><thead><tr><th>Ratio</th><th>Calcul</th><th>Rouleo</th><th>Se lit…</th></tr></thead><tbody>
+<tr><td><strong>Marge d'exploitation</strong></td><td>Résultat d'exploitation ÷ CA</td><td class="n">60 ÷ 800 = 7,5 %</td><td>7,50 € gagnés par le métier pour 100 € vendus</td></tr>
+<tr><td><strong>Marge nette</strong></td><td>Résultat net ÷ CA</td><td class="n">42 ÷ 800 ≈ 5,3 %</td><td>5,25 € de bénéfice final pour 100 € vendus</td></tr>
+<tr><td><strong>ROE</strong> (rentabilité des capitaux propres)</td><td>Résultat net ÷ capitaux propres</td><td class="n">42 ÷ 200 = 21 %</td><td>100 € placés par les associés en rapportent 21</td></tr>
+<tr><td><strong>ROCE</strong> (rentabilité des capitaux employés)</td><td>Résultat d'exploitation ÷ (capitaux propres + dette nette)</td><td class="n">60 ÷ 280 ≈ 21 %</td><td>tout l'argent engagé, des associés et des banques, rapporte 21 %</td></tr>
+</tbody></table></div>
+<p>Un ROE au-dessus de 15 % est souvent jugé très bon. Il faut le comparer à ce que les associés pourraient gagner ailleurs, avec moins de risque : un livret d'épargne, une obligation d'État.</p>
+<p class="pg"><span class="lbl">Attention</span>On peut gonfler le ROE en s'endettant : moins de capitaux propres pour le même bénéfice, donc un ratio plus élevé, mais une entreprise plus fragile. C'est pourquoi on regarde aussi le ROCE et l'endettement (fiche 8).</p>
+<div class="mots" aria-label="Mots-clés"><span>rentabilité</span><span>marge d'exploitation</span><span>marge nette</span><span>ROE</span><span>ROCE</span></div>
+</article>
+
+<article class="fiche" id="f8" aria-labelledby="t8">
+<span class="num" aria-hidden="true">8</span><h3 id="t8">L'endettement : levier, gearing, autonomie financière</h3>
+<p class="def">S'endetter n'est pas mauvais en soi : cela permet d'investir plus vite. La question est de savoir si l'entreprise pourra <strong>rembourser</strong> et si elle reste <strong>maîtresse de ses choix</strong> face à ses banques.</p>
+<div class="tw"><table class="t"><thead><tr><th>Ratio</th><th>Calcul</th><th>Rouleo</th><th>Repère</th></tr></thead><tbody>
+<tr><td><strong>Levier</strong> (dette nette ÷ EBE)</td><td>Dette nette ÷ EBE</td><td class="n">80 ÷ 80 = 1 an</td><td>sain sous 2 à 3 ans</td></tr>
+<tr><td><strong>Gearing</strong></td><td>Dette nette ÷ capitaux propres</td><td class="n">80 ÷ 200 = 40 %</td><td>prudence au-dessus de 100 %</td></tr>
+<tr><td><strong>Autonomie financière</strong></td><td>Capitaux propres ÷ total du bilan</td><td class="n">200 ÷ 400 = 50 %</td><td>les banques aiment au moins 20 à 25 %</td></tr>
+</tbody></table></div>
+<ul class="pts"><li>Le <strong>levier</strong> se lit en années : il faudrait à Rouleo un an d'EBE pour effacer sa dette nette.</li><li>Une entreprise sans dette et avec beaucoup de trésorerie a une dette nette <strong>négative</strong> : on dit qu'elle a une « trésorerie nette ».</li></ul>
+<p class="pg"><span class="lbl">Attention</span>Gearing et autonomie financière ne mesurent pas la même chose : le premier compare la dette aux capitaux propres, le second la part des capitaux propres dans tout le bilan. Certains documents les confondent.</p>
+<div class="mots" aria-label="Mots-clés"><span>endettement</span><span>levier financier</span><span>gearing</span><span>autonomie financière</span><span>trésorerie nette</span></div>
+</article>
+
+<article class="fiche" id="f9" aria-labelledby="t9">
+<span class="num" aria-hidden="true">9</span><h3 id="t9">La bourse : BNA, PER et dividende</h3>
+<p class="def">Une entreprise <strong>cotée en bourse</strong> a divisé son capital en <strong>actions</strong> que tout le monde peut acheter. La <strong>capitalisation boursière</strong> est le prix de toutes ses actions : cours × nombre d'actions.</p>
+<p>Imaginons que Rouleo soit cotée : 10 000 actions à <strong>63 €</strong>, soit une capitalisation de 630 000 €.</p>
+<div class="tw"><table class="t"><thead><tr><th>Indicateur</th><th>Calcul</th><th>Rouleo</th><th>Se lit…</th></tr></thead><tbody>
+<tr><td><strong>BNA</strong> (bénéfice net par action)</td><td>Résultat net ÷ nombre d'actions</td><td class="n">42 000 ÷ 10 000 = 4,20 €</td><td>la part de bénéfice de chaque action</td></tr>
+<tr><td><strong>PER</strong> (<i>price earnings ratio</i>)</td><td>Cours ÷ BNA</td><td class="n">63 ÷ 4,20 = 15</td><td>on paie l'action 15 années de bénéfices actuels</td></tr>
+<tr><td><strong>Taux de distribution</strong></td><td>Dividendes ÷ résultat net</td><td class="n">12 600 ÷ 42 000 = 30 %</td><td>la part du bénéfice versée aux actionnaires</td></tr>
+<tr><td><strong>Rendement du dividende</strong></td><td>Dividende par action ÷ cours</td><td class="n">1,26 ÷ 63 = 2 %</td><td>le revenu annuel pour 100 € d'actions achetées</td></tr>
+</tbody></table></div>
+<ul class="pts"><li>Un PER entre 10 et 17 est souvent vu comme raisonnable ; au-dessus de 25, le marché parie sur une forte croissance… ou l'action est trop chère.</li><li>Un taux de distribution au-dessus de 100 % signifie que l'entreprise verse plus qu'elle ne gagne : elle puise dans ses réserves ou s'endette. Ce n'est pas tenable longtemps.</li></ul>
+<p class="pg"><span class="lbl">Attention</span>Ces repères sont des ordres de grandeur, pas des règles. Ce site résume des notions ; ce n'est pas un conseil d'investissement.</p>
+<div class="mots" aria-label="Mots-clés"><span>bourse</span><span>action</span><span>capitalisation</span><span>BNA</span><span>PER</span><span>dividende</span><span>taux de distribution</span></div>
+</article>
+
+<article class="fiche" id="f10" aria-labelledby="t10">
+<span class="num" aria-hidden="true">10</span><h3 id="t10">Une action est-elle chère ? Multiples, PEG et actualisation</h3>
+<p class="def">Deux façons d'estimer la valeur d'une entreprise : la <strong>comparer</strong> à ses concurrentes (les <strong>multiples</strong>), ou calculer ce que vaut aujourd'hui l'argent qu'elle rapportera demain (la valeur <strong>intrinsèque</strong>, méthode DCF).</p>
+<div class="tw"><table class="t"><thead><tr><th>Multiple</th><th>Calcul</th><th>Rouleo</th><th>Utile surtout pour…</th></tr></thead><tbody>
+<tr><td><strong>PER</strong></td><td>Cours ÷ BNA</td><td class="n">15</td><td>les entreprises bénéficiaires</td></tr>
+<tr><td><strong>VE ÷ EBE</strong></td><td>(Capitalisation + dette nette) ÷ EBE</td><td class="n">710 ÷ 80 ≈ 8,9</td><td>comparer des entreprises plus ou moins endettées</td></tr>
+<tr><td><strong>P/B</strong> (cours ÷ valeur comptable)</td><td>Capitalisation ÷ capitaux propres</td><td class="n">630 ÷ 200 ≈ 3,2</td><td>banques, industrie lourde (un P/B &lt; 1 attire l'attention)</td></tr>
+<tr><td><strong>P/S</strong> (cours ÷ ventes)</td><td>Capitalisation ÷ CA</td><td class="n">630 ÷ 800 ≈ 0,8</td><td>jeunes entreprises encore sans bénéfice</td></tr>
+</tbody></table></div>
+<div class="formule">PEG = PER ÷ croissance annuelle attendue des bénéfices (en %)</div>
+<p class="ex"><span class="lbl">Exemple</span>Action A : PER 30, bénéfices en hausse de 30 % par an → PEG = 1. Action B : PER 15, croissance de 5 % → PEG = 3. Le PER de B est deux fois plus bas, mais au regard de sa croissance, c'est <strong>B la plus chère</strong>. Repères : PEG &lt; 1 plutôt bon marché, &gt; 1,5 à 2 plutôt cher.</p>
+<p><strong>L'actualisation</strong> : 100 € dans un an valent moins que 100 € aujourd'hui, car on pourrait placer l'argent. Avec un taux de 5 %, 105 € dans un an valent 100 € aujourd'hui. La méthode <strong>DCF</strong> (<i>discounted cash flows</i>) additionne les free cash flows futurs ramenés ainsi à aujourd'hui. Si le résultat par action dépasse le cours, l'action semble sous-cotée.</p>
+<ul class="pts"><li>Quand les <strong>taux d'intérêt montent</strong>, l'argent futur vaut moins aujourd'hui : les entreprises dont les bénéfices sont lointains (technologie) baissent le plus.</li><li><strong>Piège de valeur</strong> : un PER très bas peut signaler une entreprise dont l'activité décline, pas une affaire.</li><li><strong>Entreprises cycliques</strong> (automobile, acier) : au sommet du cycle, les bénéfices sont exceptionnels, donc le PER paraît bas… juste avant que les bénéfices ne retombent.</li></ul>
+<div class="mots" aria-label="Mots-clés"><span>valorisation</span><span>multiples</span><span>valeur d'entreprise</span><span>VE/EBITDA</span><span>P/B</span><span>P/S</span><span>PEG</span><span>DCF</span><span>actualisation</span><span>piège de valeur</span></div>
+</article>
+
+<article class="fiche" id="f11" aria-labelledby="t11">
+<span class="num" aria-hidden="true">11</span><h3 id="t11">Repérer une entreprise en danger</h3>
+<p class="def">Avant de travailler avec une entreprise (comme client, fournisseur ou futur salarié), on peut consulter gratuitement ses comptes s'ils sont publiés, et les annonces légales qui la concernent.</p>
+<ul class="pts"><li><strong>Où chercher ?</strong> L'Annuaire des entreprises de l'État (annuaire-entreprises.data.gouv.fr), Infogreffe, Pappers ou Societe.com reprennent les comptes déposés au greffe du tribunal de commerce. Les petites entreprises peuvent demander que leurs comptes restent confidentiels. Le <strong>BODACC</strong> publie les annonces officielles : changements de dirigeant, déménagements, procédures collectives.</li></ul>
+<div class="tw"><table class="t"><thead><tr><th>Signal d'alerte</th><th>Ce qu'il peut vouloir dire</th></tr></thead><tbody>
+<tr><td>Capitaux propres <strong>inférieurs à la moitié du capital social</strong>, ou négatifs</td><td>Les pertes ont mangé les apports. La loi oblige les associés à décider s'ils dissolvent la société ou s'ils la renflouent.</td></tr>
+<tr><td>EBE négatif deux années de suite</td><td>Le métier lui-même perd de l'argent, avant même les intérêts et l'impôt.</td></tr>
+<tr><td>Trésorerie qui s'effondre, découverts qui explosent</td><td>Plus de réserve pour un imprévu ; les banques ne prêtent plus à long terme.</td></tr>
+<tr><td>Délai de paiement des fournisseurs qui passe de 45 à 90 jours</td><td>L'entreprise survit en payant en retard : souvent un signe qui précède la faillite.</td></tr>
+<tr><td>Ventes en forte hausse mais bénéfice en chute (<strong>effet ciseau</strong>)</td><td>Les charges augmentent plus vite que les ventes : croissance mal maîtrisée.</td></tr>
+<tr><td>Comptes plus déposés, dirigeants qui changent souvent, dettes envers l'URSSAF ou le Trésor public inscrites au greffe</td><td>Désordre interne ou impayés sociaux et fiscaux.</td></tr>
+</tbody></table></div>
+<p><strong>Les procédures</strong>, de la plus légère à la plus grave : le <strong>mandat ad hoc</strong> (négociation discrète avec les créanciers), la <strong>sauvegarde</strong> (avant la cessation des paiements, les dettes sont gelées le temps de se réorganiser), le <strong>redressement judiciaire</strong> (après la cessation des paiements, pour sauver l'activité et les emplois) et la <strong>liquidation judiciaire</strong> (l'entreprise s'arrête, ses biens sont vendus pour payer les créanciers). Une entreprise est en <strong>cessation des paiements</strong> quand l'argent disponible ne suffit plus à payer les dettes arrivées à échéance ; elle doit alors le déclarer au tribunal dans les 45 jours.</p>
+<p class="ex"><span class="lbl">Exemple</span>Face à un client fragile, une entreprise demande un <strong>acompte</strong> (30 à 50 % à la commande), raccourcit les délais de paiement et ajoute une <strong>clause de réserve de propriété</strong> : elle reste propriétaire de la marchandise tant qu'elle n'est pas payée.</p>
+<div class="mots" aria-label="Mots-clés"><span>signaux d'alerte</span><span>BODACC</span><span>cessation des paiements</span><span>sauvegarde</span><span>redressement judiciaire</span><span>liquidation judiciaire</span><span>effet ciseau</span><span>Pappers</span><span>Infogreffe</span></div>
+</article>
+
+<section class="calc" id="calculateur" aria-labelledby="tc">
+<h3 id="tc">🧮 Calculateur : faire le diagnostic d'une entreprise</h3>
+<p>Les cases sont remplies avec les chiffres de Rouleo. Remplacez-les par ceux d'une vraie entreprise (en euros, ou tous en milliers d'euros) : les ratios se recalculent.</p>
+<div class="grid">
+<label>Chiffre d'affaires<input type="number" id="c-ca" value="800000" inputmode="decimal"></label>
+<label>EBE<input type="number" id="c-ebe" value="80000" inputmode="decimal"></label>
+<label>Résultat d'exploitation<input type="number" id="c-rex" value="60000" inputmode="decimal"></label>
+<label>Résultat net<input type="number" id="c-rn" value="42000" inputmode="decimal"></label>
+<label>Capitaux propres<input type="number" id="c-cp" value="200000" inputmode="decimal"></label>
+<label>Dettes financières<input type="number" id="c-df" value="120000" inputmode="decimal"></label>
+<label>Trésorerie<input type="number" id="c-tr" value="40000" inputmode="decimal"></label>
+<label>Total du bilan<input type="number" id="c-tb" value="400000" inputmode="decimal"></label>
+</div>
+<div class="tw"><table class="t res"><thead><tr><th>Ratio</th><th>Valeur</th><th>Lecture</th></tr></thead><tbody id="c-out"></tbody></table></div>
+<p class="pg"><span class="lbl">Attention</span>Les seuils utilisés sont des repères généraux. Une conclusion sérieuse demande de comparer avec le secteur et les années précédentes.</p>
+</section>
+
+<aside class="memo"><h3>À retenir</h3><ul><li>Le <strong>compte de résultat</strong> descend du chiffre d'affaires au résultat net : marge brute → valeur ajoutée → EBE → résultat d'exploitation → résultat net.</li><li>Le <strong>bilan</strong> montre ce que l'entreprise possède (actif) et qui l'a financé (passif). <strong>Dette nette = dettes financières − trésorerie.</strong></li><li><strong>Bénéfice ≠ trésorerie</strong> : le BFR (stocks + clients − fournisseurs) peut vider la caisse d'une entreprise rentable.</li><li>Rentabilité : <strong>marge nette = résultat net ÷ CA</strong> ; <strong>ROE = résultat net ÷ capitaux propres</strong>.</li><li>Endettement : <strong>dette nette ÷ EBE</strong> en années (sain sous 2 à 3) ; <strong>gearing = dette nette ÷ capitaux propres</strong>.</li><li>Bourse : <strong>PER = cours ÷ BNA</strong> ; un PER bas n'est pas toujours une bonne affaire.</li><li>Un ratio se compare toujours <strong>au secteur et aux années précédentes</strong>.</li></ul></aside>
+
+<section class="gloss" id="lexique" aria-labelledby="tl">
+<h2 id="tl">Lexique</h2>
+<dl>
+<dt>Amortissement</dt><dd>Étalement du coût d'un équipement sur sa durée d'utilisation.</dd>
+<dt>Bilan</dt><dd>Photo, au dernier jour de l'année, de ce que l'entreprise possède (actif) et de ses financements (passif).</dd>
+<dt>BNA (EPS)</dt><dd>Bénéfice net par action : résultat net ÷ nombre d'actions.</dd>
+<dt>BODACC</dt><dd>Bulletin officiel des annonces civiles et commerciales : créations, changements, procédures collectives.</dd>
+<dt>BFR</dt><dd>Besoin en fonds de roulement : stocks + créances clients − dettes fournisseurs.</dd>
+<dt>CAC</dt><dd>Coût d'acquisition client : dépenses marketing et commerciales ÷ nouveaux clients.</dd>
+<dt>CAF</dt><dd>Capacité d'autofinancement : environ résultat net + amortissements.</dd>
+<dt>Capital social</dt><dd>Apports des associés à la création ou lors d'une augmentation de capital.</dd>
+<dt>Capitalisation boursière</dt><dd>Cours de l'action × nombre d'actions.</dd>
+<dt>Capitaux propres</dt><dd>Capital social + réserves + résultat de l'année : ce qui revient aux associés.</dd>
+<dt>Cessation des paiements</dt><dd>Impossibilité de payer les dettes exigibles avec l'argent disponible.</dd>
+<dt>Chiffre d'affaires (CA)</dt><dd>Total des ventes hors taxes de l'année.</dd>
+<dt>Churn (attrition)</dt><dd>Part des clients perdus sur une période.</dd>
+<dt>DCF</dt><dd>Méthode qui estime la valeur d'une entreprise en actualisant ses free cash flows futurs.</dd>
+<dt>Dette nette</dt><dd>Dettes financières − trésorerie.</dd>
+<dt>EBE (EBITDA)</dt><dd>Excédent brut d'exploitation : valeur ajoutée − salaires − impôts et taxes (+ subventions d'exploitation).</dd>
+<dt>Effet ciseau</dt><dd>Les charges augmentent plus vite que les ventes : la rentabilité se dégrade.</dd>
+<dt>Fonds de roulement</dt><dd>Ressources stables (capitaux propres + emprunts longs) − immobilisations.</dd>
+<dt>Free cash flow (FCF)</dt><dd>Argent dégagé par l'activité, après BFR et investissements.</dd>
+<dt>Gearing</dt><dd>Dette nette ÷ capitaux propres.</dd>
+<dt>KPI</dt><dd>Indicateur clé de performance, suivi régulièrement pour piloter.</dd>
+<dt>LTV (CLV)</dt><dd>Valeur vie client : ce qu'un client rapporte sur toute sa fidélité.</dd>
+<dt>Marge brute</dt><dd>Chiffre d'affaires − coût d'achat des produits vendus.</dd>
+<dt>PEG</dt><dd>PER ÷ croissance annuelle attendue des bénéfices (en %).</dd>
+<dt>PER</dt><dd>Cours ÷ BNA : nombre d'années de bénéfices actuels payées en achetant l'action.</dd>
+<dt>Résultat d'exploitation (EBIT)</dt><dd>EBE − amortissements et provisions.</dd>
+<dt>Résultat net</dt><dd>Bénéfice (ou perte) final après intérêts et impôt sur les sociétés.</dd>
+<dt>ROCE</dt><dd>Résultat d'exploitation ÷ (capitaux propres + dette nette).</dd>
+<dt>ROE</dt><dd>Résultat net ÷ capitaux propres.</dd>
+<dt>Valeur ajoutée</dt><dd>Marge brute (ou production) − consommations externes : la richesse créée par l'entreprise.</dd>
+<dt>Valeur d'entreprise (VE)</dt><dd>Capitalisation + dette nette : le prix pour racheter l'entreprise et reprendre ses dettes.</dd>
+<dt>WACC (CMPC)</dt><dd>Coût moyen du capital : rendement exigé par les actionnaires et les prêteurs, taux utilisé dans le DCF.</dd>
+</dl>
+</section>
+
+<section id="quiz-sec" style="margin-top:34px">
+<h2 class="sec">Quiz d'évaluation</h2>
+<div class="quizbox"><div id="quiz"><noscript>Le quiz nécessite JavaScript.</noscript></div></div>
+</section>
+<div class="pager"><a href="economie-marches.html"><small>← Précédent</small>Économie et marchés</a><a class="nx" href="accueil-ses.html"><small>Retour →</small>Tous les thèmes</a></div>
+</main>
+<footer>CultureGSite · Fiches pour lycéens · Rouleo est une entreprise imaginaire ; les repères chiffrés sont des ordres de grandeur, pas des conseils d'investissement.</footer>
+<script>
+(function(){
+  var Q=[{"q": "Quel document montre ce que l'entreprise possède et qui l'a financé, au dernier jour de l'année ?", "o": ["Le compte de résultat", "Le bilan", "Le tableau des KPI", "Le BODACC"], "a": 1, "e": "Le bilan est une photo : actif (ce qu'elle possède) et passif (ses financements). Le compte de résultat raconte l'année."}, {"q": "Une boutique achète un sac 30 € et le vend 50 €. Quel est son taux de marge brute ?", "o": ["20 %", "40 %", "60 %", "67 %"], "a": 1, "e": "Marge brute : 50 − 30 = 20 €. Taux : 20 ÷ 50 = 40 % du prix de vente."}, {"q": "Dans le compte de résultat, quel solde vient juste avant le résultat d'exploitation ?", "o": ["Le résultat net", "La marge brute", "L'EBE", "Le chiffre d'affaires"], "a": 2, "e": "Résultat d'exploitation = EBE − amortissements et provisions."}, {"q": "Pourquoi une entreprise bénéficiaire peut-elle manquer d'argent ?", "o": ["Parce que le bénéfice est toujours faux", "Parce que ses clients n'ont pas encore payé et que ses stocks ont déjà été payés", "Parce que les amortissements sont des sorties d'argent", "Parce que le chiffre d'affaires est calculé TTC"], "a": 1, "e": "Le BFR (stocks + créances clients − dettes fournisseurs) bloque de l'argent : bénéfice et trésorerie ne coïncident pas."}, {"q": "Résultat net 50 000 €, amortissements 15 000 €. Quelle est la CAF approchée ?", "o": ["35 000 €", "50 000 €", "65 000 €", "15 000 €"], "a": 2, "e": "Les amortissements ne font pas sortir d'argent : CAF ≈ 50 000 + 15 000 = 65 000 €."}, {"q": "Stocks 60 000 €, créances clients 40 000 €, dettes fournisseurs 70 000 €. Quel est le BFR ?", "o": ["30 000 €", "170 000 €", "−30 000 €", "100 000 €"], "a": 0, "e": "BFR = 60 000 + 40 000 − 70 000 = 30 000 €."}, {"q": "Un supermarché encaisse ses clients à la caisse et paie ses fournisseurs à 60 jours. Son BFR est :", "o": ["Très élevé", "Nul par définition", "Négatif : la croissance lui apporte du cash", "Impossible à calculer"], "a": 2, "e": "Il encaisse avant de payer : les fournisseurs financent son activité. Plus il vend, plus il a de trésorerie."}, {"q": "Dettes financières 300 000 €, trésorerie 100 000 €. Quelle est la dette nette ?", "o": ["400 000 €", "200 000 €", "300 000 €", "100 000 €"], "a": 1, "e": "Dette nette = dettes financières − trésorerie = 300 000 − 100 000 = 200 000 €."}, {"q": "Une application dépense 20 000 € en publicité et gagne 500 nouveaux clients. Quel est son coût d'acquisition client ?", "o": ["25 €", "40 €", "400 €", "10 000 €"], "a": 1, "e": "CAC = 20 000 ÷ 500 = 40 € par client."}, {"q": "Un service d'abonnement avait 1 000 abonnés en janvier et en a perdu 150 dans l'année. Son taux d'attrition (churn) est :", "o": ["15 %", "85 %", "1,5 %", "150 %"], "a": 0, "e": "Churn = 150 ÷ 1 000 = 15 %. Le taux de rétention correspondant est de 85 %."}, {"q": "Résultat net 30 000 €, capitaux propres 150 000 €. Quel est le ROE ?", "o": ["5 %", "20 %", "30 %", "50 %"], "a": 1, "e": "ROE = 30 000 ÷ 150 000 = 20 % : 100 € apportés par les associés en rapportent 20."}, {"q": "Dette nette 400 000 €, EBE 100 000 €. Comment juger le levier (dette nette ÷ EBE) ?", "o": ["0,25 an : aucune dette", "4 ans : endettement élevé, au-delà du repère de 2 à 3", "4 % : très faible", "Impossible : il faut le cours de bourse"], "a": 1, "e": "400 000 ÷ 100 000 = 4 années d'EBE pour rembourser, au-dessus du repère courant de 2 à 3 ans."}, {"q": "Une action cote 80 € et son BNA est de 4 €. Quel est son PER ?", "o": ["4", "20", "84", "320"], "a": 1, "e": "PER = cours ÷ BNA = 80 ÷ 4 = 20 : on paie 20 années de bénéfices actuels."}, {"q": "Action A : PER 40, croissance des bénéfices 40 % par an. Action B : PER 12, croissance 3 %. Selon le PEG, laquelle est la plus chère ?", "o": ["A, car son PER est plus haut", "B, car son PEG vaut 4 contre 1 pour A", "Elles se valent", "On ne peut rien dire sans dividende"], "a": 1, "e": "PEG A = 40 ÷ 40 = 1 ; PEG B = 12 ÷ 3 = 4. Rapportée à sa croissance, B est la plus chère."}, {"q": "Pourquoi une hausse des taux d'intérêt fait-elle souvent baisser les actions technologiques ?", "o": ["Parce que les entreprises tech n'ont pas de dettes", "Parce que l'argent attendu loin dans le futur vaut moins aujourd'hui une fois actualisé", "Parce que le PER augmente automatiquement", "Parce que les dividendes deviennent obligatoires"], "a": 1, "e": "Avec un taux plus élevé, l'actualisation réduit davantage les flux lointains, qui pèsent beaucoup dans la valeur des entreprises de croissance."}, {"q": "Lequel de ces signaux doit inquiéter avant de signer avec un fournisseur ?", "o": ["Un ROE de 18 %", "Des délais de paiement fournisseurs passés de 45 à 95 jours", "Un BFR en légère baisse", "Un dividende stable"], "a": 1, "e": "Payer de plus en plus tard est souvent le signe d'une entreprise qui manque de trésorerie, ce qui précède fréquemment la cessation des paiements."}];
+  var KEY="cgs-quiz-analyse-financiere";
+  var root=document.getElementById("quiz");
+  var LET=["A","B","C","D","E"];
+  var st=null;
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+  function best(){try{return parseInt(localStorage.getItem(KEY)||"-1",10);}catch(e){return -1;}}
+  function saveBest(v){try{if(v>best())localStorage.setItem(KEY,String(v));}catch(e){}}
+  function start(list){st={list:list,i:0,score:0,wrong:[],done:false};render();}
+  function render(){
+    root.innerHTML="";
+    if(st.i>=st.list.length){return finish();}
+    var q=st.list[st.i];
+    var head=el("div","qhead");
+    head.appendChild(el("span",null,"Question "+(st.i+1)+" / "+st.list.length));
+    head.appendChild(el("span",null,"Score : "+st.score));
+    var bar=el("div","bar");bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax",st.list.length);bar.setAttribute("aria-valuenow",st.i);
+    var fill=el("i");fill.style.width=(st.i/st.list.length*100)+"%";bar.appendChild(fill);
+    var qt=el("p","qtext",q.q);qt.tabIndex=-1;
+    var opts=el("div","opts");opts.setAttribute("role","group");opts.setAttribute("aria-label","Réponses possibles");
+    var items=shuffle(q.o.map(function(t,k){return {t:t,k:k};}));
+    var fb=el("div");fb.setAttribute("aria-live","polite");
+    var next=null;
+    items.forEach(function(it,idx){
+      var b=el("button","opt");b.type="button";b.dataset.k=it.k;
+      b.appendChild(el("span","k",LET[idx]));b.appendChild(el("span",null,it.t));
+      b.addEventListener("click",function(){choose(b,it.k===q.a);});
+      opts.appendChild(b);
+    });
+    function choose(btn,ok){
+      var all=opts.querySelectorAll("button");
+      for(var i=0;i<all.length;i++){all[i].disabled=true;if(parseInt(all[i].dataset.k,10)===q.a)all[i].classList.add("good");}
+      if(ok){st.score++;}else{btn.classList.add("bad");st.wrong.push(q);}
+      fb.className="fb "+(ok?"good":"bad");
+      fb.innerHTML="<b>"+(ok?"Bonne réponse !":"Pas tout à fait.")+"</b>"+q.e;
+      head.lastChild.textContent="Score : "+st.score;
+      fill.style.width=((st.i+1)/st.list.length*100)+"%";
+      next=el("button","btn",st.i+1<st.list.length?"Question suivante →":"Voir mon résultat");next.type="button";
+      next.addEventListener("click",function(){st.i++;render();});
+      root.appendChild(next);next.focus();
+    }
+    root.appendChild(head);root.appendChild(bar);root.appendChild(qt);root.appendChild(opts);root.appendChild(fb);
+    qt.focus({preventScroll:true});
+  }
+  function finish(){
+    var n=st.list.length,s=st.score;
+    var prev=best();saveBest(s);
+    var msg=s===n?"Parfait, sans faute !":(s>=n*0.8?"Très bien, les notions sont solides.":(s>=n*0.5?"Bon début : relisez les fiches des questions manquées.":"À retravailler : reprenez les fiches puis refaites le quiz."));
+    root.innerHTML="";
+    var box=el("div","score");
+    box.appendChild(el("div","big",s+" / "+n));
+    box.appendChild(el("p",null,"<strong>"+msg+"</strong>"));
+    if(st.list.length===Q.length&&prev>=0&&prev!==s){box.appendChild(el("p",null,"Meilleur score sur cet appareil : "+Math.max(prev,s)+" / "+n));}
+    root.appendChild(box);
+    var btns=el("div","btns");
+    var again=el("button","btn","Recommencer le quiz");again.type="button";
+    again.addEventListener("click",function(){start(shuffle(Q));window.scrollTo({top:document.getElementById("quiz-sec").offsetTop-60});});
+    btns.appendChild(again);
+    if(st.wrong.length){
+      var redo=el("button","btn alt","Refaire les questions manquées ("+st.wrong.length+")");redo.type="button";
+      var w=st.wrong.slice();
+      redo.addEventListener("click",function(){start(shuffle(w));});
+      btns.appendChild(redo);
+    }
+    root.appendChild(btns);
+    if(st.wrong.length){
+      var rev=el("div","rev");rev.appendChild(el("h4",null,"À revoir"));
+      st.wrong.forEach(function(q){
+        var it=el("div","item","<strong>"+q.q+"</strong><small>Réponse : "+q.o[q.a]+" — "+q.e+"</small>");
+        rev.appendChild(it);
+      });
+      root.appendChild(rev);
+    }
+  }
+  document.addEventListener("keydown",function(e){
+    if(!root||e.ctrlKey||e.metaKey||e.altKey)return;
+    var t=e.target;if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"))return;
+    var r=root.getBoundingClientRect();if(r.bottom<0||r.top>window.innerHeight)return;
+    var k=parseInt(e.key,10);
+    if(k>=1&&k<=4){var bs=root.querySelectorAll(".opt:not(:disabled)");if(bs[k-1]){bs[k-1].click();e.preventDefault();}}
+  });
+  start(shuffle(Q));
+})();
+</script>
+<script>
+(function(){
+  var ids=["ca","ebe","rex","rn","cp","df","tr","tb"],out=document.getElementById("c-out");
+  if(!out)return;
+  function v(id){var x=parseFloat(String(document.getElementById("c-"+id).value).replace(",","."));return isFinite(x)?x:NaN;}
+  function pc(x){return (Math.round(x*1000)/10).toLocaleString("fr-FR")+" %";}
+  function nb(x,u){return (Math.round(x*10)/10).toLocaleString("fr-FR")+(u||"");}
+  function row(nom,val,txt,cls){var tr=document.createElement("tr");
+    var a=document.createElement("td");a.textContent=nom;var b=document.createElement("td");b.className="v n";b.textContent=val;
+    var c=document.createElement("td");c.textContent=txt;if(cls)c.className=cls;tr.appendChild(a);tr.appendChild(b);tr.appendChild(c);out.appendChild(tr);}
+  function calc(){
+    var d={};ids.forEach(function(i){d[i]=v(i);});out.textContent="";
+    var dn=d.df-d.tr;
+    if(d.ca>0){var mn=d.rn/d.ca;row("Marge nette",pc(mn),mn<0?"Perte : l'entreprise vend à perte une fois tout payé.":(mn<0.03?"Faible : peu de bénéfice par euro vendu (normal dans la grande distribution).":(mn<0.1?"Correcte pour la plupart des secteurs.":"Élevée : produit ou position très rentable.")),mn<0?"ko":(mn<0.03?"mid":"ok"));
+      var me=d.rex/d.ca;row("Marge d'exploitation",pc(me),me<0?"Le métier lui-même perd de l'argent.":"Ce que le métier rapporte pour 100 € vendus.",me<0?"ko":"");}
+    if(d.cp>0){var roe=d.rn/d.cp;row("ROE",pc(roe),roe<0?"Les associés perdent de l'argent.":(roe<0.08?"Modeste : à comparer avec un placement sans risque.":(roe<0.15?"Correct.":"Très bon (au-dessus de 15 %).")),roe<0?"ko":(roe<0.08?"mid":"ok"));
+      var ce=d.cp+dn;if(ce>0){row("ROCE",pc(d.rex/ce),"Rentabilité de tout l'argent engagé (associés et banques).","");}}
+    else if(isFinite(d.cp)){row("Capitaux propres",nb(d.cp),"Négatifs : alerte, les pertes ont dépassé les apports.","ko");}
+    row("Dette nette",nb(dn),dn<0?"Négative : l'entreprise a plus de trésorerie que de dettes.":"Ce qu'il resterait à rembourser avec la trésorerie actuelle.",dn<0?"ok":"");
+    if(d.ebe>0&&dn>0){var lv=dn/d.ebe;row("Dette nette ÷ EBE",nb(lv," an"+(lv>=2?"s":"")),lv<=2?"Sain : remboursable en moins de 2 ans d'EBE.":(lv<=3?"Acceptable, à surveiller.":"Élevé : au-delà du repère de 2 à 3 ans."),lv<=2?"ok":(lv<=3?"mid":"ko"));}
+    else if(d.ebe<=0){row("Dette nette ÷ EBE","—","EBE nul ou négatif : l'activité ne permet pas de rembourser.","ko");}
+    if(d.cp>0&&dn>0){var g=dn/d.cp;row("Gearing",pc(g),g<=1?"Endettement raisonnable par rapport aux fonds propres.":"Plus de dettes nettes que de capitaux propres : dépendance aux banques.",g<=1?"ok":"ko");}
+    if(d.tb>0&&isFinite(d.cp)){var af=d.cp/d.tb;row("Autonomie financière",pc(af),af>=0.25?"Bonne : au moins un quart du bilan financé par les associés.":"Faible : les banques demandent souvent au moins 20 à 25 %.",af>=0.25?"ok":"mid");}
+  }
+  ids.forEach(function(i){document.getElementById("c-"+i).addEventListener("input",calc);});
+  calc();
+})();
+</script>
+</body>
+</html>
