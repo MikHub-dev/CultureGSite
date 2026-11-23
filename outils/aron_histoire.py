@@ -430,7 +430,7 @@ def entete():
 
 
 def page(titre, desc, corps, classe='', script=''):
-    return ('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<script src="https://mikhub-dev.github.io/RoutineSite/famzak-verrou.js?v=2" onerror="document.documentElement.hidden=true"></script>\n<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+    return ('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="utf-8">\n<script src="https://mikhub-dev.github.io/RoutineSite/famzak-verrou.js?v=3" onerror="document.documentElement.hidden=true"></script>\n<meta name="viewport" content="width=device-width,initial-scale=1">\n'
             '<title>%s</title>\n<meta name="description" content="%s">\n<meta name="robots" content="noindex, nofollow">\n'
             '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;700&display=swap">\n'
