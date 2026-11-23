@@ -529,7 +529,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique et déforme des noms. J\'ai lu « Toinb » comme Toynbee, « le rein » comme le Rhin, « Maxweb » comme Max Weber, « Kanes » comme Keynes, « Crouchef » comme Khrouchtchev, « Kipour » comme Kippour, « Henrique Singer » et « Kissigur » comme Kissinger, « McGeorge Bandy » comme McGeorge Bundy, « Maavel » comme Machiavel, « Pétin » comme Pétain, « Ain Touren » comme Alain Touraine, « Les 18 sur la société industrielle » comme <i>Dix-huit leçons sur la société industrielle</i>, « l\'année 601 » comme l\'année universitaire 1960-1961 et « Eris Dabay » comme l\'allemand <i>er ist dabei</i> (« il est présent »). Le titre de l\'article contre le programme commun qu\'il cite est illisible : je ne l\'ai pas repris.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():

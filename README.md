@@ -21,3 +21,5 @@ Ouvrir `index.html` dans un navigateur, ou publier le dépôt avec GitHub Pages 
 - Les cours de `fiches-ses/` et `fiches-informatique/` gardent aussi leur meilleur score au format commun (`famzak:quiz:culturegsite:<page>`).
 - Accueil : chaque vignette affiche « 🎯 X/Y quiz réussis », et dans chaque thème un badge suit chaque lien vers un quiz (à faire, score, ✓ réussi). Tout est gardé sur l'appareil.
 
+
+Progression liée au code élève : `famzak-progres.js` (même fichier sur les sites FamZakSites) envoie les progrès des jeux au serveur de suivi de RoutineSite (routes `/progres/…`, Worker 1.6) sous le code de l'élève, saisi une fois (bouton 👤 en bas à droite). Sans code, tout reste sur l'appareil.

@@ -426,7 +426,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique. J\'ai lu « durkem » comme Durkheim, « Marc a dit » comme « Marx a dit » et « bonnilori » comme Bonilauri (orthographe de la description de la vidéo). Les citations entre guillemets sont légèrement resserrées.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():

@@ -473,7 +473,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique. J\'ai lu « Xavier offer » et « refire » comme Xavier Raufer, « Darman » comme Darmanin, « dupom Moretti » comme Dupond-Moretti, « hatal » comme Attal, « enverse » et « renverse » comme Anvers, « Godon a un coup de pied » comme « donner un coup de pied », « Beltram » comme Beltrame, « fleurerogis » comme Fleury-Mérogis, « mafzoli » comme Maffesoli et « le Casco » comme le SIRASCO, service de la police nationale sur le crime organisé. L\'affaire des étudiants disparus au Mexique est celle d\'Ayotzinapa (2014), que la vidéo ne nomme pas.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():

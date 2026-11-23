@@ -502,7 +502,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique et déforme des noms : j\'ai lu « Raymond Aaron » comme Raymond Aron, « Calman Levi » comme Calmann-Lévy, « 1945-172 » comme 1945-1972, « Montes qui » comme Montesquieu, « Tville » comme Tocqueville, « la coucheuse de l\'histoire » comme l\'accoucheuse de l\'histoire et « chien de faillance » comme chiens de faïence.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():

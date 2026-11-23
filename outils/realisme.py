@@ -490,7 +490,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique. J\'ai lu « Grossus » comme Grotius, « Mernir », « Mné » et « Méternique » comme Metternich, « vilsonnien » comme wilsonien, « Boudre Wilson » comme Woodrow Wilson, « Morgan Tao » comme Morgenthau, « Henrique Singer » comme Henry Kissinger, « Din Chesson » comme Dean Acheson, « les frères de l\'us » comme les frères Dulles, « Brezinski » comme Brzezinski, « Guiseau » comme Guizot, « Circle Aristote » comme Cercle Aristote, « Sapierre » comme Sapir et « Blincen » comme Blinken.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():

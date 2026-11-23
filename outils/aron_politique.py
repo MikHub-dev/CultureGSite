@@ -463,7 +463,7 @@ def page_fiche():
              '<p class="note">La transcription est automatique, sans ponctuation, et déforme beaucoup de noms. J\'ai lu « seul génie tsin » et « soljénitsyne » comme Soljenitsyne, « l\'archipel bull hague » et « gulak » comme <i>L\'Archipel du Goulag</i>, « le chêne elle vaut » comme <i>Le Chêne et le Veau</i>, « où 14 » comme <i>Août 14</i>, « paix et guerre » comme <i>Guerre et Paix</i>, « heatley » comme Hitler, « phénologie » comme phénoménologie, « styles et tziganes » comme Slaves et Tziganes. Le passage sur le « conseiller du prince » cite un homme d\'État américain dont le nom est illisible (sans doute Kissinger) : je ne l\'ai pas nommé dans la fiche.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
     # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n<script src="../famzak-progres.js" data-site="culturegsite"></script>\n')
 
 
 def main():
