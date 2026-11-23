@@ -4350,3 +4350,59 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   });
 })();
 </script>
+<script>
+/* ---------- Quiz réussis : sur chaque vignette de l'accueil et à côté des liens de chaque thème ----------
+   Lit les meilleurs scores gardés sur l'appareil : « famzak:quiz:culturegsite:<page> » (cours SES et
+   informatique), « famzak:quiz:culturegsite:video:<sujet> » (fiches vidéo), et l'ancienne clé
+   « cgs-quiz-<page> » (nombre seul) pour les scores enregistrés avant. */
+(function(){
+  var TOTAUX = {'ses-science-politique':10,'entreprise-entrepreneuriat':13,'ses-economie':10,'ses-sociologie':10,'analyse-financiere':16,'economie-marches':13,'finance-personnelle':13,'satellites-quantiques':25};
+  function lire(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }
+  function score(href){
+    var m = href.match(/fiches-(?:ses|informatique)\/([a-z-]+)\.html/), v;
+    if (m && TOTAUX[m[1]]) {
+      v = lire('famzak:quiz:culturegsite:' + m[1]);
+      if (v) return v;
+      var old = lire('cgs-quiz-' + m[1]);
+      return typeof old === 'number' && old >= 0 ? {score:old, total:TOTAUX[m[1]]} : {score:null, total:TOTAUX[m[1]]};
+    }
+    m = href.match(/fiches-geopolitique\/([a-z-]+)-fiche\.html/);
+    if (m) { v = lire('famzak:quiz:culturegsite:video:' + m[1]); return v || {score:null, total:5}; }
+    return null;
+  }
+  var parTheme = {};
+  document.querySelectorAll('.view.theme').forEach(function(vue){
+    var vus = {}, id = vue.id.slice(2), t = {faits:0, reussis:0, n:0};
+    vue.querySelectorAll('a[href]').forEach(function(a){
+      var href = a.getAttribute('href').split('#')[0], r = score(href);
+      if (!r || vus[href]) return;
+      vus[href] = 1; t.n++;
+      var b = document.createElement('span');
+      b.className = 'quiz-etat' + (r.score === null ? '' : r.score === r.total ? ' ok' : ' fait');
+      b.textContent = r.score === null ? '🎯 quiz à faire' : (r.score === r.total ? '✓ quiz ' : 'quiz ') + r.score + '/' + r.total;
+      b.title = 'Meilleur score au quiz, gardé sur cet appareil';
+      a.after(b);
+      if (r.score !== null) t.faits++;
+      if (r.score !== null && r.score === r.total) t.reussis++;
+    });
+    if (t.n) parTheme[id] = t;
+  });
+  document.querySelectorAll('.vig').forEach(function(v){
+    var a = v.querySelector('h3 a'), c = v.querySelector('.count');
+    if (!a || !c) return;
+    var t = parTheme[a.getAttribute('href').slice(1)];
+    if (!t) return;
+    var q = document.createElement('span');
+    q.className = 'vig-quiz' + (t.reussis === t.n ? ' ok' : '');
+    q.textContent = '🎯 ' + t.reussis + '/' + t.n + ' quiz réussis' + (t.reussis === t.n ? ' 🏆' : '');
+    c.after(q);
+  });
+})();
+</script>
+<style>
+.quiz-etat{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:99px;font:600 .72rem/1.5 var(--f-ui);border:1px dashed color-mix(in srgb,var(--tc,#5fd4ff) 60%,transparent);color:var(--texte-doux);vertical-align:middle;white-space:nowrap}
+.quiz-etat.fait{border-style:solid;color:var(--texte)}
+.quiz-etat.ok{border-style:solid;border-color:#5fc98a;color:#5fc98a}
+.vig-quiz{position:relative;z-index:2;font:600 .68rem/1 var(--f-ui);color:var(--texte-doux);letter-spacing:.06em;margin-top:6px}
+.vig-quiz.ok{color:#5fc98a}
+</style>

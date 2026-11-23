@@ -438,7 +438,7 @@ figure.sch figcaption{font-size:.86rem;color:var(--muted);margin-top:6px;text-al
   }
   function finish(){
     var n=st.list.length,s=st.score;
-    var prev=best();saveBest(s);
+    var prev=best();saveBest(s);if(n===Q.length){try{var fz="famzak:quiz:culturegsite:"+KEY.slice(9),o=JSON.parse(localStorage.getItem(fz)||"null");if(!o||o.total!==n||s>o.score)localStorage.setItem(fz,JSON.stringify({score:s,total:n,date:new Date().toISOString().slice(0,10)}));}catch(e){}}
     var msg=s===n?"Parfait, sans faute !":(s>=n*0.8?"Très bien, les notions sont solides.":(s>=n*0.5?"Bon début : relisez les fiches des questions manquées.":"À retravailler : reprenez les fiches puis refaites le quiz."));
     root.innerHTML="";
     var box=el("div","score");

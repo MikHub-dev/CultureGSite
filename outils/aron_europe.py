@@ -501,7 +501,8 @@ def page_fiche():
              '<p class="note">C\'est une archive de 1973 : Aron parle de l\'Europe de la guerre froide (URSS, RFA, bloc soviétique) et donne son analyse personnelle, sans contradicteur. Ses jugements, par exemple sur ce que voulait le général de Gaulle, sont ceux d\'un intervenant et ne sont pas vérifiés ici. La description de la chaîne et les commentaires présentent l\'entretien comme « visionnaire » : c\'est une appréciation, pas un fait.</p>\n'
              '<p class="note">La transcription est automatique et déforme des noms : j\'ai lu « Raymond Aaron » comme Raymond Aron, « Calman Levi » comme Calmann-Lévy, « 1945-172 » comme 1945-1972, « Montes qui » comme Montesquieu, « Tville » comme Tocqueville, « la coucheuse de l\'histoire » comme l\'accoucheuse de l\'histoire et « chien de faillance » comme chiens de faïence.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():

@@ -472,7 +472,8 @@ def page_fiche():
              '<p class="note">Chiffres cités dans la vidéo et non vérifiés ici : 1 300 à 1 350 quartiers de la politique de la ville ; 116 tonnes de cocaïne saisies à Anvers en 2023 (chiffre proche de celui annoncé par les douanes belges ; il dit aussi 113 tonnes) ; 700 à 800 tonnes entrées chaque année en Europe ; 60 euros le gramme ; 44 homicides en 2023 dans les quartiers nord de Marseille (il donne 250 000 puis 150 000 habitants : le taux de 17,5 pour 100 000 correspond à 250 000) ; 1,15 homicide pour 100 000 habitants en France ; +110 % d\'homicides et tentatives en vingt ans ; +6 % par an de coups et blessures hors famille de 2017 à 2023 ; 70 % puis 30 % de risque de mourir avant l\'opération ; 75 % de Français mécontents ; moins de procureurs par habitant qu\'en Albanie. L\'absence de commissariat dans les quartiers nord de Marseille est aussi son affirmation.</p>\n'
              '<p class="note">La transcription est automatique. J\'ai lu « Xavier offer » et « refire » comme Xavier Raufer, « Darman » comme Darmanin, « dupom Moretti » comme Dupond-Moretti, « hatal » comme Attal, « enverse » et « renverse » comme Anvers, « Godon a un coup de pied » comme « donner un coup de pied », « Beltram » comme Beltrame, « fleurerogis » comme Fleury-Mérogis, « mafzoli » comme Maffesoli et « le Casco » comme le SIRASCO, service de la police nationale sur le crime organisé. L\'affaire des étudiants disparus au Mexique est celle d\'Ayotzinapa (2014), que la vidéo ne nomme pas.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():

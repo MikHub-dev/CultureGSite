@@ -528,7 +528,8 @@ def page_fiche():
              '<p class="note">C\'est un entretien télévisé de 1974 où Aron parle de lui-même, sans contradicteur : ses souvenirs (Allemagne, Londres, Kennedy, Kissinger) et ses jugements sont rapportés comme il les donne, sans vérification. Ses chiffres d\'inflation sont ceux qu\'il cite de mémoire pour 1974, et ses pronostics (marché commun, durée de la crise) sont ceux de cette date. Le nom du journaliste, Bernard Bonilauri, vient de la description de l\'extrait publié par l\'INA, pas de celle de cette vidéo. J\'ai ajouté quelques repères (guerre du Kippour en octobre 1973, titre exact des <i>Dix-huit leçons</i>).</p>\n'
              '<p class="note">La transcription est automatique et déforme des noms. J\'ai lu « Toinb » comme Toynbee, « le rein » comme le Rhin, « Maxweb » comme Max Weber, « Kanes » comme Keynes, « Crouchef » comme Khrouchtchev, « Kipour » comme Kippour, « Henrique Singer » et « Kissigur » comme Kissinger, « McGeorge Bandy » comme McGeorge Bundy, « Maavel » comme Machiavel, « Pétin » comme Pétain, « Ain Touren » comme Alain Touraine, « Les 18 sur la société industrielle » comme <i>Dix-huit leçons sur la société industrielle</i>, « l\'année 601 » comme l\'année universitaire 1960-1961 et « Eris Dabay » comme l\'allemand <i>er ist dabei</i> (« il est présent »). Le titre de l\'article contre le programme commun qu\'il cite est illisible : je ne l\'ai pas repris.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():

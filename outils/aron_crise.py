@@ -425,7 +425,8 @@ def page_fiche():
              '<p class="note">C\'est un extrait de huit minutes d\'un entretien télévisé de 1974, remonté en podcast par l\'INA avec une présentation ajoutée. Aron y donne son analyse personnelle, sans contradicteur. Ses constats sur la violence et les suicides sont ceux qu\'il tire des études de l\'époque, sans chiffres précis : ils ne sont pas vérifiés ici. Ses horizons de 5 à 8 ans et d\'un demi-siècle sont des pronostics de 1974.</p>\n'
              '<p class="note">La transcription est automatique. J\'ai lu « durkem » comme Durkheim, « Marc a dit » comme « Marx a dit » et « bonnilori » comme Bonilauri (orthographe de la description de la vidéo). Les citations entre guillemets sont légèrement resserrées.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():

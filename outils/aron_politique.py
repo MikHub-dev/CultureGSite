@@ -462,7 +462,8 @@ def page_fiche():
              '<p class="note">C\'est un entretien d\'opinion de 1975, mis en ligne par une chaîne qui n\'est pas l\'éditeur d\'origine ; la date et l\'émission viennent de la description, je ne les ai pas vérifiées. Aron y donne son point de vue personnel, sans contradicteur, sur des sujets lourds (nazisme, stalinisme, union de la gauche). Sa comparaison des deux régimes et ses ordres de grandeur, par exemple le nombre de détenus dans les camps allemands et soviétiques au milieu des années 1930, sont rapportés comme il les donne et ne sont pas vérifiés ici. Ses pronostics sur l\'union de la gauche sont ceux de 1975.</p>\n'
              '<p class="note">La transcription est automatique, sans ponctuation, et déforme beaucoup de noms. J\'ai lu « seul génie tsin » et « soljénitsyne » comme Soljenitsyne, « l\'archipel bull hague » et « gulak » comme <i>L\'Archipel du Goulag</i>, « le chêne elle vaut » comme <i>Le Chêne et le Veau</i>, « où 14 » comme <i>Août 14</i>, « paix et guerre » comme <i>Guerre et Paix</i>, « heatley » comme Hitler, « phénologie » comme phénoménologie, « styles et tziganes » comme Slaves et Tziganes. Le passage sur le « conseiller du prince » cite un homme d\'État américain dont le nom est illisible (sans doute Kissinger) : je ne l\'ai pas nommé dans la fiche.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():

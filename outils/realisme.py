@@ -489,7 +489,8 @@ def page_fiche():
              '<p class="note">Faits et attributions non vérifiés ici : la phrase « nous allons vous priver d\'ennemi », attribuée dans la vidéo à l\'ambassadeur soviétique à l\'ONU (on la prête souvent au conseiller soviétique Gueorgui Arbatov) ; la formule sur les dictateurs « fils de… », prêtée à un président américain sans source sûre ; « la force prime le droit », prêtée à Bismarck ; l\'anecdote du conseil de De Gaulle à Nixon sur la Chine ; l\'élection de Kissinger à l\'Académie des sciences de Russie en 2016. J\'ai corrigé la fonction de Kissinger, présenté dans la vidéo comme « président du Conseil de sécurité nationale » : il en était le conseiller avant de devenir secrétaire d\'État.</p>\n'
              '<p class="note">La transcription est automatique. J\'ai lu « Grossus » comme Grotius, « Mernir », « Mné » et « Méternique » comme Metternich, « vilsonnien » comme wilsonien, « Boudre Wilson » comme Woodrow Wilson, « Morgan Tao » comme Morgenthau, « Henrique Singer » comme Henry Kissinger, « Din Chesson » comme Dean Acheson, « les frères de l\'us » comme les frères Dulles, « Brezinski » comme Brzezinski, « Guiseau » comme Guizot, « Circle Aristote » comme Cercle Aristote, « Sapierre » comme Sapir et « Blincen » comme Blinken.</p>\n</article>\n')
     h.append('<a class="back" href="../index.html#geopolitique">&larr; Politique et Géopolitique</a>\n</main>\n')
-    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h))
+    # Quiz de 5 questions en bas de la fiche (données : fiches-geopolitique/quiz-videos.js).
+    return page('%s — Fiche vidéo' % TITRE, DESC, ''.join(h), '', '<script src="../quiz-famzak.js"></script>\n<script src="quiz-videos.js"></script>\n')
 
 
 def main():
