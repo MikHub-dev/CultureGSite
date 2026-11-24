@@ -463,9 +463,9 @@ Scene.prototype.frame=function(t){
       const bx=Math.max(4,Math.min(396-w,cx-w/2)),by=cy-h/2,mx=Math.max(bx+12,Math.min(bx+w-12,tp[0]));
       const tipY=tp[1]-6,base=tipY>cy?by+h:by;
       o+=`<g${pr.op!=null?` opacity="${f1(pr.op*100)/100}"`:''}><path d="M${f1(mx-6)},${f1(base)} L${f1(tp[0])},${f1(tipY)} L${f1(mx+6)},${f1(base)}" fill="#0b1630" stroke="${pr.col}" stroke-width="1.3" stroke-linejoin="round"/>`+
-        `<rect x="${f1(bx)}" y="${f1(by)}" width="${f1(w)}" height="${h}" rx="${h/2}" fill="#0b1630" stroke="${pr.col}" stroke-width="1.3"/>`+
+        `<rect x="${f1(bx)}" y="${f1(by)}" width="${f1(w)}" height="${h}" rx="${h/2}" fill="#0b1630" fill-opacity=".92" stroke="${pr.col}" stroke-width="1.3"/>`+
         `<rect x="${f1(mx-5)}" y="${f1(base-1.5)}" width="10" height="3" fill="#0b1630"/>`+
-        `<text x="${f1(bx+w/2)}" y="${f1(by+h/2+fs*.36)}" font-size="${fs}" font-weight="600" fill="#f2f6ff" text-anchor="middle" font-family="Inter,Arial,sans-serif">${pr.s}</text></g>`;
+        `<text x="${f1(bx+w/2)}" y="${f1(by+h/2+fs*.36)}" font-size="${fs}" font-weight="600" fill="#fff4dc" text-anchor="middle" font-family="Inter,Arial,sans-serif">${pr.s}</text></g>`;
     }
   }
   const nk=Object.keys(GR).length;

@@ -107,7 +107,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .art .d{fill:var(--tc);stroke:none}
 .art text{fill:var(--tc);stroke:none;font-family:var(--f-serif);font-weight:600}
 .art3d{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;user-select:none}
-.vig[data-3d-zone]{min-height:270px}
+.vig[data-3d-zone]{min-height:270px;background:rgba(26,42,82,.66)}
+.vig[data-3d-zone]:hover{background:rgba(32,50,96,.78)}
+.vig[data-3d-zone]::before{background:linear-gradient(160deg,rgba(10,22,50,.7) 0%,rgba(10,22,50,.35) 16%,transparent 34%)}
 .vhead{position:relative;z-index:2;display:flex;align-items:center;gap:10px}
 .ico{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:9px;background:color-mix(in srgb,var(--tc) 14%,rgba(5,13,34,.85));border:1px solid color-mix(in srgb,var(--tc) 38%,transparent);color:var(--tc)}
 .ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--tc) 55%,transparent))}
@@ -4413,5 +4415,5 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 .vig-quiz{position:relative;z-index:2;font:600 .68rem/1 var(--f-ui);color:var(--texte-doux);letter-spacing:.06em;margin-left:auto;text-align:right}
 .vig-quiz.ok{color:#5fc98a}
 </style>
-<script src="accueil-3d.js?v=2"></script>
+<script src="accueil-3d.js?v=3"></script>
 <script src="famzak-progres.js" data-site="culturegsite"></script>
