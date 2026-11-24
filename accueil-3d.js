@@ -402,7 +402,7 @@ const CFG={
 
 function Scene(svg,cfg){
   this.svg=svg;this.cfg=cfg;this.uy=0;this.up=0;this.hy=0;this.hp=0;this.thy=0;this.thp=0;this.nd=-1;
-  this.cx=+(svg.dataset.cx||268);this.cy=+(svg.dataset.cy||cfg.cy||182);this.pitch=+(svg.dataset.pitch||.3);this.k=+(svg.dataset.scale||cfg.k||1.3);
+  this.cx=+(svg.dataset.cx||cfg.cx||200);this.cy=+(svg.dataset.cy||cfg.cy||182);this.pitch=+(svg.dataset.pitch||.3);this.k=+(svg.dataset.scale||cfg.k||1.3);
   this.defs=document.createElementNS(NS,'defs');svg.insertBefore(this.defs,svg.firstChild);
   this.g=document.createElementNS(NS,'g');svg.appendChild(this.g);
   /* la zone interactive : la carte entière si la scène est dans une carte, sinon le SVG */
