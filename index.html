@@ -4243,6 +4243,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
   });
 })();
 </script>
+<script src="quiz-famzak.js"></script>
+<script src="quiz-fiches.js"></script>
 <script>
 /* ---------- Quiz réussis : sur chaque vignette de l'accueil et à côté des liens de chaque thème ----------
    Lit les meilleurs scores gardés sur l'appareil : « famzak:quiz:culturegsite:<page> » (cours SES et
@@ -4278,6 +4280,21 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
       if (r.score !== null) t.faits++;
       if (r.score !== null && r.score === r.total) t.reussis++;
     });
+    (window.CGS_QUIZ_FICHES || []).forEach(function(z){ /* quiz en bas des fiches (quiz-fiches.js) */
+      var art = document.getElementById(z.fiche);
+      if (!art || !vue.contains(art)) return;
+      var r = lire('famzak:quiz:culturegsite:fiche:' + z.id) || {score:null, total:z.questions.length};
+      t.n++;
+      if (r.score !== null) t.faits++;
+      if (r.score !== null && r.score === r.total) t.reussis++;
+      var h = document.querySelector('#quiz-' + CSS.escape(z.id) + ' h4');
+      if (h) {
+        var b = document.createElement('span');
+        b.className = 'quiz-etat' + (r.score === null ? '' : r.score === r.total ? ' ok' : ' fait');
+        b.textContent = r.score === null ? 'à faire' : (r.score === r.total ? '✓ ' : '') + r.score + '/' + r.total;
+        h.append(' ', b);
+      }
+    });
     if (t.n) parTheme[id] = t;
   });
   document.querySelectorAll('.vig').forEach(function(v){
@@ -4296,6 +4313,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:now
 })();
 </script>
 <style>
+.quiz-fiche{margin-top:16px;padding-top:4px}
 .quiz-etat{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:99px;font:600 .72rem/1.5 var(--f-ui);border:1px dashed color-mix(in srgb,var(--tc,#5fd4ff) 60%,transparent);color:var(--texte-doux);vertical-align:middle;white-space:nowrap}
 .quiz-etat.fait{border-style:solid;color:var(--texte)}
 .quiz-etat.ok{border-style:solid;border-color:#5fc98a;color:#5fc98a}
